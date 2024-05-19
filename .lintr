@@ -5,7 +5,9 @@ linters: all_linters(
     undesirable_function_linter = undesirable_function_linter(modify_defaults(
       defaults = default_undesirable_functions,
       structure = NULL
-    ))
+    )),
+    implicit_integer_linter = NULL,
+    object_name_linter = NULL
   )
 exclusions: list(
     "tests/testthat.R"

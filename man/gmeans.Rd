@@ -11,7 +11,7 @@ gmeans(x)
 (such as a numeric vector or a data frame with all numeric columns).}
 }
 \description{
-G-means Clustering
+Perform G-means clustering on a data matrix.
 }
 \references{
 Hamerly, Greg, Elkan, Charles (2003).
