@@ -74,16 +74,14 @@ number of non-missing values must be greater than 7.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of
-normality. The test statistic is
+normality. The test statistic is $$
+  A^2 = -n -\frac{1}{n} \sum_{i=1}^{n} (2i-1) [\ln(z_{i}) + \ln(1 - z_{n+1-i})]
 $$
-A = -n -\frac{1}{n} \sum_{i=1}^{n} [2i-1]
-[\ln(p_{(i)}) + \ln(1 - p_{(n-i+1)})],
-$$
-where \(p_{(i)} = \Phi([x_{(i)} - \overline{x}]/s)\). Here,
+where \(z_{i} = \Phi(\fraq{x_{i} - \overline{x}}{s})\). Here,
 \(\Phi\) is the cumulative distribution function of the standard normal
 distribution, and \(\overline{x}\) and \(s\) are mean and standard deviation of
 the data values. The p-value is computed from the modified statistic
-\(Z=A (1.0 + 0.75/n +2.25/n^{2})\)\ according to Table 4.9 in Stephens (1986).</p>
+\(A^2_*=A^2 (1.0 + 0.75/n +2.25/n^{2})\) according to Table 4.9 in Stephens (1986).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
