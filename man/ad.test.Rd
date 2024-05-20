@@ -3,6 +3,9 @@
 \name{ad.test}
 \alias{ad.test}
 \title{Anderson-Darling Normality Test}
+\source{
+Adapted from \code{\link[nortest:ad.test]{nortest::ad.test()}}
+}
 \usage{
 ad.test(x)
 }
@@ -22,6 +25,37 @@ A list inheriting from classes \code{"htest"} containing the following component
 \description{
 Perform the Anderson-Darling normality test.
 }
+\details{
+The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of
+normality. The test statistic is
+\deqn{
+A = -n -\frac{1}{n} \sum_{i=1}^{n} [2i-1]
+[\ln(p_{(i)}) + \ln(1 - p_{(n-i+1)})],
+}
+where \eqn{p_{(i)} = \Phi([x_{(i)} - \overline{x}]/s)}. Here,
+\eqn{\Phi} is the cumulative distribution function of the standard normal
+distribution, and \eqn{\overline{x}} and \eqn{s} are mean and standard deviation of
+the data values. The p-value is computed from the modified statistic
+\eqn{Z=A (1.0 + 0.75/n +2.25/n^{2})}\ according to Table 4.9 in Stephens (1986).
+}
+\examples{
+ad.test(rnorm(100, mean = 5, sd = 3))
+ad.test(runif(100, min = 2, max = 4))
+}
+\references{
+Stephens, A. M (1986).
+\dQuote{Goodness-of-Fit-Techniques.}
+In D'Agostino, B. R (eds.), chapter Tests based on EDF statistics.
+CRC Press.
+
+Thode, C. H (2002).
+\emph{Testing for normality}, 1 edition.
+CRC Press.
+\doi{10.1201/9780203910894}.
+}
 \seealso{
-\code{\link[stats:shapiro.test]{stats::shapiro.test()}} and \code{\link[stats:ks.test]{stats::ks.test()}} for other normality tests.
+\code{\link[stats:shapiro.test]{stats::shapiro.test()}} for performing the Shapiro-Wilk test for normality.
+\code{\link[nortest:cvm.test]{nortest::cvm.test()}}, \code{\link[nortest:lillie.test]{nortest::lillie.test()}}, \code{\link[nortest:pearson.test]{nortest::pearson.test()}},
+\code{\link[nortest:sf.test]{nortest::sf.test()}} for performing further tests for normality.
+\code{\link[stats:qqnorm]{stats::qqnorm()}} for producing a normal quantile-quantile plot.
 }

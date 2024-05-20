@@ -1,3 +1,6 @@
-test_that("gmeans works", {
-  expect_identical(2L, 2L)
+test_that("ad.test works", {
+  expect_error(ad.test(NULL))
+  expect_error(ad.test(letters))
+  expect_error(ad.test(numeric()))
+  expect_error(ad.test(numeric(rnorm(5L))))
 })
