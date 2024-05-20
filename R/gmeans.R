@@ -8,7 +8,7 @@
 #' `r format_bib("hamerly2003learning")`
 #' @export
 gmeans <- function(x) {
-  structure(list(), class = "gmeans")
+  structure(list(cluster = NULL, centers = NULL), class = "gmeans")
 }
 
 # steps: can initialize with just k = 1, or larger if we have some prioer knowledge
@@ -21,13 +21,21 @@ predict.gmeans <- function(object, newdata, ...) {
   stop("predict.gmeans is not yet implemented")
 }
 
-# alternative would be
-# * Kolmogorov-Smirnov (K-S) normality test
-# * Shapiro–Wilk test
-# * Jarque–Bera test
-# * Goodness of fit
-gaussian_test <- function(x) shapiro.test(x)[["p.value"]] > 0.05
-
+#' Anderson-Darling Normality Test
+#'
+#' Perform the Anderson-Darling normality test.
+#'
+#' @param x `numeric()` vector of data values. Missing values are allowed, but the
+#'   number of non-missing values must be greater than 7.
+#'
+#' @seealso [stats::shapiro.test()] and [stats::ks.test()] for other normality tests.
+#' @returns
+#' A list inheriting from classes `"htest"` containing the following components:
+#'   * statistic: the value of the statistic.
+#'   * p.value: the p-value of the test.
+#'   * method: the character string `"Anderson-Darling normality test"`.
+#'   * data.name: a character string giving the name(s) of the data.
+#' @export
 ad.test <- function(x) {
   dname <- deparse(substitute(x))
   x <- sort(x[!is.na(x)])
@@ -41,7 +49,6 @@ ad.test <- function(x) {
   logp2 <- pnorm(-scaled, log.p = TRUE)
   h <- (2 * 1:n - 1) * (logp1 + rev(logp2))
 
-  # TODO: check how to apply clustering correction, meaning how the p-value is adjusted
   A <- -n - mean(h)
   # D'Agostino (1986) adjustment
   AA <- (1 + 0.75 / n + 2.25 / n^2) * A
