@@ -38,28 +38,19 @@ predict.gmeans <- function(object, newdata, ...) {
 rxdist <- function(data,
                    centers,
                    method = c("euclidean", "manhattan", "minkowski"),
-                   ...) {
+                   p = 2) {
   method <- match.arg(method)
   distance <- switch(method,
     euclidean = function(data, x) sqrt(rowSums(sweep(data, 2L, x)^2)),
     manhattan = function(data, x) rowSums(abs(sweep(data, 2L, x))),
-    minkowski = {
-      p <- list(...)[[1L]]
-      function(data, x) (rowSums(abs(sweep(data, 2L, x))^p))^(1 / p)
-    }
+    minkowski = function(data, x) (rowSums(abs(sweep(data, 2L, x))^p))^(1 / p)
   )
-
   data_nms <- colnames(data)
-  centers_nms <- colnames(centers)
-  if (!is.null(data_nms) && !is.null(center_nms) && !identical(data_nms, centers_nms)) {
-    data <- data[, centers_nms, drop = FALSE]
+  center_nms <- colnames(centers)
+  if (!is.null(data_nms) && !is.null(center_nms) && !identical(data_nms, center_nms)) {
+    data <- data[, center_nms, drop = FALSE]
   }
-
-  out <- matrix(0, nrow(data), nrow(centers))
-  for (k in seq_len(nrow(centers))) {
-    out[, k] <- distance(data, centers[k, ])
-  }
-  out
+  apply(centers, 1L, function(x) distance(data, x))
 }
 
 #' Anderson-Darling Normality Test
