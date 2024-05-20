@@ -36,7 +36,7 @@ predict.gmeans <- function(object, newdata, ...) {
 
 rxdist <- function(A, B, method = c("euclidean", "manhattan", "minkowski"), ...) {
   method <- match.arg(method)
-  fn <- switch(method,
+  distance <- switch(method,
     euclidean = function(A, b) sqrt(rowSums(sweep(A, 2L, b)^2)),
     manhattan = function(A, b) rowSums(abs(sweep(A, 2L, b))),
     minkowski = {
@@ -53,7 +53,7 @@ rxdist <- function(A, B, method = c("euclidean", "manhattan", "minkowski"), ...)
 
   out <- matrix(0, nrow(A), nrow(B))
   for (k in seq_len(nrow(B))) {
-    out[, k] <- fn(A, B[k, ])
+    out[, k] <- distance(A, B[k, ])
   }
   out
 }
@@ -64,16 +64,14 @@ rxdist <- function(A, B, method = c("euclidean", "manhattan", "minkowski"), ...)
 #'
 #' @details
 #' The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of
-#' normality. The test statistic is
-#' \deqn{
-#' A = -n -\frac{1}{n} \sum_{i=1}^{n} [2i-1]
-#' [\ln(p_{(i)}) + \ln(1 - p_{(n-i+1)})],
+#' normality. The test statistic is \deqn{
+#'   A^2 = -n -\frac{1}{n} \sum_{i=1}^{n} (2i-1) [\ln(z_{i}) + \ln(1 - z_{n+1-i})]
 #' }
-#' where \eqn{p_{(i)} = \Phi([x_{(i)} - \overline{x}]/s)}. Here,
+#' where \eqn{z_{i} = \Phi(\fraq{x_{i} - \overline{x}}{s})}. Here,
 #' \eqn{\Phi} is the cumulative distribution function of the standard normal
 #' distribution, and \eqn{\overline{x}} and \eqn{s} are mean and standard deviation of
 #' the data values. The p-value is computed from the modified statistic
-#' \eqn{Z=A (1.0 + 0.75/n +2.25/n^{2})}\ according to Table 4.9 in Stephens (1986).
+#' \eqn{A^2_*=A^2 (1.0 + 0.75/n +2.25/n^{2})} according to Table 4.9 in Stephens (1986).
 #'
 #' @param x `numeric()` vector of data values. Missing values are allowed, but the
 #'   number of non-missing values must be greater than 7.
