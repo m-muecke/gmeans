@@ -4,21 +4,58 @@
 #'
 #' @param x numeric matrix of data, or an object that can be coerced to such a matrix
 #'   (such as a numeric vector or a data frame with all numeric columns).
+#' @param k_init `integer(1)` initial amount of centers. Default is `1`.
 #' @references
 #' `r format_bib("hamerly2003learning")`
 #' @export
-gmeans <- function(x) {
+gmeans <- function(x, k_init = 1L) {
+  # steps: can initialize with just k = 1, or larger if we have some prioer knowledge
+  # 1. start with a small number of k-means clusters and grows the no. of clusters
+  # 2. each iteration splits into two those clusters those centers whose data appear not to come from a Gaussian distribution
+  # 3. beween each round of splitting run k-means on the entire dataset and all the centers to refine the current solution
   structure(list(cluster = NULL, centers = NULL), class = "gmeans")
 }
 
-# steps: can initialize with just k = 1, or larger if we have some prioer knowledge
-# 1. start with a small number of k-means clusters and grows the no. of clusters
-# 2. each iteration splits into two those clusters those centers whose data appear not to come from a Gaussian distribution
-# 3. beween each round of splitting run k-means on the entire dataset and all the centers to refine the current solution
+#' @export
+print.gmeans <- function(x, ...) {
+  stop("Not implemented")
+}
 
+#' Predict Method for G-means Clustering
+#'
+#' @param object of class inheriting from `"gmeans"`.
+#' @param newdata `matrix()` new data to predict on.
+#' @param ... additional arguments.
+#' @source Adapted from \CRANpkg{clue}
 #' @export
 predict.gmeans <- function(object, newdata, ...) {
-  stop("predict.gmeans is not yet implemented")
+  d <- rxdist(newdata, object$centers)
+  cl <- max.col(-d)
+  cl
+}
+
+rxdist <- function(A, B, method = c("euclidean", "manhattan", "minkowski"), ...) {
+  method <- match.arg(method)
+  fn <- switch(method,
+    euclidean = function(A, b) sqrt(rowSums(sweep(A, 2L, b)^2)),
+    manhattan = function(A, b) rowSums(abs(sweep(A, 2L, b))),
+    minkowski = {
+      p <- list(...)[[1L]]
+      function(A, b) (rowSums(abs(sweep(A, 2L, b))^p))^(1 / p)
+    }
+  )
+
+  cnA <- colnames(A)
+  cnB <- colnames(B)
+  if (!is.null(cnA) && !is.null(cnB) && !identical(cnA, cnB)) {
+    A <- A[, cnB, drop = FALSE]
+  }
+
+  out <- matrix(0, nrow(A), nrow(B))
+  for (k in seq_len(nrow(B))) {
+    out[, k] <- fn(A, B[k, ])
+  }
+  out
 }
 
 #' Anderson-Darling Normality Test
