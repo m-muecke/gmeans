@@ -45,9 +45,9 @@ ad.test <- function(x) {
     stop("sample size must be greater than 7")
   }
 
-  scaled <- (x - mean(x)) / sd(x)
-  logp1 <- pnorm(scaled, log.p = TRUE)
-  logp2 <- pnorm(-scaled, log.p = TRUE)
+  scaled <- (x - mean(x)) / stats::sd(x)
+  logp1 <- stats::pnorm(scaled, log.p = TRUE)
+  logp2 <- stats::pnorm(-scaled, log.p = TRUE)
   h <- (2 * 1:n - 1) * (logp1 + rev(logp2))
 
   A <- -n - mean(h)

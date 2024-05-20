@@ -1,5 +1,5 @@
 Package: gmeans
-Title: G-Means Clustering
+Title: G-means Clustering
 Version: 0.0.1
 Authors@R:
     person("Maximilian", "Muecke", , "muecke.maximilian@gmail.com", role = c("aut", "cre"),
@@ -11,6 +11,8 @@ URL: https://m-muecke.github.io/gmeans/,
 BugReports: https://github.com/m-muecke/gmeans/issues
 Depends:
     R (>= 3.6.0)
+Imports:
+    stats
 Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
