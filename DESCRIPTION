@@ -10,7 +10,7 @@ URL: https://m-muecke.github.io/gmeans/,
     https://github.com/m-muecke/gmeans
 BugReports: https://github.com/m-muecke/gmeans/issues
 Depends:
-    R (>= 4.1.0)
+    R (>= 3.6.0)
 Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
