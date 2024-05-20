@@ -28,13 +28,14 @@ Perform the Anderson-Darling normality test.
 \details{
 The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of
 normality. The test statistic is \deqn{
-  A^2 = -n -\frac{1}{n} \sum_{i=1}^{n} (2i-1) [\ln(z_{i}) + \ln(1 - z_{n+1-i})]
+  A^2 = -n -\frac{1}{n} \sum_{i=1}^{n} (2i - 1) [\ln(z_{i}) + \ln(1 - z_{n + 1 - i})]
 }
 where \eqn{z_{i} = \Phi(\frac{x_{i} - \bar{x}}{s})}. Here,
 \eqn{\Phi} is the cumulative distribution function of the standard normal
 distribution, and \eqn{\bar{x}} and \eqn{s} are mean and standard deviation of
 the data values. The p-value is computed from the modified statistic
-\eqn{A^2_*=A^2 (1.0 + 0.75/n +2.25/n^{2})} according to Table 4.9 in Stephens (1986).
+\eqn{A^2_*=A^2 (1.0 + 0.75/n + 2.25/n^{2})} according to Table 4.9 in
+Stephens (1986).
 }
 \examples{
 ad.test(rnorm(100, mean = 5, sd = 3))

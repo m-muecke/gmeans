@@ -18,7 +18,7 @@ gmeans <- function(x, k_init = 1L) {
 
 #' @export
 print.gmeans <- function(x, ...) {
-  stop("Not implemented")
+  invisible(x)
 }
 
 #' Predict Method for G-means Clustering
@@ -29,31 +29,35 @@ print.gmeans <- function(x, ...) {
 #' @source Adapted from \CRANpkg{clue}
 #' @export
 predict.gmeans <- function(object, newdata, ...) {
+  stopifnot(is.matrix(newdata))
   d <- rxdist(newdata, object$centers)
   cl <- max.col(-d)
   cl
 }
 
-rxdist <- function(A, B, method = c("euclidean", "manhattan", "minkowski"), ...) {
+rxdist <- function(data,
+                   centers,
+                   method = c("euclidean", "manhattan", "minkowski"),
+                   ...) {
   method <- match.arg(method)
   distance <- switch(method,
-    euclidean = function(A, b) sqrt(rowSums(sweep(A, 2L, b)^2)),
-    manhattan = function(A, b) rowSums(abs(sweep(A, 2L, b))),
+    euclidean = function(data, x) sqrt(rowSums(sweep(data, 2L, x)^2)),
+    manhattan = function(data, x) rowSums(abs(sweep(data, 2L, x))),
     minkowski = {
       p <- list(...)[[1L]]
-      function(A, b) (rowSums(abs(sweep(A, 2L, b))^p))^(1 / p)
+      function(data, x) (rowSums(abs(sweep(data, 2L, x))^p))^(1 / p)
     }
   )
 
-  cnA <- colnames(A)
-  cnB <- colnames(B)
-  if (!is.null(cnA) && !is.null(cnB) && !identical(cnA, cnB)) {
-    A <- A[, cnB, drop = FALSE]
+  data_nms <- colnames(data)
+  centers_nms <- colnames(centers)
+  if (!is.null(data_nms) && !is.null(center_nms) && !identical(data_nms, centers_nms)) {
+    data <- data[, centers_nms, drop = FALSE]
   }
 
-  out <- matrix(0, nrow(A), nrow(B))
-  for (k in seq_len(nrow(B))) {
-    out[, k] <- distance(A, B[k, ])
+  out <- matrix(0, nrow(data), nrow(centers))
+  for (k in seq_len(nrow(centers))) {
+    out[, k] <- distance(data, centers[k, ])
   }
   out
 }
@@ -65,13 +69,14 @@ rxdist <- function(A, B, method = c("euclidean", "manhattan", "minkowski"), ...)
 #' @details
 #' The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of
 #' normality. The test statistic is \deqn{
-#'   A^2 = -n -\frac{1}{n} \sum_{i=1}^{n} (2i-1) [\ln(z_{i}) + \ln(1 - z_{n+1-i})]
+#'   A^2 = -n -\frac{1}{n} \sum_{i=1}^{n} (2i - 1) [\ln(z_{i}) + \ln(1 - z_{n + 1 - i})]
 #' }
 #' where \eqn{z_{i} = \Phi(\frac{x_{i} - \bar{x}}{s})}. Here,
 #' \eqn{\Phi} is the cumulative distribution function of the standard normal
 #' distribution, and \eqn{\bar{x}} and \eqn{s} are mean and standard deviation of
 #' the data values. The p-value is computed from the modified statistic
-#' \eqn{A^2_*=A^2 (1.0 + 0.75/n +2.25/n^{2})} according to Table 4.9 in Stephens (1986).
+#' \eqn{A^2_*=A^2 (1.0 + 0.75/n + 2.25/n^{2})} according to Table 4.9 in
+#' Stephens (1986).
 #'
 #' @param x `numeric()` vector of data values. Missing values are allowed, but the
 #'   number of non-missing values must be greater than 7.
