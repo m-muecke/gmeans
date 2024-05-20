@@ -30,7 +30,7 @@ The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of
 normality. The test statistic is \deqn{
   A^2 = -n -\frac{1}{n} \sum_{i=1}^{n} (2i-1) [\ln(z_{i}) + \ln(1 - z_{n+1-i})]
 }
-where \eqn{z_{i} = \Phi(\fraq{x_{i} - \overline{x}}{s})}. Here,
+where \eqn{z_{i} = \Phi(\frac{x_{i} - \overline{x}}{s})}. Here,
 \eqn{\Phi} is the cumulative distribution function of the standard normal
 distribution, and \eqn{\overline{x}} and \eqn{s} are mean and standard deviation of
 the data values. The p-value is computed from the modified statistic
