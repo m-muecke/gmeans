@@ -28,15 +28,16 @@ predict.gmeans <- function(object, newdata, ...) {
 #' @param x `numeric()` vector of data values. Missing values are allowed, but the
 #'   number of non-missing values must be greater than 7.
 #'
-#' @seealso [stats::shapiro.test()] and [stats::ks.test()] for other normality tests.
 #' @returns
 #' A list inheriting from classes `"htest"` containing the following components:
 #'   * statistic: the value of the statistic.
 #'   * p.value: the p-value of the test.
 #'   * method: the character string `"Anderson-Darling normality test"`.
 #'   * data.name: a character string giving the name(s) of the data.
+#' @seealso [stats::shapiro.test()] and [stats::ks.test()] for other normality tests.
 #' @export
 ad.test <- function(x) {
+  stopifnot(is.numeric(x), length(x) > 7L)
   dname <- deparse(substitute(x))
   x <- sort(x[!is.na(x)])
   n <- length(x)
