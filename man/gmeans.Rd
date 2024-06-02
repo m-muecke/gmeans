@@ -4,7 +4,7 @@
 \alias{gmeans}
 \title{G-means Clustering}
 \usage{
-gmeans(x, k_init = 1L, k_max = Inf, alpha = 0.05)
+gmeans(x, k_init = 1L, k_max = Inf, alpha = 0.05, ...)
 }
 \arguments{
 \item{x}{numeric matrix of data, or an object that can be coerced to such a matrix
@@ -16,9 +16,19 @@ gmeans(x, k_init = 1L, k_max = Inf, alpha = 0.05)
 
 \item{alpha}{\code{numeric(1)} significance level for the Anderson-Darling test.
 Default is \code{0.05}.}
+
+\item{...}{additional arguments passed to \code{\link[stats:kmeans]{stats::kmeans()}}.}
 }
 \description{
 Perform G-means clustering on a data matrix.
+}
+\examples{
+x <- rbind(
+  matrix(rnorm(100, sd = 0.3), ncol = 2),
+  matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2)
+)
+colnames(x) <- c("x", "y")
+cl <- gmeans(x)
 }
 \references{
 Hamerly, Greg, Elkan, Charles (2003).

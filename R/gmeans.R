@@ -8,33 +8,38 @@
 #' @param k_max `integer(1)` maximum amount of centers. Default is `Inf`.
 #' @param alpha `numeric(1)` significance level for the Anderson-Darling test.
 #'   Default is `0.05`.
+#' @param ... additional arguments passed to [stats::kmeans()].
 #' @references
 #' `r format_bib("hamerly2003learning")`
 #' @export
-gmeans <- function(x, k_init = 1L, k_max = Inf, alpha = 0.05) {
-  stopifnot(
-    is.matrix(x),
-    is.numeric(k_init), length(k_init) == 1L, k_init >= 1L,
-    is.numeric(k_max), length(k_max) == 1L, k_max >= 1L
-  )
-  km <- stats::kmeans(x, k_init)
+#' @examples
+#' x <- rbind(
+#'   matrix(rnorm(100, sd = 0.3), ncol = 2),
+#'   matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2)
+#' )
+#' colnames(x) <- c("x", "y")
+#' cl <- gmeans(x)
+gmeans <- function(x, k_init = 1L, k_max = Inf, alpha = 0.05, ...) {
+  stopifnot(is.matrix(x), is_count(k_init), is_count(k_max))
+  km <- stats::kmeans(x, k_init, ...)
   repeat {
-    new_centers <- statistical_optimization(km, k_max, alpha)
+    new_centers <- statistical_optimization(km, k_max, alpha, ...)
     # no more centers added
     if (nrow(km$centers) == nrow(new_centers)) {
       break
     }
     km <- stats::kmeans(x, nrow(new_centers))
   }
+  class(km) <- c("gmeans", class(km))
   km
 }
 
-statistical_optimization <- function(km, k_max, alpha) {
+statistical_optimization <- function(km, k_max, alpha, ...) {
   centers <- NULL
   k <- nrow(km$centers)
   for (i in seq_len(k)) {
     cluster <- which(km$cluster == i)
-    new_centers <- split_and_search(data, cluster, alpha)
+    new_centers <- split_and_search(data, cluster, alpha, ...)
     if (is.null(new_centers) || k >= k_max) {
       centers <- rbind(centers, km$centers[i, ])
     } else {
@@ -45,12 +50,12 @@ statistical_optimization <- function(km, k_max, alpha) {
   centers
 }
 
-split_and_search <- function(data, cluster, alpha) {
+split_and_search <- function(data, cluster, alpha, ...) {
   if (length(cluster) == 1L) {
     return(NULL)
   }
   points <- data[cluster, ]
-  km <- stats::kmeans(points, 2L)
+  km <- stats::kmeans(points, 2L, ...)
   new_centers <- km$centers
   if (nrow(new_centers) > 1L && !is_null_hypothesis(points, new_centers)) {
     new_centers
@@ -59,20 +64,17 @@ split_and_search <- function(data, cluster, alpha) {
   }
 }
 
+#' Null Hypothesis Test
+#'
 #' @details
 #' \deqn{
 #'   x_{i}^{*}=\frac{\left \langle x_{i}, v \right \rangle}{\left \| v \right \|^{2}}
 #' }
+#' @noRd
 is_null_hypothesis <- function(data, centers, alpha = 0.05) {
-  v <- centers[1, ] - centers[2, ]
-  points <- as.vector(data %*% v / sum(v^2L))
+  v <- centers[1L, ] - centers[2L, ]
+  points <- as.vector(data %*% v / sum(v^2))
   ad.test(points)$p.value > alpha
-}
-
-#' @export
-print.gmeans <- function(x, ...) {
-  cat("G-means clustering with", nrow(x$centers), "centers\n")
-  invisible(x)
 }
 
 #' Predict Method for G-means Clustering

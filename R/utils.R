@@ -10,3 +10,8 @@ format_bib <- function(..., bibentries = NULL, envir = parent.frame()) {
   )
   paste0(str, collapse = "\n\n")
 }
+
+is_count <- function(x) {
+  is.numeric(x) && length(x) == 1L && !is.na(x) &&
+    as.integer(x) == x && x > 0L
+}
