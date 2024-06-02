@@ -20,10 +20,15 @@
 #' colnames(x) <- c("x", "y")
 #' cl <- gmeans(x)
 gmeans <- function(x, k_init = 1L, k_max = Inf, alpha = 0.05, ...) {
-  stopifnot(is.matrix(x), is_count(k_init), is_count(k_max))
+  stopifnot(
+    is.matrix(x),
+    is_count(k_init),
+    is_count(k_max),
+    is_number(alpha), alpha > 0, alpha < 1
+  )
   km <- stats::kmeans(x, k_init, ...)
   repeat {
-    new_centers <- statistical_optimization(km, k_max, alpha, ...)
+    new_centers <- statistical_optimization(x, km, k_max, alpha, ...)
     # no more centers added
     if (nrow(km$centers) == nrow(new_centers)) {
       break
@@ -34,7 +39,7 @@ gmeans <- function(x, k_init = 1L, k_max = Inf, alpha = 0.05, ...) {
   km
 }
 
-statistical_optimization <- function(km, k_max, alpha, ...) {
+statistical_optimization <- function(data, km, k_max, alpha, ...) {
   centers <- NULL
   k <- nrow(km$centers)
   for (i in seq_len(k)) {
