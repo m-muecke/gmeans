@@ -4,13 +4,18 @@
 \alias{gmeans}
 \title{G-means Clustering}
 \usage{
-gmeans(x, k_init = 1L)
+gmeans(x, k_init = 1L, k_max = Inf, alpha = 0.05)
 }
 \arguments{
 \item{x}{numeric matrix of data, or an object that can be coerced to such a matrix
 (such as a numeric vector or a data frame with all numeric columns).}
 
-\item{k_init}{\code{integer(1)} initial amount of centers. Default is \code{1}.}
+\item{k_init}{\code{integer(1)} initial amount of centers. Default is \code{1L}.}
+
+\item{k_max}{\code{integer(1)} maximum amount of centers. Default is \code{Inf}.}
+
+\item{alpha}{\code{numeric(1)} significance level for the Anderson-Darling test.
+Default is \code{0.05}.}
 }
 \description{
 Perform G-means clustering on a data matrix.
