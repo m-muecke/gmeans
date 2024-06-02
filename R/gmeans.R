@@ -149,7 +149,7 @@ ad.test <- function(x) {
   x <- sort(x[!is.na(x)])
   n <- length(x)
   if (n < 8L) {
-    stop("sample size must be greater than 7")
+    stop("sample size must be greater than 7", call. = FALSE)
   }
 
   scaled <- (x - mean(x)) / stats::sd(x)
