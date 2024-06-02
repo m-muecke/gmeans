@@ -8,7 +8,8 @@ linters: all_linters(
       structure = NULL
     )),
     implicit_integer_linter = NULL,
-    object_name_linter = NULL
+    object_name_linter = NULL,
+    nonportable_path_linter = NULL
   )
 exclusions: list(
     "tests/testthat.R"

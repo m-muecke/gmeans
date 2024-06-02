@@ -4,7 +4,9 @@ Version: 0.0.1
 Authors@R:
     person("Maximilian", "Muecke", , "muecke.maximilian@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0000-9432-9795"))
-Description: G-Means clustering.
+Description: Gaussian-means (G-means) clustering is a clustering algorithm
+    that extends the k-means algorithm by automatically determining the
+    number of clusters.
 License: MIT + file LICENSE
 URL: https://m-muecke.github.io/gmeans/,
     https://github.com/m-muecke/gmeans
