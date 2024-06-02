@@ -16,5 +16,5 @@ is_number <- function(x) {
 }
 
 is_count <- function(x) {
-  is_number(x) &&  x > 0L && (is.infinite(x) || as.integer(x) == x)
+  is_number(x) && x > 0L && (is.infinite(x) || as.integer(x) == x)
 }
