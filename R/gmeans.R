@@ -1,5 +1,6 @@
 #' G-means Clustering
 #'
+#' @description
 #' Perform G-means clustering on a data matrix.
 #'
 #' @param x numeric matrix of data, or an object that can be coerced to such a matrix
@@ -71,7 +72,9 @@ split_and_search <- function(data, cluster, alpha, ...) {
 
 #' Null Hypothesis Test
 #'
-#' @details
+#  @description
+#  Simplifies the test for Gaussian fit by projecting the data to one dimension using
+#  the following formula, as described in `r cite_bib("hamerly2003learning")`:
 #' \deqn{
 #'   x_{i}^{*}=\frac{\left \langle x_{i}, v \right \rangle}{\left \| v \right \|^{2}}
 #' }
@@ -116,6 +119,7 @@ rxdist <- function(data,
 
 #' Anderson-Darling Normality Test
 #'
+#' @description
 #' Perform the Anderson-Darling normality test.
 #'
 #' @details
