@@ -105,7 +105,7 @@ rxdist <- function(data,
                    p = 2) {
   method <- match.arg(method)
   distance <- switch(method,
-    euclidean = function(data, x) sqrt(rowSums(sweep(data, 2L, x)^2)),
+    euclidean = function(data, x) rowSums(sweep(data, 2L, x)^2),
     manhattan = function(data, x) rowSums(abs(sweep(data, 2L, x))),
     minkowski = function(data, x) (rowSums(abs(sweep(data, 2L, x))^p))^(1 / p)
   )
