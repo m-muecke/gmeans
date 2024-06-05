@@ -21,6 +21,7 @@
 #' colnames(x) <- c("x", "y")
 #' cl <- gmeans(x)
 gmeans <- function(x, k_init = 1L, k_max = Inf, alpha = 0.05, ...) {
+  x <- as.matrix(x)
   stopifnot(
     is.matrix(x),
     is_count(k_init),
@@ -93,7 +94,10 @@ is_null_hypothesis <- function(data, centers, alpha = 0.05) {
 #' @source Adapted from \CRANpkg{clue}
 #' @export
 predict.gmeans <- function(object, newdata, ...) {
-  stopifnot(is.matrix(newdata))
+  newdata <- as.matrix(newdata)
+  if (ncol(newdata) != ncol(object$centers)) {
+    stop("`newdata` must have the same number of columns as the centers", call. = FALSE)
+  }
   d <- rxdist(newdata, object$centers)
   cl <- max.col(-d)
   cl
