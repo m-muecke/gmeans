@@ -7,15 +7,34 @@
 Adapted from \CRANpkg{clue}
 }
 \usage{
-\method{predict}{gmeans}(object, newdata, ...)
+\method{predict}{gmeans}(
+  object,
+  newdata,
+  method = c("euclidean", "manhatten", "minkowski"),
+  p = 2,
+  ...
+)
 }
 \arguments{
 \item{object}{of class inheriting from \code{"gmeans"}.}
 
 \item{newdata}{\code{matrix()} new data to predict on.}
 
+\item{method}{\code{character(1)} distance metric to use.
+Either \code{"euclidean"}, \code{"manhattan"}, or \code{"minkowski"}. Default is \code{"euclidean"}.}
+
+\item{p}{\code{numeric(1)} power of the Minkowski distance. Default is \code{2}.}
+
 \item{...}{additional arguments.}
 }
 \description{
-Predict Method for G-means Clustering
+Predicted values based on the G-means clustering model.
+}
+\examples{
+set.seed(123)
+x <- as.matrix(iris[, -5])
+cl <- gmeans(x)
+
+newdata <- newdata <- x[1:10, ]
+predict(cl, newdata)
 }

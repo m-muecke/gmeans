@@ -88,37 +88,50 @@ is_null_hypothesis <- function(data, centers, alpha = 0.05) {
 
 #' Predict Method for G-means Clustering
 #'
+#' Predicted values based on the G-means clustering model.
+#'
 #' @param object of class inheriting from `"gmeans"`.
 #' @param newdata `matrix()` new data to predict on.
+#' @param method `character(1)` distance metric to use.
+#'   Either `"euclidean"`, `"manhattan"`, or `"minkowski"`. Default is `"euclidean"`.
+#' @param p `numeric(1)` power of the Minkowski distance. Default is `2`.
 #' @param ... additional arguments.
 #' @source Adapted from \CRANpkg{clue}
 #' @export
-predict.gmeans <- function(object, newdata, ...) {
+#' @examples
+#' set.seed(123)
+#' x <- as.matrix(iris[, -5])
+#' cl <- gmeans(x)
+#'
+#' newdata <- newdata <- x[1:10, ]
+#' predict(cl, newdata)
+predict.gmeans <- function(object,
+                           newdata,
+                           method = c("euclidean", "manhatten", "minkowski"),
+                           p = 2,
+                           ...) {
+  stopifnot(is_number(p))
+  method <- match.arg(method)
   newdata <- as.matrix(newdata)
-  if (ncol(newdata) != ncol(object$centers)) {
+  centers <- object$centers
+  if (ncol(newdata) != ncol(centers)) {
     stop("`newdata` must have the same number of columns as the centers", call. = FALSE)
   }
-  d <- rxdist(newdata, object$centers)
-  cl <- max.col(-d)
-  cl
-}
 
-rxdist <- function(data,
-                   centers,
-                   method = c("euclidean", "manhattan", "minkowski"),
-                   p = 2) {
-  method <- match.arg(method)
   distance <- switch(method,
     euclidean = function(data, x) rowSums(sweep(data, 2L, x)^2),
     manhattan = function(data, x) rowSums(abs(sweep(data, 2L, x))),
     minkowski = function(data, x) (rowSums(abs(sweep(data, 2L, x))^p))^(1 / p)
   )
-  data_nms <- colnames(data)
+
+  data_nms <- colnames(newdata)
   center_nms <- colnames(centers)
   if (!is.null(data_nms) && !is.null(center_nms) && !identical(data_nms, center_nms)) {
-    data <- data[, center_nms, drop = FALSE]
+    newdata <- newdata[, center_nms, drop = FALSE]
   }
-  apply(centers, 1L, function(x) distance(data, x))
+  d <- apply(centers, 1L, function(x) distance(newdata, x))
+  cl <- max.col(-d)
+  cl
 }
 
 #' Anderson-Darling Normality Test
