@@ -4,7 +4,7 @@
 \alias{gmeans}
 \title{G-means Clustering}
 \usage{
-gmeans(x, k_init = 1L, k_max = Inf, alpha = 0.05, ...)
+gmeans(x, k_init = 1L, k_max = Inf, level = 0.05, ...)
 }
 \arguments{
 \item{x}{numeric matrix of data, or an object that can be coerced to such a matrix
@@ -14,7 +14,7 @@ gmeans(x, k_init = 1L, k_max = Inf, alpha = 0.05, ...)
 
 \item{k_max}{\code{integer(1)} maximum amount of centers. Default is \code{Inf}.}
 
-\item{alpha}{\code{numeric(1)} significance level for the Anderson-Darling test.
+\item{level}{\code{numeric(1)} significance level for the Anderson-Darling test.
 Default is \code{0.05}.}
 
 \item{...}{additional arguments passed to \code{\link[stats:kmeans]{stats::kmeans()}}.}

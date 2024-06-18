@@ -7,7 +7,7 @@
 #'   (such as a numeric vector or a data frame with all numeric columns).
 #' @param k_init `integer(1)` initial amount of centers. Default is `1L`.
 #' @param k_max `integer(1)` maximum amount of centers. Default is `Inf`.
-#' @param alpha `numeric(1)` significance level for the Anderson-Darling test.
+#' @param level `numeric(1)` significance level for the Anderson-Darling test.
 #'   Default is `0.05`.
 #' @param ... additional arguments passed to [stats::kmeans()].
 #' @references
@@ -20,17 +20,17 @@
 #' )
 #' colnames(x) <- c("x", "y")
 #' cl <- gmeans(x)
-gmeans <- function(x, k_init = 1L, k_max = Inf, alpha = 0.05, ...) {
+gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.05, ...) {
   x <- as.matrix(x)
   stopifnot(
     is.matrix(x),
     is_count(k_init),
     is_count(k_max),
-    is_number(alpha), alpha > 0, alpha < 1
+    is_number(level), level > 0, level < 1
   )
   km <- stats::kmeans(x, k_init, ...)
   repeat {
-    new_centers <- statistical_optimization(x, km, k_max, alpha, ...)
+    new_centers <- statistical_optimization(x, km, k_max, level, ...)
     # no more centers added
     if (nrow(km$centers) == nrow(new_centers)) {
       break
@@ -41,12 +41,12 @@ gmeans <- function(x, k_init = 1L, k_max = Inf, alpha = 0.05, ...) {
   km
 }
 
-statistical_optimization <- function(data, km, k_max, alpha, ...) {
+statistical_optimization <- function(data, km, k_max, level, ...) {
   centers <- NULL
   k <- nrow(km$centers)
   for (i in seq_len(k)) {
     cluster <- which(km$cluster == i)
-    new_centers <- split_and_search(data, cluster, alpha, ...)
+    new_centers <- split_and_search(data, cluster, level, ...)
     if (is.null(new_centers) || k >= k_max) {
       centers <- rbind(centers, km$centers[i, ])
     } else {
@@ -57,7 +57,7 @@ statistical_optimization <- function(data, km, k_max, alpha, ...) {
   centers
 }
 
-split_and_search <- function(data, cluster, alpha, ...) {
+split_and_search <- function(data, cluster, level, ...) {
   if (length(cluster) == 1L) {
     return(NULL)
   }
@@ -80,10 +80,10 @@ split_and_search <- function(data, cluster, alpha, ...) {
 #'   x_{i}^{*}=\frac{\left \langle x_{i}, v \right \rangle}{\left \| v \right \|^{2}}
 #' }
 #' @noRd
-is_null_hypothesis <- function(data, centers, alpha = 0.05) {
+is_null_hypothesis <- function(data, centers, level = 0.05) {
   v <- centers[1L, ] - centers[2L, ]
   points <- as.vector(data %*% v / sum(v^2))
-  ad.test(points)$p.value > alpha
+  ad.test(points)$p.value > level
 }
 
 #' Predict Method for G-means Clustering
