@@ -114,8 +114,8 @@ predict.gmeans <- function(object,
   method <- match.arg(method)
   newdata <- as.matrix(newdata)
   centers <- object$centers
-  if (ncol(newdata) != ncol(centers)) {
-    stop("`newdata` must have the same number of columns as the centers", call. = FALSE)
+  if (!all(colnames(centers) %in% colnames(newdata))) {
+    stop("`newdata` must have the same columns as the centers", call. = FALSE)
   }
 
   distance <- switch(method,
