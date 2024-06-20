@@ -35,6 +35,6 @@ set.seed(123)
 x <- as.matrix(iris[, -5])
 cl <- gmeans(x)
 
-newdata <- newdata <- x[1:10, ]
+newdata <- x[1:10, ]
 predict(cl, newdata)
 }
