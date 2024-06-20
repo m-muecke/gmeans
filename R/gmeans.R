@@ -177,7 +177,7 @@ predict.gmeans <- function(object,
 #' ad.test(runif(100, min = 2, max = 4))
 ad.test <- function(x) {
   stopifnot(is.numeric(x), length(x) > 7L)
-  dname <- deparse(substitute(x))
+  dname <- deparse1(substitute(x))
   x <- sort(x[!is.na(x)])
   n <- length(x)
   if (n < 8L) {
