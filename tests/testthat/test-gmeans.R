@@ -40,6 +40,7 @@ test_that("predict works", {
 })
 
 test_that("ad.test works", {
+  set.seed(123)
   x <- rnorm(100, mean = 5, sd = 3)
   res <- ad.test(x)
   expect_s3_class(res, "htest")
@@ -51,6 +52,7 @@ test_that("ad.test works", {
   expect_lte(res$p.value, 1)
   expect_identical(res$method, "Anderson-Darling normality test")
   expect_identical(res$data.name, "x")
+  expect_snapshot(res)
   # input validation
   expect_error(ad.test(NULL))
   expect_error(ad.test(letters))

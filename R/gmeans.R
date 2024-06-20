@@ -22,7 +22,9 @@
 #' colnames(x) <- c("x", "y")
 #' cl <- gmeans(x)
 gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.05, ...) {
-  x <- as.matrix(x)
+  if (inherits(x, "data.frame")) {
+    x <- as.matrix(x)
+  }
   stopifnot(
     is.matrix(x),
     is_count(k_init),
