@@ -5,7 +5,7 @@ test_that("gmeans works", {
   expect_error(gmeans(numeric()))
   expect_error(gmeans(rnorm(5L)))
   # k_init and k_max need to be integers
-  x <- matrix(rnorm(100, sd = 0.3), ncol = 2)
+  x <- matrix(rnorm(100, sd = 0.3), ncol = 2L)
   colnames(x) <- c("x", "y")
   expect_error(gmeans(x, k_init = NA_integer_))
   expect_error(gmeans(x, k_init = 1:10))
@@ -13,12 +13,12 @@ test_that("gmeans works", {
   expect_error(gmeans(x, k_max = NA_integer_))
   expect_error(gmeans(x, k_max = 1:10))
   expect_error(gmeans(x, k_max = 1.5))
-  # alpha needs to be a number between 0 and 1
-  expect_error(gmeans(x, alpha = NULL))
-  expect_error(gmeans(x, alpha = NA_real_))
-  expect_error(gmeans(x, alpha = 0))
-  expect_error(gmeans(x, alpha = 1))
-  expect_error(gmeans(x, alpha = c(0.5, 0.7)))
+  # level needs to be a number between 0 and 1
+  expect_error(gmeans(x, level = NULL))
+  expect_error(gmeans(x, level = NA_real_))
+  expect_error(gmeans(x, level = 0))
+  expect_error(gmeans(x, level = 1))
+  expect_error(gmeans(x, level = c(0.5, 0.7)))
 })
 
 test_that("predict works", {
@@ -40,8 +40,20 @@ test_that("predict works", {
 })
 
 test_that("ad.test works", {
+  x <- rnorm(100, mean = 5, sd = 3)
+  res <- ad.test(x)
+  expect_s3_class(res, "htest")
+  expect_named(res, c("statistic", "p.value", "method", "data.name"))
+  expect_vector(res$statistic, ptype = numeric(), size = 1L)
+  expect_vector(res$p.value, ptype = numeric(), size = 1L)
+  expect_gte(res$p.value, 0)
+  expect_gte(res$p.value, 0)
+  expect_lte(res$p.value, 1)
+  expect_identical(res$method, "Anderson-Darling normality test")
+  expect_identical(res$data.name, "x")
+  # input validation
   expect_error(ad.test(NULL))
   expect_error(ad.test(letters))
   expect_error(ad.test(numeric()))
-  expect_error(ad.test(rnorm(5L)))
+  expect_error(ad.test(rnorm(7L)))
 })
