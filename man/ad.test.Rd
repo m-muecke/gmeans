@@ -38,6 +38,7 @@ the data values. The p-value is computed from the modified statistic
 Stephens (1986).
 }
 \examples{
+set.seed(123)
 ad.test(rnorm(100, mean = 5, sd = 3))
 ad.test(runif(100, min = 2, max = 4))
 }

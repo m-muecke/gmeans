@@ -14,6 +14,7 @@
 #' `r format_bib("hamerly2003learning")`
 #' @export
 #' @examples
+#' set.seed(123)
 #' x <- rbind(
 #'   matrix(rnorm(100, sd = 0.3), ncol = 2),
 #'   matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2)
@@ -30,7 +31,7 @@ gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.05, ...) {
   )
   km <- stats::kmeans(x, k_init, ...)
   repeat {
-    new_centers <- statistical_optimization(x, km, k_max, level, ...)
+    new_centers <- suggest_centers(x, km, k_max, level, ...)
     # no more centers added
     if (nrow(km$centers) == nrow(new_centers)) {
       break
@@ -41,7 +42,7 @@ gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.05, ...) {
   km
 }
 
-statistical_optimization <- function(data, km, k_max, level, ...) {
+suggest_centers <- function(data, km, k_max, level, ...) {
   centers <- NULL
   k <- nrow(km$centers)
   for (i in seq_len(k)) {
@@ -169,6 +170,7 @@ predict.gmeans <- function(object,
 #' `r format_bib("d2017goodness", "thode2002testing")`
 #' @export
 #' @examples
+#' set.seed(123)
 #' ad.test(rnorm(100, mean = 5, sd = 3))
 #' ad.test(runif(100, min = 2, max = 4))
 ad.test <- function(x) {

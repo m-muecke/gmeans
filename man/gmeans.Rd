@@ -23,6 +23,7 @@ Default is \code{0.05}.}
 Perform G-means clustering on a data matrix.
 }
 \examples{
+set.seed(123)
 x <- rbind(
   matrix(rnorm(100, sd = 0.3), ncol = 2),
   matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2)
