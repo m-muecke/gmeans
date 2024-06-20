@@ -8,7 +8,7 @@
 #' @param k_init `integer(1)` initial amount of centers. Default is `1L`.
 #' @param k_max `integer(1)` maximum amount of centers. Default is `Inf`.
 #' @param level `numeric(1)` significance level for the Anderson-Darling test.
-#'   Default is `0.05`.
+#'   Default is `0.05`. See [ad.test()] for more information.
 #' @param ... additional arguments passed to [stats::kmeans()].
 #' @references
 #' `r format_bib("hamerly2003learning")`

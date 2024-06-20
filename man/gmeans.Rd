@@ -15,7 +15,7 @@ gmeans(x, k_init = 1L, k_max = Inf, level = 0.05, ...)
 \item{k_max}{\code{integer(1)} maximum amount of centers. Default is \code{Inf}.}
 
 \item{level}{\code{numeric(1)} significance level for the Anderson-Darling test.
-Default is \code{0.05}.}
+Default is \code{0.05}. See \code{\link[=ad.test]{ad.test()}} for more information.}
 
 \item{...}{additional arguments passed to \code{\link[stats:kmeans]{stats::kmeans()}}.}
 }
