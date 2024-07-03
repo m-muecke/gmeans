@@ -72,6 +72,51 @@
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"m-muecke/gmeans"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://m-muecke.github.io/gmeans/">gmeans</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">km</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/gmeans.html">gmeans</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="va">km</span></span>
+<span><span class="co">#&gt; K-means clustering with 2 clusters of sizes 18, 14</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Cluster means:</span></span>
+<span><span class="co">#&gt;        mpg      cyl     disp        hp     drat       wt     qsec        vs</span></span>
+<span><span class="co">#&gt; 1 23.97222 4.777778 135.5389  98.05556 3.882222 2.609056 18.68611 0.7777778</span></span>
+<span><span class="co">#&gt; 2 15.10000 8.000000 353.1000 209.21429 3.229286 3.999214 16.77214 0.0000000</span></span>
+<span><span class="co">#&gt;          am     gear     carb</span></span>
+<span><span class="co">#&gt; 1 0.6111111 4.000000 2.277778</span></span>
+<span><span class="co">#&gt; 2 0.1428571 3.285714 3.500000</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Clustering vector:</span></span>
+<span><span class="co">#&gt;           Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive </span></span>
+<span><span class="co">#&gt;                   1                   1                   1                   1 </span></span>
+<span><span class="co">#&gt;   Hornet Sportabout             Valiant          Duster 360           Merc 240D </span></span>
+<span><span class="co">#&gt;                   2                   1                   2                   1 </span></span>
+<span><span class="co">#&gt;            Merc 230            Merc 280           Merc 280C          Merc 450SE </span></span>
+<span><span class="co">#&gt;                   1                   1                   1                   2 </span></span>
+<span><span class="co">#&gt;          Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental </span></span>
+<span><span class="co">#&gt;                   2                   2                   2                   2 </span></span>
+<span><span class="co">#&gt;   Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla </span></span>
+<span><span class="co">#&gt;                   2                   1                   1                   1 </span></span>
+<span><span class="co">#&gt;       Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 </span></span>
+<span><span class="co">#&gt;                   1                   2                   2                   2 </span></span>
+<span><span class="co">#&gt;    Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa </span></span>
+<span><span class="co">#&gt;                   2                   1                   1                   1 </span></span>
+<span><span class="co">#&gt;      Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E </span></span>
+<span><span class="co">#&gt;                   2                   1                   2                   1 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Within cluster sum of squares by cluster:</span></span>
+<span><span class="co">#&gt; [1] 58920.54 93643.90</span></span>
+<span><span class="co">#&gt;  (between_SS / total_SS =  75.5 %)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Available components:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"</span></span>
+<span><span class="co">#&gt; [6] "betweenss"    "size"         "iter"         "ifault"</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="related-work">Related work<a class="anchor" aria-label="anchor" href="#related-work"></a>
 </h2>
 <ul>
