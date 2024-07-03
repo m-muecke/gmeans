@@ -59,3 +59,8 @@ test_that("ad.test works", {
   expect_error(ad.test(numeric()))
   expect_error(ad.test(rnorm(7L)))
 })
+
+test_that("compute_wss works", {
+  km <- kmeans(mtcars, 5)
+  expect_equal(compute_wss(km), compute_wss(km, mtcars))
+})

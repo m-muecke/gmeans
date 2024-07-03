@@ -93,7 +93,7 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 #'
 #' Predicted values based on the G-means clustering model.
 #'
-#' @param object of class inheriting from `"gmeans"`.
+#' @param object of class inheriting from `"kmeans"`.
 #' @param newdata `matrix()` new data to predict on.
 #' @param method `character(1)` distance metric to use.
 #'   Either `"euclidean"`, `"manhattan"`, or `"minkowski"`. Default is `"euclidean"`.
@@ -108,11 +108,45 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 #'
 #' newdata <- x[1:10, ]
 #' predict(cl, newdata)
-predict.gmeans <- function(object,
+predict.kmeans <- function(object,
                            newdata,
                            method = c("euclidean", "manhatten", "minkowski"),
                            p = 2,
                            ...) {
+  d <- rxdist(object, newdata, method, p)
+  cl <- max.col(-d)
+  cl
+}
+
+#' Compute Within-Cluster Sum of Squares
+#'
+#' @param object of class inheriting from `"kmeans"`.
+#' @param newdata `matrix()` new data to predict on.
+#' @export
+#' @examples
+#' km <- kmeans(mtcars, 5)
+#' compute_wss(km)
+#' # or with new data
+#' compute_wss(km, mtcars)
+compute_wss <- function(object, newdata = NULL) {
+  if (!inherits(object, "kmeans")) {
+    stop("object must be of class 'kmeans'", call. = FALSE)
+  }
+  if (is.null(newdata)) {
+    wss <- object$withinss
+  } else {
+    d <- rxdist(object, newdata)
+    pred <- apply(d, 1L, which.min)
+    dit <- apply(d, 1L, min)
+    wss <- as.numeric(tapply(dit, pred, sum, default = 0))
+  }
+  wss
+}
+
+rxdist <- function(object,
+                   newdata,
+                   method = c("euclidean", "manhatten", "minkowski"),
+                   p = 2) {
   stopifnot(is_number(p))
   method <- match.arg(method)
   newdata <- as.matrix(newdata)
@@ -121,20 +155,17 @@ predict.gmeans <- function(object,
     stop("`newdata` must have the same columns as the centers", call. = FALSE)
   }
 
-  distance <- switch(method,
-    euclidean = function(data, x) rowSums(sweep(data, 2L, x)^2),
-    manhattan = function(data, x) rowSums(abs(sweep(data, 2L, x))),
-    minkowski = function(data, x) (rowSums(abs(sweep(data, 2L, x))^p))^(1 / p)
-  )
-
   data_nms <- colnames(newdata)
   center_nms <- colnames(centers)
   if (!is.null(data_nms) && !is.null(center_nms) && !identical(data_nms, center_nms)) {
     newdata <- newdata[, center_nms, drop = FALSE]
   }
-  d <- apply(centers, 1L, function(x) distance(newdata, x))
-  cl <- max.col(-d)
-  cl
+  distance <- switch(method,
+    euclidean = function(data, x) rowSums(sweep(data, 2L, x)^2),
+    manhattan = function(data, x) rowSums(abs(sweep(data, 2L, x))),
+    minkowski = function(data, x) (rowSums(abs(sweep(data, 2L, x))^p))^(1 / p)
+  )
+  apply(centers, 1L, function(x) distance(newdata, x))
 }
 
 #' Anderson-Darling Normality Test
