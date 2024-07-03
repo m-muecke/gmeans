@@ -34,6 +34,15 @@ You can install the development version of gmeans from [GitHub](https://github.c
 pak::pak("m-muecke/gmeans")
 ```
 
+## Usage
+
+```{r}
+library(gmeans)
+
+km <- gmeans(mtcars)
+km
+```
+
 ## Related work
 
 * [nortest](https://CRAN.R-project.org/package=nortest): R package for testing the composite hypothesis of normality.

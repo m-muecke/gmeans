@@ -137,8 +137,8 @@ compute_wss <- function(object, newdata = NULL) {
   } else {
     d <- rxdist(object, newdata)
     pred <- apply(d, 1L, which.min)
-    dit <- apply(d, 1L, min)
-    wss <- as.numeric(tapply(dit, pred, sum, default = 0))
+    dist <- apply(d, 1L, min)
+    wss <- as.numeric(tapply(dist, pred, sum, default = 0))
   }
   wss
 }
