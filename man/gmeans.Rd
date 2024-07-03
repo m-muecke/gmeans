@@ -4,13 +4,13 @@
 \alias{gmeans}
 \title{G-means Clustering}
 \usage{
-gmeans(x, k_init = 1L, k_max = Inf, level = 0.05, ...)
+gmeans(x, k_init = 2L, k_max = Inf, level = 0.05, ...)
 }
 \arguments{
 \item{x}{numeric matrix of data, or an object that can be coerced to such a matrix
 (such as a numeric vector or a data frame with all numeric columns).}
 
-\item{k_init}{\code{integer(1)} initial amount of centers. Default is \code{1L}.}
+\item{k_init}{\code{integer(1)} initial amount of centers. Default is \code{2L}.}
 
 \item{k_max}{\code{integer(1)} maximum amount of centers. Default is \code{Inf}.}
 

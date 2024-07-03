@@ -5,7 +5,7 @@
 #'
 #' @param x numeric matrix of data, or an object that can be coerced to such a matrix
 #'   (such as a numeric vector or a data frame with all numeric columns).
-#' @param k_init `integer(1)` initial amount of centers. Default is `1L`.
+#' @param k_init `integer(1)` initial amount of centers. Default is `2L`.
 #' @param k_max `integer(1)` maximum amount of centers. Default is `Inf`.
 #' @param level `numeric(1)` significance level for the Anderson-Darling test.
 #'   Default is `0.05`. See [ad.test()] for more information.
@@ -21,7 +21,7 @@
 #' )
 #' colnames(x) <- c("x", "y")
 #' cl <- gmeans(x)
-gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.05, ...) {
+gmeans <- function(x, k_init = 2L, k_max = Inf, level = 0.05, ...) {
   if (inherits(x, "data.frame")) {
     x <- as.matrix(x)
   }
