@@ -19,12 +19,15 @@
     <loc>https://m-muecke.github.io/gmeans/reference/ad.test.html</loc>
   </url>
   <url>
+    <loc>https://m-muecke.github.io/gmeans/reference/compute_wss.html</loc>
+  </url>
+  <url>
     <loc>https://m-muecke.github.io/gmeans/reference/gmeans.html</loc>
   </url>
   <url>
     <loc>https://m-muecke.github.io/gmeans/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://m-muecke.github.io/gmeans/reference/predict.gmeans.html</loc>
+    <loc>https://m-muecke.github.io/gmeans/reference/predict.kmeans.html</loc>
   </url>
 </urlset>
