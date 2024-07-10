@@ -1,11 +1,12 @@
 test_that("gmeans works", {
+  withr::local_seed(1234L)
   # x needs to be a matrix
   expect_error(gmeans(NULL))
   expect_error(gmeans(letters))
   expect_error(gmeans(numeric()))
   expect_error(gmeans(rnorm(5L)))
   # k_init and k_max need to be integers
-  x <- matrix(rnorm(100, sd = 0.3), ncol = 2L)
+  x <- matrix(rnorm(100L, sd = 0.3), ncol = 2L)
   colnames(x) <- c("x", "y")
   expect_error(gmeans(x, k_init = NA_integer_))
   expect_error(gmeans(x, k_init = 1:10))
@@ -22,6 +23,7 @@ test_that("gmeans works", {
 })
 
 test_that("predict works", {
+  withr::local_seed(1234L)
   x <- matrix(rnorm(100L, sd = 0.3), ncol = 2L)
   colnames(x) <- c("x", "y")
   cl <- gmeans(x)
@@ -40,8 +42,8 @@ test_that("predict works", {
 })
 
 test_that("ad.test works", {
-  set.seed(123)
-  x <- rnorm(100, mean = 5, sd = 3)
+  withr::local_seed(1234L)
+  x <- rnorm(100L, mean = 5, sd = 3)
   res <- ad.test(x)
   expect_s3_class(res, "htest")
   expect_named(res, c("statistic", "p.value", "method", "data.name"))

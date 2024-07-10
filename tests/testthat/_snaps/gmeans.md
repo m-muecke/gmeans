@@ -7,6 +7,6 @@
       	Anderson-Darling normality test
       
       data:  x
-      A = 0.182, p-value = 0.9104
+      A = 1.2438, p-value = 0.00293
       
 
