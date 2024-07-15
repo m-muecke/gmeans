@@ -148,8 +148,10 @@ rxdist <- function(object,
                    method = c("euclidean", "manhatten", "minkowski"),
                    p = 2) {
   stopifnot(is_number(p))
+  if (inherits(newdata, "data.frame")) {
+    newdata <- as.matrix(newdata)
+  }
   method <- match.arg(method)
-  newdata <- as.matrix(newdata)
   centers <- object$centers
   if (!all(colnames(centers) %in% colnames(newdata))) {
     stop("`newdata` must have the same columns as the centers", call. = FALSE)
