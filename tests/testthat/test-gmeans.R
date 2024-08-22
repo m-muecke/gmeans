@@ -64,5 +64,5 @@ test_that("ad.test works", {
 
 test_that("compute_wss works", {
   km <- kmeans(mtcars, 5)
-  expect_equal(compute_wss(km), compute_wss(km, mtcars))
+  expect_equal(compute_wss(km), compute_wss(km, mtcars)) # nolint
 })

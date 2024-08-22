@@ -14,6 +14,15 @@ compute_wss(object, newdata = NULL)
 \description{
 Compute Within-Cluster Sum of Squares
 }
+\details{
+WSS is defined as \deqn{
+  \sum_{i=1}^{n} \left\|x_{i} - \mu_{j(i)}\right\|^2
+},
+where \eqn{x_{i}} is a data point and \eqn{\mu_{j(i)}} is the centroid of the cluster
+to which \eqn{x_{i}} is assigned. When new data is provided, the function predicts
+the nearest cluster for each new observation and computes the WSS for these points
+based on their predicted clusters.
+}
 \examples{
 km <- kmeans(mtcars, 5)
 compute_wss(km)
