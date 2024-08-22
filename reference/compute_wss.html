@@ -16,6 +16,10 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/introduction.html">Introduction</a></li>
+  </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/m-muecke/gmeans/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -59,6 +63,16 @@
 <dd><p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix()</a></code> new data to predict on.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>WSS is defined as $$
+  \sum_{i=1}^{n} \left\|x_{i} - \mu_{j(i)}\right\|^2
+$$,
+where \(x_{i}\) is a data point and \(\mu_{j(i)}\) is the centroid of the cluster
+to which \(x_{i}\) is assigned. When new data is provided, the function predicts
+the nearest cluster for each new observation and computes the WSS for these points
+based on their predicted clusters.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
