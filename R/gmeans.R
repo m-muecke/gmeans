@@ -114,7 +114,28 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 
 #' Predict Method for G-means Clustering
 #'
+#' @description
 #' Predicted values based on the G-means clustering model.
+#'
+#' @details
+#' The `predict` method for G-means clustering assigns new data points to the nearest
+#' cluster center identified by the G-means algorithm. The method uses the specified
+#' distance metric to calculate the distance between each new data point and all
+#' cluster centers, and then assigns each point to the cluster with the closest center.
+#'
+#' The `method` argument specifies the distance metric to use. The following options:
+#' - `"euclidean"`: The euclidean distance is the default metric used in the k-means
+#'   and is defined as \deqn{
+#'     d(x, y) = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}
+#'   }
+#' - `"manhatten"`: The Manhatten distance is defined as \deqn{
+#'     d(x, y) = \sum_{i=1}^{n} |x_i - y_i|
+#'   }
+#' - `"minkowski"`: The Minkowski distance is defined as \deqn{
+#'     d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{1/p}
+#'   },
+#'   where \eqn{p} is a parameter that defines the distance type (e.g., \eqn{p=2}
+#'   for Euclidean, \eqn{p=1} for Manhattan).
 #'
 #' @param object of class inheriting from `"kmeans"`.
 #' @param newdata `matrix()` new data to predict on.

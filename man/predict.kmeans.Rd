@@ -30,6 +30,28 @@ Either \code{"euclidean"}, \code{"manhattan"}, or \code{"minkowski"}. Default is
 \description{
 Predicted values based on the G-means clustering model.
 }
+\details{
+The \code{predict} method for G-means clustering assigns new data points to the nearest
+cluster center identified by the G-means algorithm. The method uses the specified
+distance metric to calculate the distance between each new data point and all
+cluster centers, and then assigns each point to the cluster with the closest center.
+
+The \code{method} argument specifies the distance metric to use. The following options:
+\itemize{
+\item \code{"euclidean"}: The euclidean distance is the default metric used in the k-means
+and is defined as \deqn{
+    d(x, y) = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}
+  }
+\item \code{"manhatten"}: The Manhatten distance is defined as \deqn{
+    d(x, y) = \sum_{i=1}^{n} |x_i - y_i|
+  }
+\item \code{"minkowski"}: The Minkowski distance is defined as \deqn{
+    d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{1/p}
+  },
+where \eqn{p} is a parameter that defines the distance type (e.g., \eqn{p=2}
+for Euclidean, \eqn{p=1} for Manhattan).
+}
+}
 \examples{
 set.seed(123)
 x <- as.matrix(iris[, -5])
