@@ -87,6 +87,25 @@ Either <code>"euclidean"</code>, <code>"manhattan"</code>, or <code>"minkowski"<
 <dd><p>additional arguments.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The <code>predict</code> method for G-means clustering assigns new data points to the nearest
+cluster center identified by the G-means algorithm. The method uses the specified
+distance metric to calculate the distance between each new data point and all
+cluster centers, and then assigns each point to the cluster with the closest center.</p>
+<p>The <code>method</code> argument specifies the distance metric to use. The following options:</p><ul><li><p><code>"euclidean"</code>: The euclidean distance is the default metric used in the k-means
+and is defined as $$
+    d(x, y) = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}
+  $$</p></li>
+<li><p><code>"manhatten"</code>: The Manhatten distance is defined as $$
+    d(x, y) = \sum_{i=1}^{n} |x_i - y_i|
+  $$</p></li>
+<li><p><code>"minkowski"</code>: The Minkowski distance is defined as $$
+    d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{1/p}
+  $$,
+where \(p\) is a parameter that defines the distance type (e.g., \(p=2\)
+for Euclidean, \(p=1\) for Manhattan).</p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
