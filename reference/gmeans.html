@@ -78,6 +78,27 @@ Default is <code>0.05</code>. See <code><a href="ad.test.html">ad.test()</a></co
 
 </dl></div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The G-means clustering algorithm is an extension of the traditional k-means
+algorithm that automatically determines the number of clusters by iteratively
+testing the Gaussianity of data within clusters. The process begins with a specified
+initial number of clusters (<code>k_init</code>) and iteratively increases the number of
+clusters until it reaches the specified maximum (<code>k_max</code>) or the data within
+clusters is determined to be Gaussian at the specified significance level (<code>level</code>).</p>
+<p>The algorithm is outlined as follows:</p><ol><li><p>Let \(C\) be the initial set of centers (usually
+\(C \leftarrow \{\bar{x}\}\)).</p></li>
+<li><p>Perform k-means clustering on the dataset \(X\) using the current set of
+centers \(C\), i.e., \(C \leftarrow \text{kmeans}(C, X)\).</p></li>
+<li><p>For each center \(c_j\), identify the set of data points
+\(\{x_i \mid \text{class}(x_i) = j\}\) that are assigned to \(c_j\).</p></li>
+<li><p>Use the Anderson-Darling test to check if the set of data points
+\(\{x_i \mid \text{class}(x_i) = j\}\) follows a Gaussian distribution</p></li>
+<li><p>If the data points appear Gaussian, keep \(c_j\).
+at the confidence level \(\alpha\).
+Otherwise, replace \(c_j\) with two new centers.</p></li>
+<li><p>Repeat from step 2 until no more centers are added.</p></li>
+</ol></div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Hamerly, Greg, Elkan, Charles (2003).
 “Learning the k in k-means.”
