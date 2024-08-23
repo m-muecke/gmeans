@@ -3,6 +3,29 @@
 #' @description
 #' Perform G-means clustering on a data matrix.
 #'
+#' @details
+#' The G-means clustering algorithm is an extension of the traditional k-means
+#' algorithm that automatically determines the number of clusters by iteratively
+#' testing the Gaussianity of data within clusters. The process begins with a specified
+#' initial number of clusters (`k_init`) and iteratively increases the number of
+#' clusters until it reaches the specified maximum (`k_max`) or the data within
+#' clusters is determined to be Gaussian at the specified significance level (`level`).
+#'
+#' The algorithm is outlined as follows:
+#'
+#' 1. Let \eqn{C} be the initial set of centers (usually
+#'    \eqn{C \leftarrow \{\bar{x}\}}).
+#' 2. Perform k-means clustering on the dataset \eqn{X} using the current set of
+#'    centers \eqn{C}, i.e., \eqn{C \leftarrow \text{kmeans}(C, X)}.
+#' 3. For each center \eqn{c_j}, identify the set of data points
+#'    \eqn{\{x_i \mid \text{class}(x_i) = j\}} that are assigned to \eqn{c_j}.
+#' 4. Use the Anderson-Darling test to check if the set of data points
+#'    \eqn{\{x_i \mid \text{class}(x_i) = j\}} follows a Gaussian distribution
+#' 5. If the data points appear Gaussian, keep \eqn{c_j}.
+#'    at the confidence level \eqn{\alpha}.
+#'    Otherwise, replace \eqn{c_j} with two new centers.
+#' 6. Repeat from step 2 until no more centers are added.
+#'
 #' @param x numeric matrix of data, or an object that can be coerced to such a matrix
 #'   (such as a numeric vector or a data frame with all numeric columns).
 #' @param k_init `integer(1)` initial amount of centers. Default is `2L`.

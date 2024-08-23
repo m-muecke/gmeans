@@ -22,6 +22,30 @@ Default is \code{0.05}. See \code{\link[=ad.test]{ad.test()}} for more informati
 \description{
 Perform G-means clustering on a data matrix.
 }
+\details{
+The G-means clustering algorithm is an extension of the traditional k-means
+algorithm that automatically determines the number of clusters by iteratively
+testing the Gaussianity of data within clusters. The process begins with a specified
+initial number of clusters (\code{k_init}) and iteratively increases the number of
+clusters until it reaches the specified maximum (\code{k_max}) or the data within
+clusters is determined to be Gaussian at the specified significance level (\code{level}).
+
+The algorithm is outlined as follows:
+\enumerate{
+\item Let \eqn{C} be the initial set of centers (usually
+\eqn{C \leftarrow \{\bar{x}\}}).
+\item Perform k-means clustering on the dataset \eqn{X} using the current set of
+centers \eqn{C}, i.e., \eqn{C \leftarrow \text{kmeans}(C, X)}.
+\item For each center \eqn{c_j}, identify the set of data points
+\eqn{\{x_i \mid \text{class}(x_i) = j\}} that are assigned to \eqn{c_j}.
+\item Use the Anderson-Darling test to check if the set of data points
+\eqn{\{x_i \mid \text{class}(x_i) = j\}} follows a Gaussian distribution
+\item If the data points appear Gaussian, keep \eqn{c_j}.
+at the confidence level \eqn{\alpha}.
+Otherwise, replace \eqn{c_j} with two new centers.
+\item Repeat from step 2 until no more centers are added.
+}
+}
 \examples{
 set.seed(123)
 x <- rbind(
