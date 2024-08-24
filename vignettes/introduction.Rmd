@@ -1,8 +1,8 @@
 ---
-title: "Introduction"
+title: "Why G-means?"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{introduction}
+  %\VignetteIndexEntry{Why G-means?}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,7 +22,7 @@ library(ggplot2)
 library(gmeans)
 ```
 
-## Why G-means?
+## Overview
 
 To illustrate the purpose of the G-means algorithm, let's start with an adapted
 k-means clustering example from the
@@ -133,8 +133,9 @@ p1
 To enhance the visualization, let's add cluster centers:
 
 ```{r}
-geom_point(data = clusters, size = 10, shape = "x") +
+p2 <- p1 + geom_point(data = clusters, size = 10, shape = "x") +
   labs(title = "k-means Clustering with Centers")
+p2
 ```
 
 ## Evaluating Clustering Performance
@@ -146,7 +147,12 @@ increases:
 ```{r}
 ggplot(clusterings, aes(k, tot.withinss)) +
   geom_line() +
-  geom_point()
+  geom_point() +
+  labs(
+    title = "Total Within-Cluster Sum of Squares vs. Number of Clusters (k)",
+    x = "Number of Clusters (k)",
+    y = "Total Within-Cluster Sum of Squares"
+  )
 ```
 
 ## Motivation for G-means
