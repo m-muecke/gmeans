@@ -79,6 +79,8 @@ define `tidy`, `augment`, and `glance` functions that mimic the functionality of
 `broom` package:
 
 ```{r}
+`%||%` <- function(x, y) if (!is.null(x)) x else y
+
 tidy <- function(x, col.names = colnames(x$centers)) {
   col.names <- col.names %||% paste0("x", seq_len(ncol(x$centers)))
   dt <- as.data.table(x$centers)
