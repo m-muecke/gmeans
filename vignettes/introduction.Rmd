@@ -229,12 +229,12 @@ augment(gclust, x) |>
 
 The `tidy()` function provides a summary of each cluster:
 
-```{r, eval = FALSE}
+```{r}
 tidy(gclust)
 ```
 
 The `glance()` function gives an overall summary of the model:
 
-```{r, eval = FALSE}
+```{r}
 glance(gclust)
 ```
