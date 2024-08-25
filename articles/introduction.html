@@ -168,8 +168,7 @@ functionality of the <code>broom</code> package:</p>
 <span>    size <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">size</span>,</span>
 <span>    withinss <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">withinss</span>,</span>
 <span>    cluster <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">.N</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span><span class="op">]</span></span>
-<span>  <span class="va">dt</span></span>
+<span>  <span class="op">)</span><span class="op">]</span><span class="op">[</span><span class="op">]</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="va">augment</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
@@ -177,8 +176,7 @@ functionality of the <code>broom</code> package:</p>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span>  <span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/as.data.table.html" class="external-link">as.data.table</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span>  <span class="va">dt</span><span class="op">[</span>, <span class="va">.cluster</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span><span class="op">]</span></span>
-<span>  <span class="va">dt</span></span>
+<span>  <span class="va">dt</span><span class="op">[</span>, <span class="va">.cluster</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span><span class="op">]</span><span class="op">[</span><span class="op">]</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="va">glance</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
@@ -188,12 +186,30 @@ functionality of the <code>broom</code> package:</p>
 the original dataset, allowing us to see how each data point is
 classified:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">augment</span><span class="op">(</span><span class="va">kclust</span>, <span class="va">points</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">augment</span><span class="op">(</span><span class="va">kclust</span>, <span class="va">points</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             x1          x2 .cluster</span></span>
+<span><span class="co">#&gt;          &lt;num&gt;       &lt;num&gt;   &lt;fctr&gt;</span></span>
+<span><span class="co">#&gt;   1:  6.907163 -0.55802683        3</span></span>
+<span><span class="co">#&gt;   2:  6.144877  0.63387660        3</span></span>
+<span><span class="co">#&gt;   3:  4.235469 -1.13137608        3</span></span>
+<span><span class="co">#&gt;   4:  3.542567 -0.83194074        3</span></span>
+<span><span class="co">#&gt;   5:  3.906531  0.01693664        3</span></span>
+<span><span class="co">#&gt;  ---                               </span></span>
+<span><span class="co">#&gt; 296: -4.252731 -2.44069059        2</span></span>
+<span><span class="co">#&gt; 297: -2.964800 -3.35679637        2</span></span>
+<span><span class="co">#&gt; 298: -3.486164 -1.23077050        2</span></span>
+<span><span class="co">#&gt; 299: -1.439651 -3.72846054        2</span></span>
+<span><span class="co">#&gt; 300: -3.531135 -0.71727390        2</span></span></code></pre></div>
 <p>The <code>tidy()</code> function provides a per-cluster summary,
 displaying the cluster centers, sizes, and within-cluster sum of
 squares:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tidy</span><span class="op">(</span><span class="va">kclust</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">tidy</span><span class="op">(</span><span class="va">kclust</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            x1         x2  size withinss cluster</span></span>
+<span><span class="co">#&gt;         &lt;num&gt;      &lt;num&gt; &lt;int&gt;    &lt;num&gt;  &lt;fctr&gt;</span></span>
+<span><span class="co">#&gt; 1: -0.1277535  1.1366932   146 307.3195       1</span></span>
+<span><span class="co">#&gt; 2: -2.9430301 -1.9877357    53 119.2575       2</span></span>
+<span><span class="co">#&gt; 3:  5.0156304 -0.8637111   101 213.5906       3</span></span></code></pre></div>
 <p>To obtain a single-row summary with overall metrics such as total sum
 of squares and the number of iterations, use the <code>glance()</code>
 function:</p>
