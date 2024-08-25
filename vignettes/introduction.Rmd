@@ -188,7 +188,7 @@ of the data effectively.
 
 As seen from the plots, choosing the right number of clusters is not straightforward.
 We could use metrics like WSS to help decide, but these methods can be subjective and
-prone to error. This is where the G-means algorithm comes in—it automatically
+prone to error. This is where the G-means algorithm comes in, it automatically
 determines the number of clusters by assessing the data distribution within each
 cluster.
 

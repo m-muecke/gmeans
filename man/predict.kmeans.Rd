@@ -46,8 +46,8 @@ and is defined as \deqn{
     d(x, y) = \sum_{i=1}^{n} |x_i - y_i|
   }
 \item \code{"minkowski"}: The Minkowski distance is defined as \deqn{
-    d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{1/p}
-  },
+    d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{1/p},
+  }
 where \eqn{p} is a parameter that defines the distance type (e.g., \eqn{p=2}
 for Euclidean, \eqn{p=1} for Manhattan).
 }

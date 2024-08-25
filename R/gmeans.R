@@ -132,8 +132,8 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 #'     d(x, y) = \sum_{i=1}^{n} |x_i - y_i|
 #'   }
 #' - `"minkowski"`: The Minkowski distance is defined as \deqn{
-#'     d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{1/p}
-#'   },
+#'     d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{1/p},
+#'   }
 #'   where \eqn{p} is a parameter that defines the distance type (e.g., \eqn{p=2}
 #'   for Euclidean, \eqn{p=1} for Manhattan).
 #'
