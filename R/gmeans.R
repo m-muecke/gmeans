@@ -61,7 +61,7 @@ gmeans <- function(x, k_init = 2L, k_max = Inf, level = 0.05, ...) {
     if (nrow(km$centers) == nrow(new_centers)) {
       break
     }
-    km <- stats::kmeans(x, nrow(new_centers))
+    km <- stats::kmeans(x, nrow(new_centers), ...)
   }
   class(km) <- c("gmeans", class(km))
   km
@@ -84,7 +84,7 @@ suggest_centers <- function(data, km, k_max, level, ...) {
 }
 
 split_and_search <- function(data, cluster, level, ...) {
-  if (length(cluster) == 1L) {
+  if (length(cluster) < 8L) {
     return(NULL)
   }
   points <- data[cluster, ]
