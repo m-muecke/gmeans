@@ -187,19 +187,15 @@ the original dataset, allowing us to see how each data point is
 classified:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">augment</span><span class="op">(</span><span class="va">kclust</span>, <span class="va">points</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             x1          x2 .cluster</span></span>
-<span><span class="co">#&gt;          &lt;num&gt;       &lt;num&gt;   &lt;fctr&gt;</span></span>
-<span><span class="co">#&gt;   1:  6.907163 -0.55802683        3</span></span>
-<span><span class="co">#&gt;   2:  6.144877  0.63387660        3</span></span>
-<span><span class="co">#&gt;   3:  4.235469 -1.13137608        3</span></span>
-<span><span class="co">#&gt;   4:  3.542567 -0.83194074        3</span></span>
-<span><span class="co">#&gt;   5:  3.906531  0.01693664        3</span></span>
-<span><span class="co">#&gt;  ---                               </span></span>
-<span><span class="co">#&gt; 296: -4.252731 -2.44069059        2</span></span>
-<span><span class="co">#&gt; 297: -2.964800 -3.35679637        2</span></span>
-<span><span class="co">#&gt; 298: -3.486164 -1.23077050        2</span></span>
-<span><span class="co">#&gt; 299: -1.439651 -3.72846054        2</span></span>
-<span><span class="co">#&gt; 300: -3.531135 -0.71727390        2</span></span></code></pre></div>
+<span><span class="co">#&gt;             x1         x2 .cluster</span></span>
+<span><span class="co">#&gt;          &lt;num&gt;      &lt;num&gt;   &lt;fctr&gt;</span></span>
+<span><span class="co">#&gt;   1:  6.907163 -0.5580268        3</span></span>
+<span><span class="co">#&gt;   2:  6.144877  0.6338766        3</span></span>
+<span><span class="co">#&gt;   3:  4.235469 -1.1313761        3</span></span>
+<span><span class="co">#&gt;  ---                              </span></span>
+<span><span class="co">#&gt; 298: -3.486164 -1.2307705        2</span></span>
+<span><span class="co">#&gt; 299: -1.439651 -3.7284605        2</span></span>
+<span><span class="co">#&gt; 300: -3.531135 -0.7172739        2</span></span></code></pre></div>
 <p>The <code>tidy()</code> function provides a per-cluster summary,
 displaying the cluster centers, sizes, and within-cluster sum of
 squares:</p>
