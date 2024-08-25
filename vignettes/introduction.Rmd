@@ -36,7 +36,6 @@ We begin by generating some random two-dimensional data that naturally forms thr
 clusters. Each cluster's data comes from a different multivariate Gaussian
 distribution with unique means:
 
-
 ```{r}
 set.seed(27)
 
@@ -105,6 +104,27 @@ augment <- function(x, data) {
 glance <- function(x) {
   as.data.table(x[c("totss", "tot.withinss", "betweenss", "iter")])
 }
+```
+
+The `augment()` function adds the cluster assignments to the original dataset,
+allowing us to see how each data point is classified:
+
+```{r}
+augment(kclust, points)
+```
+
+The `tidy()` function provides a per-cluster summary, displaying the cluster centers,
+sizes, and within-cluster sum of squares:
+
+```{r}
+tidy(kclust)
+```
+
+To obtain a single-row summary with overall metrics such as total sum of squares and
+the number of iterations, use the `glance()` function:
+
+```{r}
+glance(kclust)
 ```
 
 Using these helper functions, we can easily extract and manipulate the results of
