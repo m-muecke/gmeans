@@ -88,8 +88,7 @@ tidy <- function(x, col.names = colnames(x$centers)) {
     size = x$size,
     withinss = x$withinss,
     cluster = factor(seq_len(.N))
-  )]
-  dt
+  )][]
 }
 
 augment <- function(x, data) {
@@ -97,8 +96,7 @@ augment <- function(x, data) {
     colnames(data) <- paste0("X", seq_len(ncol(data)))
   }
   dt <- as.data.table(data)
-  dt[, .cluster := as.factor(x$cluster)]
-  dt
+  dt[, .cluster := as.factor(x$cluster)][]
 }
 
 glance <- function(x) {
