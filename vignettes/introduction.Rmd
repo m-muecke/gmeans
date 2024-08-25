@@ -176,6 +176,14 @@ ggplot(clusterings, aes(k, tot.withinss)) +
   )
 ```
 
+In general, the WSS decreases as the number of clusters k increases, which is expected
+since having more clusters usually results in a better fit. However, we often look for
+a point in the plot where the decrease in WSS starts to slow down, creating a
+noticeable "elbow". This elbow suggests that adding more clusters beyond this
+point offers little improvement, indicating a good number of clusters. In our example,
+this bend is around `k = 3`, suggesting that three clusters capture the main structure
+of the data effectively.
+
 ## Motivation for G-means
 
 As seen from the plots, choosing the right number of clusters is not straightforward.
@@ -188,3 +196,45 @@ By using statistical hypothesis testing (the Anderson-Darling test in our
 implementation), G-means provides a more robust and automated way to find the "correct"
 number of clusters. In the next section, we'll see how to use G-means and explore its
 benefits over traditional k-means clustering.
+
+## G-means
+
+Let's now apply the G-means algorithm to the same data:
+
+```{r}
+gmeans(points)
+```
+
+As expected from our previous analysis, G-means identifies 3 clusters, aligning with
+the elbow point observed in the WSS plot.
+
+Next, let's explore how G-means performs on a different dataset:
+
+```{r}
+x <- as.matrix(iris[, -5])
+gclust <- gmeans(x)
+```
+
+Since `gmeans()` uses `stats::kmeans()` under the hood, we can use our previously
+defined helper functions to analyze the clustering results.
+
+The `augment()` function adds cluster assignments to the original dataset for easy
+plotting:
+
+```{r}
+augment(gclust, x) |>
+  ggplot(aes(x = Petal.Length, y = Petal.Width)) +
+  geom_point(aes(color = .cluster))
+```
+
+The `tidy()` function provides a summary of each cluster:
+
+```{r, eval = FALSE}
+tidy(gclust)
+```
+
+The `glance()` function gives an overall summary of the model:
+
+```{r, eval = FALSE}
+glance(gclust)
+```
