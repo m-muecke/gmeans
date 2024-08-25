@@ -263,6 +263,14 @@ how well the data is being clustered as <code>k</code> increases:</p>
 <span>    y <span class="op">=</span> <span class="st">"Total Within-Cluster Sum of Squares"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="introduction_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p>In general, the WSS decreases as the number of clusters k increases,
+which is expected since having more clusters usually results in a better
+fit. However, we often look for a point in the plot where the decrease
+in WSS starts to slow down, creating a noticeable “elbow”. This elbow
+suggests that adding more clusters beyond this point offers little
+improvement, indicating a good number of clusters. In our example, this
+bend is around <code>k = 3</code>, suggesting that three clusters
+capture the main structure of the data effectively.</p>
 </div>
 <div class="section level2">
 <h2 id="motivation-for-g-means">Motivation for G-means<a class="anchor" aria-label="anchor" href="#motivation-for-g-means"></a>
@@ -277,6 +285,69 @@ our implementation), G-means provides a more robust and automated way to
 find the “correct” number of clusters. In the next section, we’ll see
 how to use G-means and explore its benefits over traditional k-means
 clustering.</p>
+</div>
+<div class="section level2">
+<h2 id="g-means">G-means<a class="anchor" aria-label="anchor" href="#g-means"></a>
+</h2>
+<p>Let’s now apply the G-means algorithm to the same data:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/gmeans.html">gmeans</a></span><span class="op">(</span><span class="va">points</span><span class="op">)</span></span>
+<span><span class="co">#&gt; K-means clustering with 8 clusters of sizes 48, 36, 40, 23, 51, 26, 42, 34</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Cluster means:</span></span>
+<span><span class="co">#&gt;          x1         x2</span></span>
+<span><span class="co">#&gt; 1  4.196045 -0.7279788</span></span>
+<span><span class="co">#&gt; 2  1.280870  0.6649957</span></span>
+<span><span class="co">#&gt; 3 -1.388517  0.6325786</span></span>
+<span><span class="co">#&gt; 4 -2.201269 -2.6206569</span></span>
+<span><span class="co">#&gt; 5  5.871410 -1.0480573</span></span>
+<span><span class="co">#&gt; 6 -3.793096 -1.6351216</span></span>
+<span><span class="co">#&gt; 7 -0.126482  0.6892849</span></span>
+<span><span class="co">#&gt; 8 -0.144552  2.5400473</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Clustering vector:</span></span>
+<span><span class="co">#&gt;   [1] 5 5 1 1 1 5 1 5 5 5 1 1 5 5 1 1 1 1 5 5 1 1 5 1 2 1 1 5 5 5 1 1 5 1 1 5 5</span></span>
+<span><span class="co">#&gt;  [38] 5 1 5 1 5 5 5 1 1 1 5 5 1 1 5 5 1 5 5 5 5 5 5 1 5 1 5 1 1 5 1 1 5 1 5 1 5</span></span>
+<span><span class="co">#&gt;  [75] 5 1 1 1 5 5 5 5 1 5 1 5 1 5 1 1 1 1 5 5 1 5 1 5 5 1 7 7 7 3 2 8 3 3 3 7 3</span></span>
+<span><span class="co">#&gt; [112] 3 3 7 3 7 3 8 2 3 2 8 2 2 8 7 8 8 8 7 3 2 7 2 7 2 8 7 8 2 4 8 8 3 2 7 2 7</span></span>
+<span><span class="co">#&gt; [149] 2 8 2 7 2 7 2 7 3 8 7 3 8 7 3 7 8 8 8 7 3 8 3 3 8 2 3 7 7 8 8 7 3 7 7 2 7</span></span>
+<span><span class="co">#&gt; [186] 7 2 2 7 7 3 2 8 3 2 7 7 2 2 7 3 3 8 2 2 8 8 8 3 8 7 7 3 8 8 2 7 7 2 8 3 7</span></span>
+<span><span class="co">#&gt; [223] 3 2 3 3 8 2 3 7 3 2 8 7 2 3 3 7 8 7 3 8 3 7 3 2 2 2 2 3 4 4 4 4 4 4 4 6 6</span></span>
+<span><span class="co">#&gt; [260] 4 6 3 4 4 6 4 4 4 4 6 6 4 6 4 6 6 4 6 6 3 4 6 6 4 6 6 6 6 6 6 6 6 4 6 6 6</span></span>
+<span><span class="co">#&gt; [297] 4 6 4 6</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Within cluster sum of squares by cluster:</span></span>
+<span><span class="co">#&gt; [1] 64.20110 33.37494 29.55454 28.32437 63.67120 30.53367 19.72381 39.89234</span></span>
+<span><span class="co">#&gt;  (between_SS / total_SS =  91.7 %)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Available components:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"</span></span>
+<span><span class="co">#&gt; [6] "betweenss"    "size"         "iter"         "ifault"</span></span></code></pre></div>
+<p>As expected from our previous analysis, G-means identifies 3
+clusters, aligning with the elbow point observed in the WSS plot.</p>
+<p>Next, let’s explore how G-means performs on a different dataset:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="op">-</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">gclust</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gmeans.html">gmeans</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<p>Since <code><a href="../reference/gmeans.html">gmeans()</a></code> uses <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code> under
+the hood, we can use our previously defined helper functions to analyze
+the clustering results.</p>
+<p>The <code>augment()</code> function adds cluster assignments to the
+original dataset for easy plotting:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">augment</span><span class="op">(</span><span class="va">gclust</span>, <span class="va">x</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Petal.Length</span>, y <span class="op">=</span> <span class="va">Petal.Width</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">.cluster</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="introduction_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p>The <code>tidy()</code> function provides a summary of each
+cluster:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tidy</span><span class="op">(</span><span class="va">gclust</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>glance()</code> function gives an overall summary of the
+model:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">glance</span><span class="op">(</span><span class="va">gclust</span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
