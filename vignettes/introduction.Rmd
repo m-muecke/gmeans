@@ -202,6 +202,8 @@ benefits over traditional k-means clustering.
 Let's now apply the G-means algorithm to the same data:
 
 ```{r}
+set.seed(123)
+
 gmeans(points)
 ```
 
@@ -211,6 +213,8 @@ the elbow point observed in the WSS plot.
 Next, let's explore how G-means performs on a different dataset:
 
 ```{r}
+set.seed(123)
+
 x <- as.matrix(iris[, -5])
 gclust <- gmeans(x)
 ```
