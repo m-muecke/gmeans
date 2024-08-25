@@ -343,11 +343,18 @@ original dataset for easy plotting:</p>
 <p>The <code>tidy()</code> function provides a summary of each
 cluster:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tidy</span><span class="op">(</span><span class="va">gclust</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">tidy</span><span class="op">(</span><span class="va">gclust</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width  size  withinss cluster</span></span>
+<span><span class="co">#&gt;           &lt;num&gt;       &lt;num&gt;        &lt;num&gt;       &lt;num&gt; &lt;int&gt;     &lt;num&gt;  &lt;fctr&gt;</span></span>
+<span><span class="co">#&gt; 1:     6.301031    2.886598     4.958763    1.695876    97 123.79588       1</span></span>
+<span><span class="co">#&gt; 2:     5.005660    3.369811     1.560377    0.290566    53  28.55208       2</span></span></code></pre></div>
 <p>The <code>glance()</code> function gives an overall summary of the
 model:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">glance</span><span class="op">(</span><span class="va">gclust</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">glance</span><span class="op">(</span><span class="va">gclust</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       totss tot.withinss betweenss  iter</span></span>
+<span><span class="co">#&gt;       &lt;num&gt;        &lt;num&gt;     &lt;num&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1: 681.3706      152.348  529.0226     1</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
