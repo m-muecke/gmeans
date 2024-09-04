@@ -343,17 +343,34 @@ original dataset for easy plotting:</p>
 cluster:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">tidy</span><span class="op">(</span><span class="va">gclust</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width  size  withinss cluster</span></span>
-<span><span class="co">#&gt;           &lt;num&gt;       &lt;num&gt;        &lt;num&gt;       &lt;num&gt; &lt;int&gt;     &lt;num&gt;  &lt;fctr&gt;</span></span>
-<span><span class="co">#&gt; 1:     5.005660    3.369811     1.560377    0.290566    53  28.55208       1</span></span>
-<span><span class="co">#&gt; 2:     6.301031    2.886598     4.958763    1.695876    97 123.79588       2</span></span></code></pre></div>
+<span><span class="co">#&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width  size  withinss cluster</span></span>
+<span><span class="co">#&gt;            &lt;num&gt;       &lt;num&gt;        &lt;num&gt;       &lt;num&gt; &lt;int&gt;     &lt;num&gt;  &lt;fctr&gt;</span></span>
+<span><span class="co">#&gt;  1:     5.871429    2.957143     4.392857   1.3785714    14 1.9557143       1</span></span>
+<span><span class="co">#&gt;  2:     7.475000    2.912500     6.312500   1.9750000     8 2.0475000       2</span></span>
+<span><span class="co">#&gt;  3:     5.120000    3.840000     1.600000   0.2800000     5 0.2880000       3</span></span>
+<span><span class="co">#&gt;  4:     4.500000    2.300000     1.300000   0.3000000     1 0.0000000       4</span></span>
+<span><span class="co">#&gt;  5:     6.200000    2.300000     4.700000   1.4500000     4 0.4100000       5</span></span>
+<span><span class="co">#&gt;  6:     5.978571    2.800000     4.978571   1.8571429    14 1.9614286       6</span></span>
+<span><span class="co">#&gt;  7:     5.342857    3.514286     1.485714   0.2285714     7 0.3085714       7</span></span>
+<span><span class="co">#&gt;  8:     6.790909    3.118182     5.590909   2.2454545    11 1.2818182       8</span></span>
+<span><span class="co">#&gt;  9:     7.600000    3.733333     6.400000   2.2333333     3 0.5933333       9</span></span>
+<span><span class="co">#&gt; 10:     4.866667    3.077778     1.466667   0.1888889     9 0.3044444      10</span></span>
+<span><span class="co">#&gt; 11:     5.575000    2.568750     3.975000   1.2125000    16 3.0518750      11</span></span>
+<span><span class="co">#&gt; 12:     6.420000    2.860000     5.480000   1.8800000    10 1.5120000      12</span></span>
+<span><span class="co">#&gt; 13:     5.000000    2.300000     3.275000   1.0250000     4 0.2950000      13</span></span>
+<span><span class="co">#&gt; 14:     6.633333    3.033333     4.633333   1.4583333    12 1.4091667      14</span></span>
+<span><span class="co">#&gt; 15:     4.511111    3.177778     1.300000   0.2000000     9 0.7444444      15</span></span>
+<span><span class="co">#&gt; 16:     5.666667    4.200000     1.366667   0.2666667     3 0.2000000      16</span></span>
+<span><span class="co">#&gt; 17:     6.300000    3.325000     5.575000   2.3750000     4 0.3625000      17</span></span>
+<span><span class="co">#&gt; 18:     5.500000    3.866667     1.566667   0.3666667     3 0.1800000      18</span></span>
+<span><span class="co">#&gt; 19:     4.992308    3.446154     1.515385   0.2769231    13 0.8015385      19</span></span></code></pre></div>
 <p>The <code>glance()</code> function gives an overall summary of the
 model:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">glance</span><span class="op">(</span><span class="va">gclust</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       totss tot.withinss betweenss  iter</span></span>
 <span><span class="co">#&gt;       &lt;num&gt;        &lt;num&gt;     &lt;num&gt; &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1: 681.3706      152.348  529.0226     1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1: 681.3706     17.70733  663.6633     4</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
