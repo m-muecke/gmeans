@@ -25,6 +25,18 @@ bibentries <- c(
     year = "2002",
     publisher = "CRC Press",
     doi = "10.1201/9780203910894"
+  ),
+  arthur2007kmeanspp = bibentry("inproceedings",
+    title = "k-means++: The Advantages of Careful Seeding",
+    author = c(person("David", "Arthur"), person("Sergei", "Vassilvitskii")),
+    year = "2007",
+    booktitle = "Proceedings of the Eighteenth Annual ACM-SIAM Symposium on Discrete Algorithms",
+    pages = "1027-1035",
+    publisher = "Society for Industrial and Applied Mathematics",
+    address = "USA",
+    series = "SODA '07",
+    isbn = "9780898716245",
+    location = "New Orleans, Louisiana"
   )
 )
 # nolint end

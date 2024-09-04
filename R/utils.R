@@ -17,7 +17,7 @@ cite_bib <- function(..., bibentries = NULL, envir = parent.frame()) {
   if (is.null(bibentries)) {
     bibentries <- get("bibentries", envir = envir)
   }
-  stopfifnot(is.list(bibentries), anyDuplicated(names(bibentries)) == 0L)
+  stopifnot(is.list(bibentries), anyDuplicated(names(bibentries)) == 0L)
 
   str <- vapply(
     list(...),
@@ -29,7 +29,7 @@ cite_bib <- function(..., bibentries = NULL, envir = parent.frame()) {
   )
 
   if (length(str) >= 3L) {
-    str <- c(toString(head(str, -1L)), tail(str, 1L))
+    str <- c(toString(utils::head(str, -1L)), utils::tail(str, 1L))
   }
 
   paste0(str, collapse = " and ")

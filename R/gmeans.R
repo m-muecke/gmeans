@@ -54,7 +54,10 @@ gmeans <- function(x, k_init = 2L, k_max = Inf, level = 0.05, ...) {
     is_count(k_max),
     is_number(level), level > 0, level < 1
   )
-  km <- stats::kmeans(x, k_init, ...)
+
+  init_centers <- kmeans_plusplus(x, k_init)
+  km <- stats::kmeans(x, init_centers, ...)
+
   repeat {
     new_centers <- suggest_centers(x, km, k_max, level, ...)
     # no more centers added
@@ -95,6 +98,47 @@ split_and_search <- function(data, cluster, level, ...) {
   } else {
     NULL
   }
+}
+
+#' kmeans++ initialization
+#'
+#' @description
+#' Algorithm for choosing the initial centers. k-means++ algorithm guarantees an
+#' approximation ratio \eqn{O(\log k)}. Clustering results of k-means are dependent
+#' on the choice of initial centers. This method is used to find out optimal initial
+#' centers.
+#'
+#' @details
+#' The kmeans++ can be divided into the following steps:
+#' 1. The first center is chosen randomly from the input data with a uniform
+#'    distribution.
+#' 2. For each point \eqn{x_i}, compute its distance \eqn{D(x_i)} to the
+#'    nearest center already chosen.
+#' 3. Calculate the probability \eqn{p_i} for each point \eqn{x_i} to be
+#'    selected as the next center: \deqn{
+#'      p_{i} = \frac{D(x_{i})^2}{\sum_{j=0}^{n} D(x_{j})^2}
+#'    }
+#'    Points farther from existing centers have a higher probability of being
+#'    chosen.
+#' 4. Select the next center based on the probability distribution calculated
+#'    in step 3.
+#' 5. Repeat steps 2-4 until the required number of centers, \eqn{k}, is
+#'    initialized.
+#'
+#' @references
+#' `r format_bib("arthur2007kmeanspp")`
+#' @noRd
+kmeans_plusplus <- function(x, k) {
+  n <- nrow(x)
+  centroids <- matrix(NA_real_, nrow = k, ncol = ncol(x))
+  centroids[1L, ] <- x[sample.int(n, 1L), ]
+
+  for (i in 2:k) {
+    dists <- apply(x, 1L, \(xi) min(colSums((t(centroids[1:(i - 1), ]) - xi)^2)))
+    prob <- dists / sum(dists)
+    centroids[i, ] <- x[sample.int(n, 1, prob = prob), ]
+  }
+  centroids
 }
 
 #' Null Hypothesis Test
