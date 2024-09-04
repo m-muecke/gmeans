@@ -213,7 +213,7 @@ the elbow point observed in the WSS plot.
 Next, let's explore how G-means performs on a different dataset:
 
 ```{r}
-set.seed(123)
+set.seed(1234)
 
 x <- as.matrix(iris[, -5])
 gclust <- gmeans(x)
