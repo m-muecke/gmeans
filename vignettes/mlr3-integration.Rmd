@@ -1,0 +1,94 @@
+---
+title: "mlr3 Integration"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mlr3 Integration}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(datatable.print.topn = 3L)
+```
+
+We'll start by loading the necessary libraries:
+
+```{r setup, message = FALSE}
+library(gmeans)
+library(mlr3cluster)
+library(mlr3misc)
+library(mlr3viz)
+library(paradox)
+```
+
+## Overview
+
+```{r}
+LearnerClustGMeans <- R6::R6Class("LearnerClustGMeans",
+  inherit = LearnerClust,
+  public = list(
+    initialize = function() {
+      param_set <- ps(
+        k_init = p_int(2L, default = 2L, tags = "train"),
+        k_max = p_int(2L, default = 10L, tags = "train"),
+        level = p_dbl(0, 1, default = 0.05, tags = "train"),
+        iter.max = p_int(1L, default = 10L, tags = "train"),
+        algorithm = p_fct(
+          levels = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"),
+          default = "Hartigan-Wong",
+          tags = "train"
+        ),
+        trace = p_lgl(default = FALSE, tags = "train")
+      )
+
+      super$initialize(
+        id = "clust.kmeans",
+        feature_types = c("logical", "integer", "numeric"),
+        predict_types = "partition",
+        param_set = param_set,
+        properties = c("partitional", "exclusive", "complete"),
+        packages = "gmeans",
+        man = "mlr3cluster::mlr_learners_clust.gmeans",
+        label = "G-Means"
+      )
+    }
+  ),
+  private = list(
+    .train = function(task) {
+      pv <- self$param_set$get_values(tags = "train")
+      m <- invoke(gmeans::gmeans, x = task$data(), .args = pv)
+      if (self$save_assignments) {
+        self$assignments <- m$cluster
+      }
+      m
+    },
+    .predict = function(task) {
+      partition <- invoke(predict, self$model,
+        newdata = task$data(), type = "class_ids"
+      )
+      PredictionClust$new(task = task, partition = partition)
+    }
+  )
+)
+```
+
+```{r}
+task <- tsk("usarrests")
+learner <- LearnerClustGMeans$new()
+learner$train(task)
+prediction <- learner$predict(task = task)
+prediction
+```
+
+```{r}
+autoplot(prediction, task)
+```
+
+```{r}
+measures <- msrs(c("clust.wss", "clust.silhouette"))
+prediction$score(measures, task)
+```

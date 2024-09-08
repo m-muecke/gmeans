@@ -17,8 +17,14 @@ Imports:
     stats
 Suggests:
     data.table (>= 1.15.0),
+    GGally,
     ggplot2,
     knitr,
+    mlr3cluster,
+    mlr3misc,
+    mlr3viz,
+    paradox,
+    R6,
     rmarkdown,
     testthat (>= 3.0.0),
     withr
