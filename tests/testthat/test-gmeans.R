@@ -31,6 +31,15 @@ test_that("kmeans_plusplus works", {
     expect_true(is.matrix(res))
   }
   expect_error(kmeans_plusplus(x, 1L))
+
+  # check distances are non-negative
+  centroids <- matrix(NA_real_, nrow = 2, ncol = ncol(x))
+  centroids[1L, ] <- x[sample.int(nrow(x), 1L), ]
+  dists <- apply(x, 1L, \(xi) min(colSums((t(centroids[1L, ]) - xi)^2)))
+  expect_true(all(dists >= 0))
+  # probabilities sum to 1
+  prob <- dists / sum(dists)
+  expect_identical(sum(prob), 1)
 })
 
 test_that("predict works", {

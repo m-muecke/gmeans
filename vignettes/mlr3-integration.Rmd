@@ -15,8 +15,10 @@ knitr::opts_chunk$set(
 options(datatable.print.topn = 3L)
 ```
 
-This vignette demonstrates how to integrate the G-Means algorithm with the
+This vignette demonstrates how to integrate the G-Means algorithm with the 
 [mlr3](https://mlr3.mlr-org.com/) framework for [clustering](https://mlr3cluster.mlr-org.com/).
+G-Means extends k-means by adapting the number of clusters based on statistical tests.
+
 We'll start by loading the necessary libraries:
 
 ```{r setup, message = FALSE}
@@ -27,8 +29,8 @@ library(mlr3viz)
 library(paradox)
 ```
 
-We define a custom LearnerClustGMeans class by extending 
-`mlr3cluster::LearnerClust` for G-Means clustering.
+We define a custom `LearnerClustGMeans` class by extending the
+[mlr3cluster::LearnerClust] class for G-Means clustering.
 
 ```{r}
 LearnerClustGMeans <- R6::R6Class("LearnerClustGMeans",
@@ -92,27 +94,31 @@ prediction
 ```
 
 We use `autoplot()` to visualize the clusters produced by the G-Means learner.
+This provides a simple scatter plot of the cluster assignments.
 
 ```{r, message = FALSE, warning = FALSE, dpi = 300}
 autoplot(prediction, task)
 ```
 
 We calculate performance metrics such as within-cluster sum of squares (`clust.wss`)
-and silhouette width (`clust.silhouette`).
+and silhouette width (`clust.silhouette`), which measure cluster compactness and 
+separation, respectively.
 
 ```{r}
 measures <- msrs(c("clust.wss", "clust.silhouette"))
 prediction$score(measures, task)
 ```
 
-Or evaluate with the PCA and Silhouette plots respectively:
+Alternatively, evaluate the clustering with PCA (Principal Component Analysis) and 
+Silhouette plots:
 
-```{r}
+```{r, dpi = 300}
 autoplot(prediction, task, type = "pca")
 autoplot(prediction, task, type = "sil")
 ```
 
-Lastly, we can now easily run a benchmark experiment:
+Lastly, we can now easily run a benchmark experiment to compare G-Means with other 
+clustering algorithms.
 
 ```{r}
 learners <- list(
