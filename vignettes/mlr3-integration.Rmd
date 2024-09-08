@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 options(datatable.print.topn = 3L)
 ```
 
+This vignette demonstrates how to integrate the G-Means algorithm with the mlr3 
+framework for clustering.
 We'll start by loading the necessary libraries:
 
 ```{r setup, message = FALSE}
@@ -25,7 +27,7 @@ library(mlr3viz)
 library(paradox)
 ```
 
-## Overview
+We define a custom LearnerClustGMeans class by extending LearnerClust for G-Means clustering.
 
 ```{r}
 LearnerClustGMeans <- R6::R6Class("LearnerClustGMeans",
@@ -76,6 +78,8 @@ LearnerClustGMeans <- R6::R6Class("LearnerClustGMeans",
 )
 ```
 
+We create a clustering task using the `usarrests` dataset and train the G-Means learner.
+
 ```{r}
 task <- tsk("usarrests")
 learner <- LearnerClustGMeans$new()
@@ -84,9 +88,14 @@ prediction <- learner$predict(task = task)
 prediction
 ```
 
+We use `autoplot()` to visualize the clusters produced by the G-Means learner.
+
 ```{r}
 autoplot(prediction, task)
 ```
+
+We calculate performance metrics such as within-cluster sum of squares (`clust.wss`)
+and silhouette width (`clust.silhouette`).
 
 ```{r}
 measures <- msrs(c("clust.wss", "clust.silhouette"))
