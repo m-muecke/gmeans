@@ -151,10 +151,8 @@ and train the G-Means learner.</p>
 <p>We use <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> to visualize the clusters produced by
 the G-Means learner.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">prediction</span>, <span class="va">task</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in GGally::ggscatmat(data, color = "partition"): Factor variables are</span></span>
-<span><span class="co">#&gt; omitted in plot</span></span></code></pre></div>
-<p><img src="mlr3-integration_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">prediction</span>, <span class="va">task</span><span class="op">)</span></span></code></pre></div>
+<p><img src="mlr3-integration_files/figure-html/unnamed-chunk-4-1.png" width="2187.5"></p>
 <p>We calculate performance metrics such as within-cluster sum of
 squares (<code>clust.wss</code>) and silhouette width
 (<code>clust.silhouette</code>).</p>
