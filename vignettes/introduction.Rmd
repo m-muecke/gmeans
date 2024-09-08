@@ -37,7 +37,7 @@ We begin by generating some random two-dimensional data that naturally forms thr
 clusters. Each cluster's data comes from a different multivariate Gaussian
 distribution with unique means:
 
-```{r}
+```{r, dpi = 300}
 set.seed(27)
 
 centers <- data.table(
@@ -129,7 +129,7 @@ glance(kclust)
 Using these helper functions, we can easily extract and manipulate the results of
 k-means clustering for different values of `k`:
 
-```{r}
+```{r, dpi = 300}
 kclusts <- data.table(k = 1:9)
 kclusts[, kclust := lapply(k, \(x) kmeans(points, x))]
 kclusts[, let(
@@ -165,7 +165,7 @@ Finally, we can look at how the total within-cluster sum of squares (WSS) change
 different values of `k`. This helps us see how well the data is being clustered as `k`
 increases:
 
-```{r}
+```{r, dpi = 300}
 ggplot(clusterings, aes(k, tot.withinss)) +
   geom_line() +
   geom_point() +
@@ -225,7 +225,7 @@ defined helper functions to analyze the clustering results.
 The `augment()` function adds cluster assignments to the original dataset for easy
 plotting:
 
-```{r}
+```{r, dpi = 300}
 augment(gclust, x) |>
   ggplot(aes(x = Petal.Length, y = Petal.Width)) +
   geom_point(aes(color = .cluster))

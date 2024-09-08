@@ -92,7 +92,7 @@ prediction
 
 We use `autoplot()` to visualize the clusters produced by the G-Means learner.
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE, dpi = 300}
 autoplot(prediction, task)
 ```
 
