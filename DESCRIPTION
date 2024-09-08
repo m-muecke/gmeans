@@ -18,6 +18,7 @@ Imports:
 Suggests:
     data.table (>= 1.15.0),
     GGally,
+    ggfortify,
     ggplot2,
     knitr,
     mlr3cluster,
