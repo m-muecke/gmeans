@@ -15,8 +15,8 @@ knitr::opts_chunk$set(
 options(datatable.print.topn = 3L)
 ```
 
-This vignette demonstrates how to integrate the G-Means algorithm with the mlr3 
-framework for clustering.
+This vignette demonstrates how to integrate the G-Means algorithm with the
+[mlr3](https://mlr3.mlr-org.com/) framework for [clustering](https://mlr3cluster.mlr-org.com/).
 We'll start by loading the necessary libraries:
 
 ```{r setup, message = FALSE}
@@ -27,7 +27,9 @@ library(mlr3viz)
 library(paradox)
 ```
 
-We define a custom LearnerClustGMeans class by extending LearnerClust for G-Means clustering.
+We define a custom LearnerClustGMeans class by extending 
+[LearnerClust](https://mlr3cluster.mlr-org.com/reference/LearnerClust.html) for G-Means 
+clustering.
 
 ```{r}
 LearnerClustGMeans <- R6::R6Class("LearnerClustGMeans",
@@ -90,7 +92,7 @@ prediction
 
 We use `autoplot()` to visualize the clusters produced by the G-Means learner.
 
-```{r}
+```{r, message = FALSE}
 autoplot(prediction, task)
 ```
 
