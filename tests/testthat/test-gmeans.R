@@ -22,6 +22,17 @@ test_that("gmeans works", {
   expect_error(gmeans(x, level = c(0.5, 0.7)))
 })
 
+test_that("kmeans_plusplus works", {
+  withr::local_seed(1234L)
+  x <- matrix(rnorm(100L, sd = 0.3), ncol = 2L)
+  for (i in 2:5) {
+    res <- kmeans_plusplus(x, i)
+    expect_identical(dim(res), c(i, 2L))
+    expect_true(is.matrix(res))
+  }
+  expect_error(kmeans_plusplus(x, 1L))
+})
+
 test_that("predict works", {
   withr::local_seed(1234L)
   x <- matrix(rnorm(100L, sd = 0.3), ncol = 2L)
