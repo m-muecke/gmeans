@@ -3,7 +3,8 @@ pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   introduction: introduction.html
-last_built: 2024-09-08T09:26Z
+  mlr3-integration: mlr3-integration.html
+last_built: 2024-09-08T13:39Z
 urls:
   reference: https://m-muecke.github.io/gmeans/reference
   article: https://m-muecke.github.io/gmeans/articles
