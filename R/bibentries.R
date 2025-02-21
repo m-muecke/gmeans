@@ -1,6 +1,7 @@
 # nolint start
 bibentries <- c(
-  hamerly2003learning = bibentry("inproceedings",
+  hamerly2003learning = bibentry(
+    "inproceedings",
     title = "Learning the k in k-means",
     author = "Hamerly, Greg and Elkan, Charles",
     booktitle = "Advances in Neural Information Processing Systems",
@@ -10,7 +11,8 @@ bibentries <- c(
     volume = "16",
     year = "2003"
   ),
-  d2017goodness = bibentry("inbook",
+  d2017goodness = bibentry(
+    "inbook",
     title = "Goodness-of-Fit-Techniques",
     author = "Stephens, Michael A.",
     editor = "D'Agostino, Ralph B.",
@@ -18,7 +20,8 @@ bibentries <- c(
     year = "1986",
     publisher = "CRC Press"
   ),
-  thode2002testing = bibentry("book",
+  thode2002testing = bibentry(
+    "book",
     title = "Testing for normality",
     author = "Thode, Henry C.",
     edition = "1",
@@ -26,7 +29,8 @@ bibentries <- c(
     publisher = "CRC Press",
     doi = "10.1201/9780203910894"
   ),
-  arthur2007kmeanspp = bibentry("inproceedings",
+  arthur2007kmeanspp = bibentry(
+    "inproceedings",
     title = "k-means++: The Advantages of Careful Seeding",
     author = c(person("David", "Arthur"), person("Sergei", "Vassilvitskii")),
     year = "2007",

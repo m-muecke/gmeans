@@ -52,7 +52,9 @@ gmeans <- function(x, k_init = 2L, k_max = 10L, level = 0.05, ...) {
     is.matrix(x),
     is_count(k_init),
     is_count(k_max),
-    is_number(level), level > 0, level < 1
+    is_number(level),
+    level > 0,
+    level < 1
   )
 
   init_centers <- kmeans_plusplus(x, k_init)
@@ -196,11 +198,13 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 #'
 #' newdata <- x[1:10, ]
 #' predict(cl, newdata)
-predict.kmeans <- function(object,
-                           newdata,
-                           method = c("euclidean", "manhatten", "minkowski"),
-                           p = 2,
-                           ...) {
+predict.kmeans <- function(
+  object,
+  newdata,
+  method = c("euclidean", "manhatten", "minkowski"),
+  p = 2,
+  ...
+) {
   d <- rxdist(object, newdata, method, p)
   cl <- max.col(-d)
   cl
@@ -240,10 +244,12 @@ compute_wss <- function(object, newdata = NULL) {
   wss
 }
 
-rxdist <- function(object,
-                   newdata,
-                   method = c("euclidean", "manhatten", "minkowski"),
-                   p = 2) {
+rxdist <- function(
+  object,
+  newdata,
+  method = c("euclidean", "manhatten", "minkowski"),
+  p = 2
+) {
   stopifnot(is_number(p))
   if (inherits(newdata, "data.frame")) {
     newdata <- as.matrix(newdata)
@@ -259,7 +265,8 @@ rxdist <- function(object,
   if (!is.null(data_nms) && !is.null(center_nms) && !identical(data_nms, center_nms)) {
     newdata <- newdata[, center_nms, drop = FALSE]
   }
-  distance <- switch(method,
+  distance <- switch(
+    method,
     euclidean = function(data, x) rowSums(sweep(data, 2L, x)^2),
     manhattan = function(data, x) rowSums(abs(sweep(data, 2L, x))),
     minkowski = function(data, x) (rowSums(abs(sweep(data, 2L, x))^p))^(1 / p)
