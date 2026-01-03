@@ -23,25 +23,29 @@ Adapted from [clue](https://CRAN.R-project.org/package=clue)
 
 - object:
 
-  of class inheriting from `"kmeans"`.
+  (`any`)  
+  Class inheriting from `"kmeans"`.
 
 - newdata:
 
-  [`matrix()`](https://rdrr.io/r/base/matrix.html) new data to predict
-  on.
+  ([`matrix()`](https://rdrr.io/r/base/matrix.html))  
+  New data to predict on.
 
 - method:
 
-  `character(1)` distance metric to use. Either `"euclidean"`,
-  `"manhattan"`, or `"minkowski"`. Default is `"euclidean"`.
+  (`character(1)`)  
+  Distance metric to use. Either `"euclidean"`, `"manhattan"`, or
+  `"minkowski"`. Default is `"euclidean"`.
 
 - p:
 
-  `numeric(1)` power of the Minkowski distance. Default is `2`.
+  (`numeric(1)`)  
+  Power of the Minkowski distance. Default is `2`.
 
 - ...:
 
-  additional arguments.
+  (`any`)  
+  Additional arguments.
 
 ## Details
 

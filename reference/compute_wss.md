@@ -12,12 +12,13 @@ compute_wss(object, newdata = NULL)
 
 - object:
 
-  of class inheriting from `"kmeans"`.
+  (`any`)  
+  Class inheriting from `"kmeans"`.
 
 - newdata:
 
-  [`matrix()`](https://rdrr.io/r/base/matrix.html) new data to predict
-  on.
+  ([`matrix()`](https://rdrr.io/r/base/matrix.html))  
+  New data to predict on.
 
 ## Details
 

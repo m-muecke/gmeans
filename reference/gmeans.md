@@ -12,28 +12,33 @@ gmeans(x, k_init = 2L, k_max = 10L, level = 0.05, ...)
 
 - x:
 
-  numeric matrix of data, or an object that can be coerced to such a
+  ([`matrix()`](https://rdrr.io/r/base/matrix.html))  
+  Numeric matrix of data, or an object that can be coerced to such a
   matrix (such as a numeric vector or a data frame with all numeric
   columns).
 
 - k_init:
 
-  `integer(1)` initial amount of centers. Default is `2L`.
+  (`integer(1)`)  
+  Initial amount of centers. Default is `2L`.
 
 - k_max:
 
-  `integer(1)` maximum amount of centers. Default is `10L`.
+  (`integer(1)`)  
+  Maximum amount of centers. Default is `10L`.
 
 - level:
 
-  `numeric(1)` significance level for the Anderson-Darling test. Default
-  is `0.05`. See
+  (`numeric(1)`)  
+  Significance level for the Anderson-Darling test. Default is `0.05`.
+  See
   [`ad.test()`](https://m-muecke.github.io/gmeans/reference/ad.test.md)
   for more information.
 
 - ...:
 
-  additional arguments passed to
+  (`any`)  
+  Additional arguments passed to
   [`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html).
 
 ## Details

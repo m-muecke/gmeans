@@ -16,9 +16,9 @@ Adapted from `nortest::ad.test()`
 
 - x:
 
-  [`numeric()`](https://rdrr.io/r/base/numeric.html) vector of data
-  values. Missing values are allowed, but the number of non-missing
-  values must be greater than 7.
+  ([`numeric()`](https://rdrr.io/r/base/numeric.html))  
+  Vector of data values. Missing values are allowed, but the number of
+  non-missing values must be greater than 7.
 
 ## Value
 
