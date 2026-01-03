@@ -16,16 +16,21 @@ Adapted from \CRANpkg{clue}
 )
 }
 \arguments{
-\item{object}{of class inheriting from \code{"kmeans"}.}
+\item{object}{(\code{any})\cr
+Class inheriting from \code{"kmeans"}.}
 
-\item{newdata}{\code{matrix()} new data to predict on.}
+\item{newdata}{(\code{matrix()})\cr
+New data to predict on.}
 
-\item{method}{\code{character(1)} distance metric to use.
+\item{method}{(\code{character(1)})\cr
+Distance metric to use.
 Either \code{"euclidean"}, \code{"manhattan"}, or \code{"minkowski"}. Default is \code{"euclidean"}.}
 
-\item{p}{\code{numeric(1)} power of the Minkowski distance. Default is \code{2}.}
+\item{p}{(\code{numeric(1)})\cr
+Power of the Minkowski distance. Default is \code{2}.}
 
-\item{...}{additional arguments.}
+\item{...}{(\code{any})\cr
+Additional arguments.}
 }
 \description{
 Predicted values based on the G-means clustering model.

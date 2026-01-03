@@ -10,7 +10,8 @@ Adapted from \code{\link[nortest:ad.test]{nortest::ad.test()}}
 ad.test(x)
 }
 \arguments{
-\item{x}{\code{numeric()} vector of data values. Missing values are allowed, but the
+\item{x}{(\code{numeric()})\cr
+Vector of data values. Missing values are allowed, but the
 number of non-missing values must be greater than 7.}
 }
 \value{

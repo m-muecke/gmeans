@@ -26,13 +26,18 @@
 #'    Otherwise, replace \eqn{c_j} with two new centers.
 #' 6. Repeat from step 2 until no more centers are added.
 #'
-#' @param x numeric matrix of data, or an object that can be coerced to such a matrix
+#' @param x (`matrix()`)\cr
+#'   Numeric matrix of data, or an object that can be coerced to such a matrix
 #'   (such as a numeric vector or a data frame with all numeric columns).
-#' @param k_init `integer(1)` initial amount of centers. Default is `2L`.
-#' @param k_max `integer(1)` maximum amount of centers. Default is `10L`.
-#' @param level `numeric(1)` significance level for the Anderson-Darling test.
+#' @param k_init (`integer(1)`)\cr
+#'   Initial amount of centers. Default is `2L`.
+#' @param k_max (`integer(1)`)\cr
+#'   Maximum amount of centers. Default is `10L`.
+#' @param level (`numeric(1)`)\cr
+#'   Significance level for the Anderson-Darling test.
 #'   Default is `0.05`. See [ad.test()] for more information.
-#' @param ... additional arguments passed to [stats::kmeans()].
+#' @param ... (`any`)\cr
+#'   Additional arguments passed to [stats::kmeans()].
 #' @references
 #' `r format_bib("hamerly2003learning")`
 #' @export
@@ -183,12 +188,17 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 #'   where \eqn{p} is a parameter that defines the distance type (e.g., \eqn{p=2}
 #'   for Euclidean, \eqn{p=1} for Manhattan).
 #'
-#' @param object of class inheriting from `"kmeans"`.
-#' @param newdata `matrix()` new data to predict on.
-#' @param method `character(1)` distance metric to use.
+#' @param object (`any`)\cr
+#'   Class inheriting from `"kmeans"`.
+#' @param newdata (`matrix()`)\cr
+#'   New data to predict on.
+#' @param method (`character(1)`)\cr
+#'   Distance metric to use.
 #'   Either `"euclidean"`, `"manhattan"`, or `"minkowski"`. Default is `"euclidean"`.
-#' @param p `numeric(1)` power of the Minkowski distance. Default is `2`.
-#' @param ... additional arguments.
+#' @param p (`numeric(1)`)\cr
+#'   Power of the Minkowski distance. Default is `2`.
+#' @param ... (`any`)\cr
+#'   Additional arguments.
 #' @source Adapted from \CRANpkg{clue}
 #' @export
 #' @examples
@@ -206,8 +216,7 @@ predict.kmeans <- function(
   ...
 ) {
   d <- rxdist(object, newdata, method, p)
-  cl <- max.col(-d)
-  cl
+  max.col(-d)
 }
 
 #' Compute Within-Cluster Sum of Squares
@@ -221,8 +230,10 @@ predict.kmeans <- function(
 #' the nearest cluster for each new observation and computes the WSS for these points
 #' based on their predicted clusters.
 #'
-#' @param object of class inheriting from `"kmeans"`.
-#' @param newdata `matrix()` new data to predict on.
+#' @param object (`any`)\cr
+#'   Class inheriting from `"kmeans"`.
+#' @param newdata (`matrix()`)\cr
+#'   New data to predict on.
 #' @export
 #' @examples
 #' km <- kmeans(mtcars, 5)
@@ -291,7 +302,8 @@ rxdist <- function(
 #' \eqn{A^2_*=A^2 (1.0 + 0.75/n + 2.25/n^{2})} according to Table 4.9 in
 #' Stephens (1986).
 #'
-#' @param x `numeric()` vector of data values. Missing values are allowed, but the
+#' @param x (`numeric()`)\cr
+#'   Vector of data values. Missing values are allowed, but the
 #'   number of non-missing values must be greater than 7.
 #'
 #' @returns

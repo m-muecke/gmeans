@@ -7,9 +7,11 @@
 compute_wss(object, newdata = NULL)
 }
 \arguments{
-\item{object}{of class inheriting from \code{"kmeans"}.}
+\item{object}{(\code{any})\cr
+Class inheriting from \code{"kmeans"}.}
 
-\item{newdata}{\code{matrix()} new data to predict on.}
+\item{newdata}{(\code{matrix()})\cr
+New data to predict on.}
 }
 \description{
 Compute Within-Cluster Sum of Squares
