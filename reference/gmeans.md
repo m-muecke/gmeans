@@ -41,6 +41,11 @@ gmeans(x, k_init = 2L, k_max = 10L, level = 0.05, ...)
   Additional arguments passed to
   [`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html).
 
+## Value
+
+An object of class `c("gmeans", "kmeans")`. See
+[`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html) for details.
+
 ## Details
 
 The G-means clustering algorithm is an extension of the traditional
