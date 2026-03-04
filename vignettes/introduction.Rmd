@@ -29,7 +29,7 @@ To illustrate the purpose of the G-means algorithm, let's start with an adapted
 k-means clustering example from the
 [tidymodels](https://www.tidymodels.org/learn/statistics/k-means/) website.
 This example shows the challenge of determining the number of clusters (`k`) in
-clustering analysis. Throughout  this vignette, we will use `data.table` for data
+clustering analysis. Throughout this vignette, we will use `data.table` for data
 manipulation, and the custom `tidy`, `augment`, and `glance` functions for handling
 model output, inspired by the `broom` package functionality.
 

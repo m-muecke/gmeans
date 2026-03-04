@@ -10,7 +10,7 @@ Adapted from \CRANpkg{clue}
 \method{predict}{kmeans}(
   object,
   newdata,
-  method = c("euclidean", "manhatten", "minkowski"),
+  method = c("euclidean", "manhattan", "minkowski"),
   p = 2,
   ...
 )
@@ -43,11 +43,11 @@ cluster centers, and then assigns each point to the cluster with the closest cen
 
 The \code{method} argument specifies the distance metric to use. The following options:
 \itemize{
-\item \code{"euclidean"}: The euclidean distance is the default metric used in the k-means
+\item \code{"euclidean"}: The Euclidean distance is the default metric used in the k-means
 and is defined as \deqn{
     d(x, y) = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}
   }
-\item \code{"manhatten"}: The Manhatten distance is defined as \deqn{
+\item \code{"manhattan"}: The Manhattan distance is defined as \deqn{
     d(x, y) = \sum_{i=1}^{n} |x_i - y_i|
   }
 \item \code{"minkowski"}: The Minkowski distance is defined as \deqn{

@@ -45,8 +45,8 @@ centers \eqn{C}, i.e., \eqn{C \leftarrow \text{kmeans}(C, X)}.
 \eqn{\{x_i \mid \text{class}(x_i) = j\}} that are assigned to \eqn{c_j}.
 \item Use the Anderson-Darling test to check if the set of data points
 \eqn{\{x_i \mid \text{class}(x_i) = j\}} follows a Gaussian distribution
-\item If the data points appear Gaussian, keep \eqn{c_j}.
 at the confidence level \eqn{\alpha}.
+\item If the data points appear Gaussian, keep \eqn{c_j}.
 Otherwise, replace \eqn{c_j} with two new centers.
 \item Repeat from step 2 until no more centers are added.
 }

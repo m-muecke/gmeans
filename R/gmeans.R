@@ -21,8 +21,8 @@
 #'    \eqn{\{x_i \mid \text{class}(x_i) = j\}} that are assigned to \eqn{c_j}.
 #' 4. Use the Anderson-Darling test to check if the set of data points
 #'    \eqn{\{x_i \mid \text{class}(x_i) = j\}} follows a Gaussian distribution
-#' 5. If the data points appear Gaussian, keep \eqn{c_j}.
 #'    at the confidence level \eqn{\alpha}.
+#' 5. If the data points appear Gaussian, keep \eqn{c_j}.
 #'    Otherwise, replace \eqn{c_j} with two new centers.
 #' 6. Repeat from step 2 until no more centers are added.
 #'
@@ -175,11 +175,11 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 #' cluster centers, and then assigns each point to the cluster with the closest center.
 #'
 #' The `method` argument specifies the distance metric to use. The following options:
-#' - `"euclidean"`: The euclidean distance is the default metric used in the k-means
+#' - `"euclidean"`: The Euclidean distance is the default metric used in the k-means
 #'   and is defined as \deqn{
 #'     d(x, y) = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}
 #'   }
-#' - `"manhatten"`: The Manhatten distance is defined as \deqn{
+#' - `"manhattan"`: The Manhattan distance is defined as \deqn{
 #'     d(x, y) = \sum_{i=1}^{n} |x_i - y_i|
 #'   }
 #' - `"minkowski"`: The Minkowski distance is defined as \deqn{
@@ -211,7 +211,7 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 predict.kmeans <- function(
   object,
   newdata,
-  method = c("euclidean", "manhatten", "minkowski"),
+  method = c("euclidean", "manhattan", "minkowski"),
   p = 2,
   ...
 ) {
@@ -258,7 +258,7 @@ compute_wss <- function(object, newdata = NULL) {
 rxdist <- function(
   object,
   newdata,
-  method = c("euclidean", "manhatten", "minkowski"),
+  method = c("euclidean", "manhattan", "minkowski"),
   p = 2
 ) {
   stopifnot(is_number(p))
