@@ -16,6 +16,7 @@ Depends:
 Imports:
     stats
 Suggests:
+    clue,
     data.table (>= 1.15.0),
     GGally,
     ggfortify,
