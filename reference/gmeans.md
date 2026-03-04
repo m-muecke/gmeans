@@ -64,10 +64,10 @@ The algorithm is outlined as follows:
 
 4.  Use the Anderson-Darling test to check if the set of data points
     \\\\x_i \mid \text{class}(x_i) = j\\\\ follows a Gaussian
-    distribution
+    distribution at the confidence level \\\alpha\\.
 
-5.  If the data points appear Gaussian, keep \\c_j\\. at the confidence
-    level \\\alpha\\. Otherwise, replace \\c_j\\ with two new centers.
+5.  If the data points appear Gaussian, keep \\c_j\\. Otherwise, replace
+    \\c_j\\ with two new centers.
 
 6.  Repeat from step 2 until no more centers are added.
 

@@ -104,9 +104,9 @@ centers \(C\), i.e., \(C \leftarrow \text{kmeans}(C, X)\).</p></li>
 <li><p>For each center \(c_j\), identify the set of data points
 \(\{x_i \mid \text{class}(x_i) = j\}\) that are assigned to \(c_j\).</p></li>
 <li><p>Use the Anderson-Darling test to check if the set of data points
-\(\{x_i \mid \text{class}(x_i) = j\}\) follows a Gaussian distribution</p></li>
+\(\{x_i \mid \text{class}(x_i) = j\}\) follows a Gaussian distribution
+at the confidence level \(\alpha\).</p></li>
 <li><p>If the data points appear Gaussian, keep \(c_j\).
-at the confidence level \(\alpha\).
 Otherwise, replace \(c_j\) with two new centers.</p></li>
 <li><p>Repeat from step 2 until no more centers are added.</p></li>
 </ol></div>

@@ -9,7 +9,7 @@ Predicted values based on the G-means clustering model.
 predict(
   object,
   newdata,
-  method = c("euclidean", "manhatten", "minkowski"),
+  method = c("euclidean", "manhattan", "minkowski"),
   p = 2,
   ...
 )
@@ -58,11 +58,11 @@ each point to the cluster with the closest center.
 The `method` argument specifies the distance metric to use. The
 following options:
 
-- `"euclidean"`: The euclidean distance is the default metric used in
+- `"euclidean"`: The Euclidean distance is the default metric used in
   the k-means and is defined as \$\$ d(x, y) = \sqrt{\sum\_{i=1}^{n}
   (x_i - y_i)^2} \$\$
 
-- `"manhatten"`: The Manhatten distance is defined as \$\$ d(x, y) =
+- `"manhattan"`: The Manhattan distance is defined as \$\$ d(x, y) =
   \sum\_{i=1}^{n} \|x_i - y_i\| \$\$
 
 - `"minkowski"`: The Minkowski distance is defined as \$\$ d(x, y) =
@@ -79,5 +79,5 @@ cl <- gmeans(x)
 
 newdata <- x[1:10, ]
 predict(cl, newdata)
-#>  [1] 6 9 9 9 6 1 9 6 4 9
+#>  [1] 4 4 4 4 4 4 4 4 4 4
 ```
