@@ -71,7 +71,7 @@ gmeans <- function(x, k_init = 2L, k_max = 10L, level = 0.05, ...) {
     if (nrow(km$centers) == nrow(new_centers)) {
       break
     }
-    km <- stats::kmeans(x, nrow(new_centers), ...)
+    km <- stats::kmeans(x, new_centers, ...)
   }
   class(km) <- c("gmeans", class(km))
   km
@@ -100,7 +100,7 @@ split_and_search <- function(data, cluster, level, ...) {
   points <- data[cluster, ]
   km <- stats::kmeans(points, 2L, ...)
   new_centers <- km$centers
-  if (nrow(new_centers) > 1L && !is_null_hypothesis(points, new_centers)) {
+  if (nrow(new_centers) > 1L && !is_null_hypothesis(points, new_centers, level)) {
     new_centers
   } else {
     NULL
