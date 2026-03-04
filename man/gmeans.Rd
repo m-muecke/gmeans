@@ -24,6 +24,9 @@ Default is \code{0.05}. See \code{\link[=ad.test]{ad.test()}} for more informati
 \item{...}{(\code{any})\cr
 Additional arguments passed to \code{\link[stats:kmeans]{stats::kmeans()}}.}
 }
+\value{
+An object of class \code{c("gmeans", "kmeans")}. See \code{\link[stats:kmeans]{stats::kmeans()}} for details.
+}
 \description{
 Perform G-means clustering on a data matrix.
 }

@@ -40,6 +40,7 @@
 #'   Additional arguments passed to [stats::kmeans()].
 #' @references
 #' `r format_bib("hamerly2003learning")`
+#' @returns An object of class `c("gmeans", "kmeans")`. See [stats::kmeans()] for details.
 #' @export
 #' @examples
 #' set.seed(123)
