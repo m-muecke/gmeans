@@ -8,6 +8,7 @@ by adapting the number of clusters based on statistical tests.
 We’ll start by loading the necessary libraries:
 
 ``` r
+
 library(gmeans)
 library(mlr3cluster)
 library(mlr3misc)
@@ -19,6 +20,7 @@ We define a custom `LearnerClustGMeans` class by extending the
 \[mlr3cluster::LearnerClust\] class for G-Means clustering.
 
 ``` r
+
 LearnerClustGMeans <- R6::R6Class("LearnerClustGMeans",
   inherit = LearnerClust,
   public = list(
@@ -73,6 +75,7 @@ We create a clustering task using the `usarrests` dataset and train the
 G-Means learner.
 
 ``` r
+
 task <- tsk("usarrests")
 learner <- lrn("clust.gmeans")
 learner$train(task)
@@ -96,6 +99,7 @@ visualize the clusters produced by the G-Means learner. This provides a
 simple scatter plot of the cluster assignments.
 
 ``` r
+
 autoplot(prediction, task)
 ```
 
@@ -106,6 +110,7 @@ We calculate performance metrics such as within-cluster sum of squares
 cluster compactness and separation, respectively.
 
 ``` r
+
 measures <- msrs(c("clust.wss", "clust.silhouette"))
 prediction$score(measures, task)
 #>        clust.wss clust.silhouette 
@@ -116,6 +121,7 @@ Alternatively, evaluate the clustering with PCA (Principal Component
 Analysis) and Silhouette plots:
 
 ``` r
+
 autoplot(prediction, task, type = "pca")
 #> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
 #> ℹ Please use tidy evaluation idioms with `aes()`.
@@ -130,6 +136,7 @@ autoplot(prediction, task, type = "pca")
 ![](mlr3-integration_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
+
 autoplot(prediction, task, type = "sil")
 #> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 #> ℹ Please use `linewidth` instead.
@@ -146,6 +153,7 @@ Lastly, we can now easily run a benchmark experiment to compare G-Means
 with other clustering algorithms.
 
 ``` r
+
 learners <- list(
   lrn("clust.featureless"),
   lrn("clust.kmeans"),

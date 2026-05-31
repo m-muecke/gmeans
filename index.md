@@ -12,6 +12,7 @@ You can install the development version of gmeans from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("m-muecke/gmeans")
 ```
@@ -19,6 +20,7 @@ pak::pak("m-muecke/gmeans")
 ## Usage
 
 ``` r
+
 library(gmeans)
 
 km <- gmeans(mtcars)

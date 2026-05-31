@@ -3,6 +3,7 @@
 We’ll start by loading the necessary libraries:
 
 ``` r
+
 library(data.table)
 library(ggplot2)
 library(gmeans)
@@ -24,6 +25,7 @@ forms three clusters. Each cluster’s data comes from a different
 multivariate Gaussian distribution with unique means:
 
 ``` r
+
 set.seed(27)
 
 centers <- data.table(
@@ -53,6 +55,7 @@ k-means clustering requires specifying the number of clusters, `k`,
 beforehand. To illustrate this, let’s fit a k-means model with `k = 3`:
 
 ``` r
+
 points <- points[, cluster := NULL]
 kclust <- kmeans(points, centers = 3)
 kclust
@@ -95,6 +98,7 @@ the k-means output easier, we define `tidy`, `augment`, and `glance`
 functions that mimic the functionality of the `broom` package:
 
 ``` r
+
 `%||%` <- function(x, y) if (!is.null(x)) x else y
 
 tidy <- function(x, col.names = colnames(x$centers)) {
@@ -125,6 +129,7 @@ The `augment()` function adds the cluster assignments to the original
 dataset, allowing us to see how each data point is classified:
 
 ``` r
+
 augment(kclust, points)
 #>             x1         x2 .cluster
 #>          <num>      <num>   <fctr>
@@ -141,6 +146,7 @@ The `tidy()` function provides a per-cluster summary, displaying the
 cluster centers, sizes, and within-cluster sum of squares:
 
 ``` r
+
 tidy(kclust)
 #>            x1         x2  size withinss cluster
 #>         <num>      <num> <int>    <num>  <fctr>
@@ -153,6 +159,7 @@ To obtain a single-row summary with overall metrics such as total sum of
 squares and the number of iterations, use the `glance()` function:
 
 ``` r
+
 glance(kclust)
 #>       totss tot.withinss betweenss  iter
 #>       <num>        <num>     <num> <int>
@@ -163,6 +170,7 @@ Using these helper functions, we can easily extract and manipulate the
 results of k-means clustering for different values of `k`:
 
 ``` r
+
 kclusts <- data.table(k = 1:9)
 kclusts[, kclust := lapply(k, \(x) kmeans(points, x))]
 kclusts[, let(
@@ -189,6 +197,7 @@ p1
 To enhance the visualization, let’s add cluster centers:
 
 ``` r
+
 p2 <- p1 + geom_point(data = clusters, size = 10, shape = "x") +
   labs(title = "k-means Clustering with Centers")
 p2
@@ -203,6 +212,7 @@ Finally, we can look at how the total within-cluster sum of squares
 the data is being clustered as `k` increases:
 
 ``` r
+
 ggplot(clusterings, aes(k, tot.withinss)) +
   geom_line() +
   geom_point() +
@@ -243,6 +253,7 @@ clustering.
 Let’s now apply the G-means algorithm to the same data:
 
 ``` r
+
 set.seed(123)
 
 gmeans(points)
@@ -281,6 +292,7 @@ aligning with the elbow point observed in the WSS plot.
 Next, let’s explore how G-means performs on a different dataset:
 
 ``` r
+
 set.seed(1234)
 
 x <- as.matrix(iris[, -5])
@@ -297,6 +309,7 @@ The `augment()` function adds cluster assignments to the original
 dataset for easy plotting:
 
 ``` r
+
 augment(gclust, x) |>
   ggplot(aes(x = Petal.Length, y = Petal.Width)) +
   geom_point(aes(color = .cluster))
@@ -307,6 +320,7 @@ augment(gclust, x) |>
 The `tidy()` function provides a summary of each cluster:
 
 ``` r
+
 tidy(gclust)
 #>    Sepal.Length Sepal.Width Petal.Length Petal.Width  size  withinss cluster
 #>           <num>       <num>        <num>       <num> <int>     <num>  <fctr>
@@ -317,6 +331,7 @@ tidy(gclust)
 The `glance()` function gives an overall summary of the model:
 
 ``` r
+
 glance(gclust)
 #>       totss tot.withinss betweenss  iter
 #>       <num>        <num>     <num> <int>
