@@ -164,7 +164,7 @@ bmr <- benchmark(benchmark_grid(tsk("ruspini"), learners, rsmp("insample")))
 bmr$aggregate(measures)[, c(4, 7, 8)]
 #>           learner_id clust.wss clust.silhouette
 #>               <char>     <num>            <num>
-#> 1: clust.featureless 244373.87        0.0000000
+#> 1: clust.featureless 244373.87              NaN
 #> 2:      clust.kmeans  89337.83        0.5827264
 #> 3:      clust.gmeans  10126.72        0.7019241
 ```
