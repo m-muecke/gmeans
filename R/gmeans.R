@@ -253,7 +253,7 @@ compute_wss <- function(object, newdata = NULL) {
     wss <- object$withinss
   } else {
     d <- rxdist(object, newdata)
-    pred <- apply(d, 1L, which.min)
+    pred <- factor(apply(d, 1L, which.min), levels = seq_len(nrow(object$centers)))
     dist <- apply(d, 1L, min)
     wss <- as.numeric(tapply(dist, pred, sum, default = 0))
   }

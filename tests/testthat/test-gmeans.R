@@ -74,7 +74,7 @@ test_that("predict works", {
   newdata <- matrix(rnorm(2L), ncol = 2L, dimnames = list(NULL, c("x", "y")))
   expect_length(predict(cl, newdata), 1L)
   expect_identical(predict(cl, newdata), predict(cl, rbind(newdata, newdata))[1L])
-  expect_no_error(compute_wss(cl, newdata))
+  expect_length(compute_wss(cl, newdata), nrow(cl$centers))
   # error when required cols are missing
   expect_error(predict(cl, x[, "x", drop = FALSE]))
   # allow more than required cols
@@ -128,4 +128,14 @@ test_that("ad.test works", {
 test_that("compute_wss works", {
   km <- kmeans(mtcars, 5)
   expect_equal(compute_wss(km), compute_wss(km, mtcars)) # nolint
+})
+
+test_that("compute_wss keeps one entry per cluster", {
+  withr::local_seed(1234L)
+  km <- kmeans(mtcars, 5L)
+  # newdata reaching only a subset of the clusters
+  wss <- compute_wss(km, mtcars[1:3, ])
+  expect_length(wss, nrow(km$centers))
+  expect_true(any(wss == 0))
+  expect_equal(sum(wss > 0), length(unique(predict(km, mtcars[1:3, ])))) # nolint
 })
