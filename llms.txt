@@ -25,36 +25,36 @@ library(gmeans)
 
 km <- gmeans(mtcars)
 km
-#> K-means clustering with 2 clusters of sizes 18, 14
+#> K-means clustering with 2 clusters of sizes 14, 18
 #> 
 #> Cluster means:
 #>        mpg      cyl     disp        hp     drat       wt     qsec        vs
-#> 1 23.97222 4.777778 135.5389  98.05556 3.882222 2.609056 18.68611 0.7777778
-#> 2 15.10000 8.000000 353.1000 209.21429 3.229286 3.999214 16.77214 0.0000000
+#> 1 15.10000 8.000000 353.1000 209.21429 3.229286 3.999214 16.77214 0.0000000
+#> 2 23.97222 4.777778 135.5389  98.05556 3.882222 2.609056 18.68611 0.7777778
 #>          am     gear     carb
-#> 1 0.6111111 4.000000 2.277778
-#> 2 0.1428571 3.285714 3.500000
+#> 1 0.1428571 3.285714 3.500000
+#> 2 0.6111111 4.000000 2.277778
 #> 
 #> Clustering vector:
 #>           Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
-#>                   1                   1                   1                   1 
-#>   Hornet Sportabout             Valiant          Duster 360           Merc 240D 
-#>                   2                   1                   2                   1 
-#>            Merc 230            Merc 280           Merc 280C          Merc 450SE 
-#>                   1                   1                   1                   2 
-#>          Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
 #>                   2                   2                   2                   2 
+#>   Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+#>                   1                   2                   1                   2 
+#>            Merc 230            Merc 280           Merc 280C          Merc 450SE 
+#>                   2                   2                   2                   1 
+#>          Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+#>                   1                   1                   1                   1 
 #>   Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
-#>                   2                   1                   1                   1 
-#>       Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
 #>                   1                   2                   2                   2 
-#>    Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+#>       Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
 #>                   2                   1                   1                   1 
+#>    Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+#>                   1                   2                   2                   2 
 #>      Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
-#>                   2                   1                   2                   1 
+#>                   1                   2                   1                   2 
 #> 
 #> Within cluster sum of squares by cluster:
-#> [1] 58920.54 93643.90
+#> [1] 93643.90 58920.54
 #>  (between_SS / total_SS =  75.5 %)
 #> 
 #> Available components:
