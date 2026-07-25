@@ -74,7 +74,9 @@ test_that("predict works", {
   expect_error(predict(cl))
   # newdata should work with a single row
   newdata <- matrix(rnorm(2L), ncol = 2L, dimnames = list(NULL, c("x", "y")))
-  expect_no_error(predict(cl, newdata))
+  expect_length(predict(cl, newdata), 1L)
+  expect_identical(predict(cl, newdata), predict(cl, rbind(newdata, newdata))[1L])
+  expect_no_error(compute_wss(cl, newdata))
   # error when required cols are missing
   expect_error(predict(cl, x[, "x", drop = FALSE]))
   # allow more than required cols

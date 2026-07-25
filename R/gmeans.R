@@ -286,7 +286,11 @@ rxdist <- function(
     manhattan = function(data, x) rowSums(abs(sweep(data, 2L, x))),
     minkowski = function(data, x) (rowSums(abs(sweep(data, 2L, x))^p))^(1 / p)
   )
-  apply(centers, 1L, function(x) distance(newdata, x))
+  matrix(
+    apply(centers, 1L, function(x) distance(newdata, x)),
+    nrow = nrow(newdata),
+    ncol = nrow(centers)
+  )
 }
 
 #' Anderson-Darling Normality Test
