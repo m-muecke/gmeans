@@ -105,7 +105,8 @@ split_and_search <- function(data, cluster, level, ...) {
     return(NULL)
   }
   points <- data[cluster, , drop = FALSE]
-  if (nrow(unique(points)) < 2L) {
+  # all rows identical, so there are fewer distinct points than centers to find
+  if (!any(points != rep(points[1L, ], each = nrow(points)))) {
     return(NULL)
   }
   km <- stats::kmeans(points, 2L, ...)
