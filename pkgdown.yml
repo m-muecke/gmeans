@@ -1,10 +1,10 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   introduction: introduction.html
   mlr3-integration: mlr3-integration.html
-last_built: 2026-06-23T07:51Z
+last_built: 2026-07-25T08:56Z
 urls:
   reference: https://m-muecke.github.io/gmeans/reference
   article: https://m-muecke.github.io/gmeans/articles
