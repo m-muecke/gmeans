@@ -149,7 +149,7 @@ p1 <- ggplot(assignments, aes(x = x1, y = x2)) +
 p1
 ```
 
-## Visualizing Cluster Centers
+## Visualizing cluster centers
 
 To enhance the visualization, let's add cluster centers:
 
@@ -159,7 +159,7 @@ p2 <- p1 + geom_point(data = clusters, size = 10, shape = "x") +
 p2
 ```
 
-## Evaluating Clustering Performance
+## Evaluating clustering performance
 
 Finally, we can look at how the total within-cluster sum of squares (WSS) changes with
 different values of `k`. This helps us see how well the data is being clustered as `k`
@@ -188,7 +188,7 @@ of the data effectively.
 
 As seen from the plots, choosing the right number of clusters is not straightforward.
 We could use metrics like WSS to help decide, but these methods can be subjective and
-prone to error. This is where the G-means algorithm comes in, it automatically
+prone to error. This is where the G-means algorithm comes in: it automatically
 determines the number of clusters by assessing the data distribution within each
 cluster.
 

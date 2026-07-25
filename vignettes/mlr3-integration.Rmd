@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 options(datatable.print.topn = 3L)
 ```
 
-This vignette demonstrates how to integrate the G-means algorithm with the 
+This vignette demonstrates how to integrate the G-means algorithm with the
 [mlr3](https://mlr3.mlr-org.com/) framework for [clustering](https://mlr3cluster.mlr-org.com/).
 G-means extends k-means by adapting the number of clusters based on statistical tests.
 
@@ -101,7 +101,7 @@ autoplot(prediction, task)
 ```
 
 We calculate performance metrics such as within-cluster sum of squares (`clust.wss`)
-and silhouette width (`clust.silhouette`), which measure cluster compactness and 
+and silhouette width (`clust.silhouette`), which measure cluster compactness and
 separation, respectively.
 
 ```{r}
@@ -109,7 +109,7 @@ measures <- msrs(c("clust.wss", "clust.silhouette"))
 prediction$score(measures, task)
 ```
 
-Alternatively, evaluate the clustering with PCA (Principal Component Analysis) and 
+Alternatively, evaluate the clustering with PCA (Principal Component Analysis) and
 Silhouette plots:
 
 ```{r, dpi = 300}
@@ -117,7 +117,7 @@ autoplot(prediction, task, type = "pca")
 autoplot(prediction, task, type = "sil")
 ```
 
-Lastly, we can now easily run a benchmark experiment to compare G-means with other 
+Lastly, we can now easily run a benchmark experiment to compare G-means with other
 clustering algorithms.
 
 ```{r}
