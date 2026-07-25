@@ -80,8 +80,8 @@
 
     
     
-<p>This vignette demonstrates how to integrate the G-Means algorithm
-with the <a href="https://mlr3.mlr-org.com/" class="external-link">mlr3</a> framework for <a href="https://mlr3cluster.mlr-org.com/" class="external-link">clustering</a>. G-Means extends
+<p>This vignette demonstrates how to integrate the G-means algorithm
+with the <a href="https://mlr3.mlr-org.com/" class="external-link">mlr3</a> framework for <a href="https://mlr3cluster.mlr-org.com/" class="external-link">clustering</a>. G-means extends
 k-means by adapting the number of clusters based on statistical
 tests.</p>
 <p>We’ll start by loading the necessary libraries:</p>
@@ -92,7 +92,7 @@ tests.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlr3viz.mlr-org.com" class="external-link">mlr3viz</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paradox.mlr-org.com" class="external-link">paradox</a></span><span class="op">)</span></span></code></pre></div>
 <p>We define a custom <code>LearnerClustGMeans</code> class by extending
-the [mlr3cluster::LearnerClust] class for G-Means clustering.</p>
+the [mlr3cluster::LearnerClust] class for G-means clustering.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">LearnerClustGMeans</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></span><span class="op">(</span><span class="st">"LearnerClustGMeans"</span>,</span>
 <span>  inherit <span class="op">=</span> <span class="va">LearnerClust</span>,</span>
@@ -119,7 +119,7 @@ the [mlr3cluster::LearnerClust] class for G-Means clustering.</p>
 <span>        properties <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"partitional"</span>, <span class="st">"exclusive"</span>, <span class="st">"complete"</span><span class="op">)</span>,</span>
 <span>        packages <span class="op">=</span> <span class="st">"gmeans"</span>,</span>
 <span>        man <span class="op">=</span> <span class="st">"mlr3cluster::mlr_learners_clust.gmeans"</span>,</span>
-<span>        label <span class="op">=</span> <span class="st">"G-Means"</span></span>
+<span>        label <span class="op">=</span> <span class="st">"G-means"</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">}</span></span>
 <span>  <span class="op">)</span>,</span>
@@ -143,7 +143,7 @@ the [mlr3cluster::LearnerClust] class for G-Means clustering.</p>
 <span></span>
 <span><span class="va">mlr_learners</span><span class="op">$</span><span class="fu">add</span><span class="op">(</span><span class="st">"clust.gmeans"</span>, <span class="va">LearnerClustGMeans</span><span class="op">)</span></span></code></pre></div>
 <p>We create a clustering task using the <code>usarrests</code> dataset
-and train the G-Means learner.</p>
+and train the G-means learner.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">task</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">tsk</a></span><span class="op">(</span><span class="st">"usarrests"</span><span class="op">)</span></span>
 <span><span class="va">learner</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"clust.gmeans"</span><span class="op">)</span></span>
@@ -161,7 +161,7 @@ and train the G-Means learner.</p>
 <span><span class="co">#&gt;       49         1</span></span>
 <span><span class="co">#&gt;       50         1</span></span></code></pre></div>
 <p>We use <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot()</a></code> to visualize the clusters produced by
-the G-Means learner. This provides a simple scatter plot of the cluster
+the G-means learner. This provides a simple scatter plot of the cluster
 assignments.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">prediction</span>, <span class="va">task</span><span class="op">)</span></span></code></pre></div>
@@ -199,7 +199,7 @@ Analysis) and Silhouette plots:</p>
 <span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p><img src="mlr3-integration_files/figure-html/unnamed-chunk-6-2.png" class="r-plt" alt="" width="2187.5"></p>
 <p>Lastly, we can now easily run a benchmark experiment to compare
-G-Means with other clustering algorithms.</p>
+G-means with other clustering algorithms.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">learners</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://mlr3.mlr-org.com/reference/mlr_sugar.html" class="external-link">lrn</a></span><span class="op">(</span><span class="st">"clust.featureless"</span><span class="op">)</span>,</span>

@@ -1,8 +1,8 @@
 # mlr3 Integration
 
-This vignette demonstrates how to integrate the G-Means algorithm with
+This vignette demonstrates how to integrate the G-means algorithm with
 the [mlr3](https://mlr3.mlr-org.com/) framework for
-[clustering](https://mlr3cluster.mlr-org.com/). G-Means extends k-means
+[clustering](https://mlr3cluster.mlr-org.com/). G-means extends k-means
 by adapting the number of clusters based on statistical tests.
 
 We’ll start by loading the necessary libraries:
@@ -17,7 +17,7 @@ library(paradox)
 ```
 
 We define a custom `LearnerClustGMeans` class by extending the
-\[mlr3cluster::LearnerClust\] class for G-Means clustering.
+\[mlr3cluster::LearnerClust\] class for G-means clustering.
 
 ``` r
 
@@ -46,7 +46,7 @@ LearnerClustGMeans <- R6::R6Class("LearnerClustGMeans",
         properties = c("partitional", "exclusive", "complete"),
         packages = "gmeans",
         man = "mlr3cluster::mlr_learners_clust.gmeans",
-        label = "G-Means"
+        label = "G-means"
       )
     }
   ),
@@ -72,7 +72,7 @@ mlr_learners$add("clust.gmeans", LearnerClustGMeans)
 ```
 
 We create a clustering task using the `usarrests` dataset and train the
-G-Means learner.
+G-means learner.
 
 ``` r
 
@@ -95,7 +95,7 @@ prediction
 
 We use
 [`autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html) to
-visualize the clusters produced by the G-Means learner. This provides a
+visualize the clusters produced by the G-means learner. This provides a
 simple scatter plot of the cluster assignments.
 
 ``` r
@@ -149,7 +149,7 @@ autoplot(prediction, task, type = "sil")
 
 ![](mlr3-integration_files/figure-html/unnamed-chunk-6-2.png)
 
-Lastly, we can now easily run a benchmark experiment to compare G-Means
+Lastly, we can now easily run a benchmark experiment to compare G-means
 with other clustering algorithms.
 
 ``` r

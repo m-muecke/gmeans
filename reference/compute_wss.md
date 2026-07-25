@@ -29,7 +29,7 @@ within-cluster sum of squares per cluster, in the order of the rows of
 ## Details
 
 WSS is defined as \$\$ \sum\_{i=1}^{n} \left\\x\_{i} -
-\mu\_{j(i)}\right\\^2 \$\$, where \\x\_{i}\\ is a data point and
+\mu\_{j(i)}\right\\^2, \$\$ where \\x\_{i}\\ is a data point and
 \\\mu\_{j(i)}\\ is the centroid of the cluster to which \\x\_{i}\\ is
 assigned. When new data is provided, the function predicts the nearest
 cluster for each new observation and computes the WSS for these points
