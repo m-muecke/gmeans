@@ -168,9 +168,9 @@ kmeans_plusplus <- function(x, k) {
 
 #' Null Hypothesis Test
 #'
-#  @description
-#  Simplifies the test for Gaussian fit by projecting the data to one dimension using
-#  the following formula, as described in `r cite_bib("hamerly2003learning")`:
+#' @description
+#' Simplifies the test for Gaussian fit by projecting the data to one dimension using
+#' the following formula, as described in `r cite_bib("hamerly2003learning")`:
 #' \deqn{
 #'   x_{i}^{*}=\frac{\left \langle x_{i}, v \right \rangle}{\left \| v \right \|^{2}}
 #' }
@@ -243,8 +243,8 @@ predict.gmeans <- function(
 #'
 #' @details
 #' WSS is defined as \deqn{
-#'   \sum_{i=1}^{n} \left\|x_{i} - \mu_{j(i)}\right\|^2
-#' },
+#'   \sum_{i=1}^{n} \left\|x_{i} - \mu_{j(i)}\right\|^2,
+#' }
 #' where \eqn{x_{i}} is a data point and \eqn{\mu_{j(i)}} is the centroid of the cluster
 #' to which \eqn{x_{i}} is assigned. When new data is provided, the function predicts
 #' the nearest cluster for each new observation and computes the WSS for these points

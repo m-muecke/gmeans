@@ -127,7 +127,6 @@ test_that("ad.test works", {
   expect_vector(res$statistic, ptype = numeric(), size = 1L)
   expect_vector(res$p.value, ptype = numeric(), size = 1L)
   expect_gte(res$p.value, 0)
-  expect_gte(res$p.value, 0)
   expect_lte(res$p.value, 1)
   expect_identical(res$method, "Anderson-Darling normality test")
   expect_identical(res$data.name, "x")
