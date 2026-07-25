@@ -30,7 +30,8 @@ library(paradox)
 ```
 
 We define a custom `LearnerClustGMeans` class by extending the
-[mlr3cluster::LearnerClust] class for G-means clustering.
+[`mlr3cluster::LearnerClust`](https://mlr3cluster.mlr-org.com/reference/LearnerClust.html)
+class for G-means clustering.
 
 ```{r}
 LearnerClustGMeans <- R6::R6Class("LearnerClustGMeans",
