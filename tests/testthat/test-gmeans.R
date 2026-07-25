@@ -44,6 +44,13 @@ test_that("gmeans works with a single initial center", {
   expect_gt(nrow(gmeans(x[, 1L, drop = FALSE], k_init = 1L)$centers), 1L)
 })
 
+test_that("gmeans respects k_max", {
+  withr::local_seed(2L)
+  x <- do.call(rbind, lapply(seq(0, 60, by = 4), \(m) cbind(rnorm(40L, m), rnorm(40L, m))))
+  expect_lte(nrow(gmeans(x, k_max = 3L)$centers), 3L)
+  expect_lte(nrow(gmeans(x, k_max = 5L)$centers), 5L)
+})
+
 test_that("gmeans works with duplicated points", {
   withr::local_seed(11L)
   # a cluster of identical points has fewer distinct rows than the 2 centers

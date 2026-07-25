@@ -85,9 +85,12 @@ suggest_centers <- function(data, km, k_max, level, ...) {
   centers <- NULL
   k <- nrow(km$centers)
   for (i in seq_len(k)) {
-    cluster <- which(km$cluster == i)
-    new_centers <- split_and_search(data, cluster, level, ...)
-    if (is.null(new_centers) || k >= k_max) {
+    new_centers <- NULL
+    if (k < k_max) {
+      cluster <- which(km$cluster == i)
+      new_centers <- split_and_search(data, cluster, level, ...)
+    }
+    if (is.null(new_centers)) {
       centers <- rbind(centers, km$centers[i, ])
     } else {
       centers <- rbind(centers, new_centers)
