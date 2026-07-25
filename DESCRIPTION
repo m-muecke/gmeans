@@ -28,7 +28,7 @@ Suggests:
     paradox,
     R6,
     rmarkdown,
-    testthat (>= 3.0.0),
+    testthat (>= 3.3.0),
     withr
 VignetteBuilder:
     knitr
