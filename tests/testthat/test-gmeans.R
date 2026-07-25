@@ -34,15 +34,24 @@ test_that("gmeans works with a single column", {
   expect_identical(cl$centers, withr::with_seed(1L, gmeans(as.data.frame(x)))$centers)
 })
 
+test_that("gmeans works with a single initial center", {
+  withr::local_seed(1234L)
+  x <- rbind(
+    matrix(rnorm(100L, sd = 0.3), ncol = 2L),
+    matrix(rnorm(100L, mean = 3, sd = 0.3), ncol = 2L)
+  )
+  expect_gt(nrow(gmeans(x, k_init = 1L)$centers), 1L)
+  expect_gt(nrow(gmeans(x[, 1L, drop = FALSE], k_init = 1L)$centers), 1L)
+})
+
 test_that("kmeans_plusplus works", {
   withr::local_seed(1234L)
   x <- matrix(rnorm(100L, sd = 0.3), ncol = 2L)
-  for (i in 2:5) {
+  for (i in 1:5) {
     res <- kmeans_plusplus(x, i)
     expect_identical(dim(res), c(i, 2L))
     expect_true(is.matrix(res))
   }
-  expect_error(kmeans_plusplus(x, 1L))
 
   # check distances are non-negative
   centroids <- matrix(NA_real_, nrow = 2, ncol = ncol(x))

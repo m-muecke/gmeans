@@ -64,6 +64,9 @@ gmeans <- function(x, k_init = 2L, k_max = 10L, level = 0.05, ...) {
   )
 
   init_centers <- kmeans_plusplus(x, k_init)
+  if (length(init_centers) == 1L) {
+    init_centers <- 1L
+  }
   km <- stats::kmeans(x, init_centers, ...)
 
   repeat {
@@ -141,7 +144,7 @@ kmeans_plusplus <- function(x, k) {
   centroids <- matrix(NA_real_, nrow = k, ncol = ncol(x))
   centroids[1L, ] <- x[sample.int(n, 1L), ]
 
-  for (i in 2:k) {
+  for (i in seq_len(k)[-1L]) {
     dists <- apply(x, 1L, \(xi) min(colSums((t(centroids[1:(i - 1), ]) - xi)^2)))
     prob <- dists / sum(dists)
     centroids[i, ] <- x[sample.int(n, 1, prob = prob), ]
