@@ -6,7 +6,8 @@ Authors@R:
            comment = c(ORCID = "0009-0000-9432-9795"))
 Description: Gaussian-means (G-means) clustering is a clustering algorithm
     that extends the k-means algorithm by automatically determining the
-    number of clusters.
+    number of clusters, as described in Hamerly and Elkan (2003)
+    <https://proceedings.neurips.cc/paper_files/paper/2003/hash/234833147b97bb6aed53a8f4f1c7a7d8-Abstract.html>.
 License: MIT + file LICENSE
 URL: https://m-muecke.github.io/gmeans/,
     https://github.com/m-muecke/gmeans
