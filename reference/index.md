@@ -8,5 +8,5 @@
   : Compute Within-Cluster Sum of Squares
 - [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md) :
   G-means Clustering
-- [`predict(`*`<kmeans>`*`)`](https://m-muecke.github.io/gmeans/reference/predict.kmeans.md)
+- [`predict(`*`<gmeans>`*`)`](https://m-muecke.github.io/gmeans/reference/predict.gmeans.md)
   : Predict Method for G-means Clustering
