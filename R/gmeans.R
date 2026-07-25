@@ -102,6 +102,9 @@ split_and_search <- function(data, cluster, level, ...) {
     return(NULL)
   }
   points <- data[cluster, , drop = FALSE]
+  if (nrow(unique(points)) < 2L) {
+    return(NULL)
+  }
   km <- stats::kmeans(points, 2L, ...)
   new_centers <- km$centers
   if (nrow(new_centers) > 1L && !is_null_hypothesis(points, new_centers, level)) {

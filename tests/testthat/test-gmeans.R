@@ -44,6 +44,15 @@ test_that("gmeans works with a single initial center", {
   expect_gt(nrow(gmeans(x[, 1L, drop = FALSE], k_init = 1L)$centers), 1L)
 })
 
+test_that("gmeans works with duplicated points", {
+  withr::local_seed(11L)
+  # a cluster of identical points has fewer distinct rows than the 2 centers
+  # stats::kmeans() is asked for
+  expect_null(split_and_search(matrix(rep(1, 20L), ncol = 2L), seq_len(10L), 0.05))
+  x <- cbind(a = rep(1:3, 20L), b = rep(1:2, 30L))
+  expect_s3_class(gmeans(x), "gmeans")
+})
+
 test_that("kmeans_plusplus works", {
   withr::local_seed(1234L)
   x <- matrix(rnorm(100L, sd = 0.3), ncol = 2L)
