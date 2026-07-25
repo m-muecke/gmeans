@@ -220,7 +220,7 @@ predict.kmeans <- function(
   ...
 ) {
   d <- rxdist(object, newdata, method, p)
-  max.col(-d)
+  max.col(-d, ties.method = "first")
 }
 
 #' Compute Within-Cluster Sum of Squares

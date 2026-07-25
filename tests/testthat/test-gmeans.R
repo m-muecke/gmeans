@@ -84,6 +84,26 @@ test_that("predict works", {
   expect_no_error(predict(cl, newdata))
 })
 
+test_that("predict breaks ties deterministically", {
+  km <- structure(
+    list(
+      centers = matrix(
+        c(0, 0, 2, 2),
+        ncol = 2L,
+        byrow = TRUE,
+        dimnames = list(NULL, c("x", "y"))
+      )
+    ),
+    class = "kmeans"
+  )
+  newdata <- matrix(c(1, 1, 1, 1), ncol = 2L, dimnames = list(NULL, c("x", "y")))
+  expect_identical(predict(km, newdata), c(1L, 1L))
+  expect_identical(
+    replicate(10L, predict(km, newdata)),
+    matrix(1L, nrow = 2L, ncol = 10L)
+  )
+})
+
 test_that("ad.test works", {
   withr::local_seed(1234L)
   x <- rnorm(100L, mean = 5, sd = 3)
