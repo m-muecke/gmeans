@@ -199,8 +199,8 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 #'   where \eqn{p} is a parameter that defines the distance type (e.g., \eqn{p=2}
 #'   for Euclidean, \eqn{p=1} for Manhattan).
 #'
-#' @param object (`any`)\cr
-#'   Class inheriting from `"kmeans"`.
+#' @param object (`gmeans()`)\cr
+#'   An object of class `"gmeans"`.
 #' @param newdata (`matrix()`)\cr
 #'   New data to predict on.
 #' @param method (`character(1)`)\cr
@@ -210,6 +210,7 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 #'   Power of the Minkowski distance. Default is `2`.
 #' @param ... (`any`)\cr
 #'   Additional arguments.
+#' @seealso [clue::cl_predict()] to predict on a plain [stats::kmeans()] object.
 #' @source Adapted from \CRANpkg{clue}
 #' @export
 #' @examples
@@ -219,7 +220,7 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 #'
 #' newdata <- x[1:10, ]
 #' predict(cl, newdata)
-predict.kmeans <- function(
+predict.gmeans <- function(
   object,
   newdata,
   method = c("euclidean", "manhattan", "minkowski"),

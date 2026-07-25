@@ -108,7 +108,7 @@ test_that("predict breaks ties deterministically", {
         dimnames = list(NULL, c("x", "y"))
       )
     ),
-    class = "kmeans"
+    class = c("gmeans", "kmeans")
   )
   newdata <- matrix(c(1, 1, 1, 1), ncol = 2L, dimnames = list(NULL, c("x", "y")))
   expect_identical(predict(km, newdata), c(1L, 1L))
@@ -153,5 +153,6 @@ test_that("compute_wss keeps one entry per cluster", {
   wss <- compute_wss(km, mtcars[1:3, ])
   expect_length(wss, nrow(km$centers))
   expect_true(any(wss == 0))
-  expect_equal(sum(wss > 0), length(unique(predict(km, mtcars[1:3, ])))) # nolint
+  hit <- apply(rxdist(km, mtcars[1:3, ]), 1L, which.min)
+  expect_identical(which(wss > 0), sort(unique(hit)))
 })
