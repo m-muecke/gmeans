@@ -22,6 +22,18 @@ test_that("gmeans works", {
   expect_error(gmeans(x, level = c(0.5, 0.7)))
 })
 
+test_that("gmeans works with a single column", {
+  withr::local_seed(1234L)
+  x <- matrix(c(rnorm(60L, sd = 0.3), rnorm(60L, mean = 8, sd = 0.3)), ncol = 1L)
+  colnames(x) <- "v"
+  cl <- withr::with_seed(1L, gmeans(x))
+  expect_s3_class(cl, "gmeans")
+  expect_identical(ncol(cl$centers), 1L)
+  expect_gt(nrow(cl$centers), 1L)
+  expect_identical(colnames(cl$centers), "v")
+  expect_identical(cl$centers, withr::with_seed(1L, gmeans(as.data.frame(x)))$centers)
+})
+
 test_that("kmeans_plusplus works", {
   withr::local_seed(1234L)
   x <- matrix(rnorm(100L, sd = 0.3), ncol = 2L)
