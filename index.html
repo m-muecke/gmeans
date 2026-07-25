@@ -126,6 +126,11 @@
 <span><span class="co">#&gt; [6] "betweenss"    "size"         "iter"         "ifault"</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="when-to-use-gmeans">When to use gmeans<a class="anchor" aria-label="anchor" href="#when-to-use-gmeans"></a>
+</h2>
+<p>Use <code><a href="reference/gmeans.html">gmeans()</a></code> when the number of clusters is unknown and the clusters are roughly Gaussian. The algorithm splits a cluster only when an Anderson-Darling test rejects normality, so the number of clusters follows from the data and a single significance level rather than from a grid search over <code>k</code>.</p>
+</div>
+<div class="section level2">
 <h2 id="related-work">Related work<a class="anchor" aria-label="anchor" href="#related-work"></a>
 </h2>
 <ul>

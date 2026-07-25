@@ -63,6 +63,14 @@ km
 #> [6] "betweenss"    "size"         "iter"         "ifault"
 ```
 
+## When to use gmeans
+
+Use [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
+when the number of clusters is unknown and the clusters are roughly
+Gaussian. The algorithm splits a cluster only when an Anderson-Darling
+test rejects normality, so the number of clusters follows from the data
+and a single significance level rather than from a grid search over `k`.
+
 ## Related work
 
 - [nortest](https://CRAN.R-project.org/package=nortest): R package for
