@@ -282,12 +282,12 @@ rxdist <- function(
   }
   distance <- switch(
     method,
-    euclidean = function(data, x) rowSums(sweep(data, 2L, x)^2),
-    manhattan = function(data, x) rowSums(abs(sweep(data, 2L, x))),
-    minkowski = function(data, x) (rowSums(abs(sweep(data, 2L, x))^p))^(1 / p)
+    euclidean = \(data, x) rowSums(sweep(data, 2L, x)^2),
+    manhattan = \(data, x) rowSums(abs(sweep(data, 2L, x))),
+    minkowski = \(data, x) (rowSums(abs(sweep(data, 2L, x))^p))^(1 / p)
   )
   matrix(
-    apply(centers, 1L, function(x) distance(newdata, x)),
+    apply(centers, 1L, \(x) distance(newdata, x)),
     nrow = nrow(newdata),
     ncol = nrow(centers)
   )

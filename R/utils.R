@@ -9,7 +9,7 @@ format_bib <- function(..., bibentries = NULL, envir = parent.frame()) {
   stopifnot(is.list(bibentries), anyDuplicated(names(bibentries)) == 0L)
   str <- vapply(
     list(...),
-    function(entry) tools::toRd(bibentries[[entry]]),
+    \(entry) tools::toRd(bibentries[[entry]]),
     NA_character_
   )
   paste0(str, collapse = "\n\n")
