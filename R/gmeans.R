@@ -102,12 +102,12 @@ suggest_centers <- function(data, km, k_max, level, ...) {
 
 split_and_search <- function(data, cluster, level, ...) {
   if (length(cluster) < 8L) {
-    return(NULL)
+    return()
   }
   points <- data[cluster, , drop = FALSE]
   # all rows identical, so there are fewer distinct points than centers to find
   if (!any(points != rep(points[1L, ], each = nrow(points)))) {
-    return(NULL)
+    return()
   }
   km <- stats::kmeans(points, 2L, ...)
   new_centers <- km$centers
@@ -254,8 +254,9 @@ predict.gmeans <- function(
 #'   Class inheriting from `"kmeans"`.
 #' @param newdata (`matrix()`)\cr
 #'   New data to predict on.
-#' @returns A `numeric()` vector with one within-cluster sum of squares per cluster, in the
-#'   order of the rows of `object$centers`. Clusters with no assigned points contribute `0`.
+#' @returns A `numeric()` vector with one within-cluster sum of squares per cluster,
+#'   in the order of the rows of `object$centers`. Clusters with no assigned points
+#'   contribute `0`.
 #' @export
 #' @examples
 #' km <- kmeans(mtcars, 5)

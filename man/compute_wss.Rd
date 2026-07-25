@@ -14,8 +14,9 @@ Class inheriting from \code{"kmeans"}.}
 New data to predict on.}
 }
 \value{
-A \code{numeric()} vector with one within-cluster sum of squares per cluster, in the
-order of the rows of \code{object$centers}. Clusters with no assigned points contribute \code{0}.
+A \code{numeric()} vector with one within-cluster sum of squares per cluster,
+in the order of the rows of \code{object$centers}. Clusters with no assigned points
+contribute \code{0}.
 }
 \description{
 Compute Within-Cluster Sum of Squares
