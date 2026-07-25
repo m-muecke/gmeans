@@ -341,8 +341,15 @@ ad.test <- function(x) {
   if (n < 8L) {
     stop("sample size must be greater than 7", call. = FALSE)
   }
+  if (!all(is.finite(x))) {
+    stop("`x` must contain only finite values", call. = FALSE)
+  }
+  sdx <- stats::sd(x)
+  if (sdx == 0) {
+    stop("`x` must have a non-zero standard deviation", call. = FALSE)
+  }
 
-  scaled <- (x - mean(x)) / stats::sd(x)
+  scaled <- (x - mean(x)) / sdx
   logp1 <- stats::pnorm(scaled, log.p = TRUE)
   logp2 <- stats::pnorm(-scaled, log.p = TRUE)
   h <- (2 * 1:n - 1) * (logp1 + rev(logp2))

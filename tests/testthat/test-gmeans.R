@@ -121,6 +121,8 @@ test_that("ad.test works", {
   expect_error(ad.test(letters))
   expect_error(ad.test(numeric()))
   expect_error(ad.test(rnorm(7L)))
+  expect_error(ad.test(rep(1, 20L)), "standard deviation")
+  expect_error(ad.test(c(rnorm(10L), Inf)), "finite")
 })
 
 test_that("compute_wss works", {
