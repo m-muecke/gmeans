@@ -47,6 +47,11 @@ Adapted from [clue](https://CRAN.R-project.org/package=clue)
   (`any`)  
   Additional arguments.
 
+## Value
+
+An [`integer()`](https://rdrr.io/r/base/integer.html) vector with one
+cluster index per row of `newdata`.
+
 ## Details
 
 The `predict` method for G-means clustering assigns new data points to

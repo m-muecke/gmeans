@@ -20,6 +20,12 @@ compute_wss(object, newdata = NULL)
   ([`matrix()`](https://rdrr.io/r/base/matrix.html))  
   New data to predict on.
 
+## Value
+
+A [`numeric()`](https://rdrr.io/r/base/numeric.html) vector with one
+within-cluster sum of squares per cluster, in the order of the rows of
+`object$centers`. Clusters with no assigned points contribute `0`.
+
 ## Details
 
 WSS is defined as \$\$ \sum\_{i=1}^{n} \left\\x\_{i} -
