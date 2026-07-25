@@ -192,7 +192,7 @@ p1
 
 ![](introduction_files/figure-html/unnamed-chunk-8-1.png)
 
-## Visualizing Cluster Centers
+## Visualizing cluster centers
 
 To enhance the visualization, let’s add cluster centers:
 
@@ -205,7 +205,7 @@ p2
 
 ![](introduction_files/figure-html/unnamed-chunk-9-1.png)
 
-## Evaluating Clustering Performance
+## Evaluating clustering performance
 
 Finally, we can look at how the total within-cluster sum of squares
 (WSS) changes with different values of `k`. This helps us see how well
@@ -239,7 +239,7 @@ structure of the data effectively.
 As seen from the plots, choosing the right number of clusters is not
 straightforward. We could use metrics like WSS to help decide, but these
 methods can be subjective and prone to error. This is where the G-means
-algorithm comes in, it automatically determines the number of clusters
+algorithm comes in: it automatically determines the number of clusters
 by assessing the data distribution within each cluster.
 
 By using statistical hypothesis testing (the Anderson-Darling test in
