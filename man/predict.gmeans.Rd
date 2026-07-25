@@ -32,6 +32,9 @@ Power of the Minkowski distance. Default is \code{2}.}
 \item{...}{(\code{any})\cr
 Additional arguments.}
 }
+\value{
+An \code{integer()} vector with one cluster index per row of \code{newdata}.
+}
 \description{
 Predicted values based on the G-means clustering model.
 }
