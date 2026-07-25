@@ -145,7 +145,8 @@ kmeans_plusplus <- function(x, k) {
   centroids[1L, ] <- x[sample.int(n, 1L), ]
 
   for (i in seq_len(k)[-1L]) {
-    dists <- apply(x, 1L, \(xi) min(colSums((t(centroids[1:(i - 1), ]) - xi)^2)))
+    chosen <- t(centroids[seq_len(i - 1L), , drop = FALSE])
+    dists <- apply(x, 1L, \(xi) min(colSums((chosen - xi)^2)))
     prob <- dists / sum(dists)
     centroids[i, ] <- x[sample.int(n, 1, prob = prob), ]
   }

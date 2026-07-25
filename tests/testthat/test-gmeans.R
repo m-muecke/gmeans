@@ -53,14 +53,12 @@ test_that("kmeans_plusplus works", {
     expect_true(is.matrix(res))
   }
 
-  # check distances are non-negative
-  centroids <- matrix(NA_real_, nrow = 2, ncol = ncol(x))
-  centroids[1L, ] <- x[sample.int(nrow(x), 1L), ]
-  dists <- apply(x, 1L, \(xi) min(colSums((t(centroids[1L, ]) - xi)^2)))
-  expect_true(all(dists >= 0))
-  # probabilities sum to 1
-  prob <- dists / sum(dists)
-  expect_identical(sum(prob), 1)
+  # a constant column contributes no per-dimension difference, so seeding only
+  # works when distances are summed over dimensions rather than minimised
+  x <- cbind(a = as.numeric(1:20), b = 0)
+  res <- kmeans_plusplus(x, 2L)
+  expect_identical(dim(res), c(2L, 2L))
+  expect_false(anyNA(res))
 })
 
 test_that("predict works", {
