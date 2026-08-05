@@ -1,3 +1,5 @@
+# gmeans (development version)
+
 # gmeans 0.1.0
 
 # gmeans 0.0.1
