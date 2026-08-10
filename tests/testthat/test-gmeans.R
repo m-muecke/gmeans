@@ -14,6 +14,7 @@ test_that("gmeans works", {
   expect_error(gmeans(x, k_max = NA_integer_))
   expect_error(gmeans(x, k_max = 1:10))
   expect_error(gmeans(x, k_max = 1.5))
+  expect_error(gmeans(x, k_init = 3L, k_max = 2L), "k_init <= k_max", fixed = TRUE)
   # level needs to be a number between 0 and 1
   expect_error(gmeans(x, level = NULL))
   expect_error(gmeans(x, level = NA_real_))

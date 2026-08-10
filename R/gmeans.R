@@ -32,7 +32,8 @@
 #' @param k_init (`integer(1)`)\cr
 #'   Initial amount of centers. Default is `2L`.
 #' @param k_max (`integer(1)`)\cr
-#'   Maximum amount of centers. Default is `10L`.
+#'   Maximum amount of centers. Must be greater than or equal to `k_init`.
+#'   Default is `10L`.
 #' @param level (`numeric(1)`)\cr
 #'   Significance level for the Anderson-Darling test.
 #'   Default is `0.05`. See [ad.test()] for more information.
@@ -58,6 +59,7 @@ gmeans <- function(x, k_init = 2L, k_max = 10L, level = 0.05, ...) {
     is.matrix(x),
     is_count(k_init),
     is_count(k_max),
+    k_init <= k_max,
     is_number(level),
     level > 0,
     level < 1

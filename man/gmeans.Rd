@@ -15,7 +15,8 @@ Numeric matrix of data, or an object that can be coerced to such a matrix
 Initial amount of centers. Default is \code{2L}.}
 
 \item{k_max}{(\code{integer(1)})\cr
-Maximum amount of centers. Default is \code{10L}.}
+Maximum amount of centers. Must be greater than or equal to \code{k_init}.
+Default is \code{10L}.}
 
 \item{level}{(\code{numeric(1)})\cr
 Significance level for the Anderson-Darling test.
