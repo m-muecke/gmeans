@@ -25,7 +25,8 @@ gmeans(x, k_init = 2L, k_max = 10L, level = 0.05, ...)
 - k_max:
 
   (`integer(1)`)  
-  Maximum amount of centers. Default is `10L`.
+  Maximum amount of centers. Must be greater than or equal to `k_init`.
+  Default is `10L`.
 
 - level:
 
