@@ -85,5 +85,8 @@ grid search over `k`.
 
 ## Related work
 
+- [mlr3cluster](https://mlr3cluster.mlr-org.com/): cluster analysis for
+  the mlr3 ecosystem, which provides G-means as the `clust.gmeans`
+  learner.
 - [nortest](https://CRAN.R-project.org/package=nortest): R package for
   testing the composite hypothesis of normality.
