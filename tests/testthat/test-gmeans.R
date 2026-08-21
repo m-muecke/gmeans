@@ -21,6 +21,25 @@ test_that("gmeans works", {
   expect_error(gmeans(x, level = 0))
   expect_error(gmeans(x, level = 1))
   expect_error(gmeans(x, level = c(0.5, 0.7)))
+  # x must be numeric and finite
+  expect_error(gmeans(matrix(letters[1:20], ncol = 2L)), "is.numeric", fixed = TRUE)
+  expect_error(gmeans(rbind(x, c(NA, 1))), "is.finite", fixed = TRUE)
+})
+
+test_that("gmeans accepts logical input", {
+  withr::local_seed(1234L)
+  x <- matrix(sample(c(TRUE, FALSE), 60L, replace = TRUE), ncol = 2L)
+  expect_s3_class(gmeans(x), "gmeans")
+})
+
+test_that("gmeans errors clearly with too few distinct points", {
+  withr::local_seed(1234L)
+  expect_error(gmeans(matrix(1, nrow = 20L, ncol = 2L)), "distinct data points", fixed = TRUE)
+  expect_error(
+    gmeans(matrix(rnorm(10L), ncol = 2L), k_init = 6L),
+    "distinct data points",
+    fixed = TRUE
+  )
 })
 
 test_that("gmeans works with a single column", {
@@ -97,6 +116,14 @@ test_that("predict works", {
   # allow more than required cols
   newdata <- cbind(x, z = 1:50)
   expect_no_error(predict(cl, newdata))
+})
+
+test_that("predict errors when unnamed centers and newdata dimensions disagree", {
+  withr::local_seed(1234L)
+  km <- kmeans(matrix(rnorm(60L), ncol = 3L), 2L)
+  class(km) <- c("gmeans", class(km))
+  expect_error(predict(km, matrix(rnorm(10L), ncol = 2L)), "number of columns")
+  expect_no_error(predict(km, matrix(rnorm(15L), ncol = 3L)))
 })
 
 test_that("predict breaks ties deterministically", {

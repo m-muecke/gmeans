@@ -27,8 +27,9 @@
 #' 6. Repeat from step 2 until no more centers are added.
 #'
 #' @param x (`matrix()`)\cr
-#'   Numeric matrix of data, or an object that can be coerced to such a matrix
-#'   (such as a numeric vector or a data frame with all numeric columns).
+#'   Numeric matrix of data, or a data frame with all numeric columns.
+#'   Logical input is coerced to a 0/1 matrix.
+#'   Missing and infinite values are not allowed.
 #' @param k_init (`integer(1)`)\cr
 #'   Initial amount of centers. Default is `2L`.
 #' @param k_max (`integer(1)`)\cr
@@ -55,8 +56,13 @@ gmeans <- function(x, k_init = 2L, k_max = 10L, level = 0.05, ...) {
   if (inherits(x, "data.frame")) {
     x <- as.matrix(x)
   }
+  if (is.logical(x)) {
+    storage.mode(x) <- "double"
+  }
   stopifnot(
     is.matrix(x),
+    is.numeric(x),
+    all(is.finite(x)),
     is_count(k_init),
     is_count(k_max),
     k_init <= k_max,
@@ -158,7 +164,11 @@ kmeans_plusplus <- function(x, k) {
     # distance to the nearest chosen center, updated as centers are added
     dists <- colSums((tx - centroids[1L, ])^2)
     for (i in seq_len(k)[-1L]) {
-      prob <- dists / sum(dists)
+      total <- sum(dists)
+      if (total == 0) {
+        stop("more cluster centers than distinct data points", call. = FALSE)
+      }
+      prob <- dists / total
       centroids[i, ] <- x[sample.int(n, 1, prob = prob), ]
       if (i < k) {
         dists <- pmin(dists, colSums((tx - centroids[i, ])^2))
@@ -300,6 +310,9 @@ rxdist <- function(
   center_nms <- colnames(centers)
   if (!is.null(data_nms) && !is.null(center_nms) && !identical(data_nms, center_nms)) {
     newdata <- newdata[, center_nms, drop = FALSE]
+  }
+  if (ncol(newdata) != ncol(centers)) {
+    stop("`newdata` must have the same number of columns as the centers", call. = FALSE)
   }
   distance <- switch(
     method,
