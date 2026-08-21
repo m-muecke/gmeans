@@ -18,15 +18,8 @@ Imports:
 Suggests:
     clue,
     data.table (>= 1.15.0),
-    GGally,
-    ggfortify,
     ggplot2,
     knitr,
-    mlr3cluster,
-    mlr3misc,
-    mlr3viz,
-    paradox (>= 0.6.0),
-    R6,
     rmarkdown,
     testthat (>= 3.3.0),
     withr (>= 2.4.0)
