@@ -48,7 +48,7 @@ test_that("gmeans works with a single column", {
   colnames(x) <- "v"
   cl <- withr::with_seed(1L, gmeans(x))
   expect_s3_class(cl, "gmeans")
-  expect_identical(ncol(cl$centers), 1L)
+  expect_shape(cl$centers, ncol = 1L)
   expect_gt(nrow(cl$centers), 1L)
   expect_identical(colnames(cl$centers), "v")
   expect_identical(cl$centers, withr::with_seed(1L, gmeans(as.data.frame(x)))$centers)
@@ -85,7 +85,7 @@ test_that("kmeans_plusplus works", {
   x <- matrix(rnorm(100L, sd = 0.3), ncol = 2L)
   for (i in 1:5) {
     res <- kmeans_plusplus(x, i)
-    expect_identical(dim(res), c(i, 2L))
+    expect_shape(res, dim = c(i, 2L))
     expect_true(is.matrix(res))
   }
 
@@ -93,7 +93,7 @@ test_that("kmeans_plusplus works", {
   # works when distances are summed over dimensions rather than minimised
   x <- cbind(a = as.numeric(1:20), b = 0)
   res <- kmeans_plusplus(x, 2L)
-  expect_identical(dim(res), c(2L, 2L))
+  expect_shape(res, dim = c(2L, 2L))
   expect_false(anyNA(res))
 })
 
