@@ -181,5 +181,5 @@ test_that("compute_wss keeps one entry per cluster", {
   expect_length(wss, nrow(km$centers))
   expect_true(any(wss == 0))
   hit <- apply(rxdist(km, mtcars[1:3, ]), 1L, which.min)
-  expect_identical(which(wss > 0), sort(unique(hit)))
+  expect_setequal(which(wss > 0), hit)
 })
