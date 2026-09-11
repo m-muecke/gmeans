@@ -55,7 +55,7 @@
 #' colnames(x) <- c("x", "y")
 #' cl <- gmeans(x)
 gmeans <- function(x, k_init = 2L, k_max = 10L, level = 0.05, ...) {
-  if (inherits(x, "data.frame")) {
+  if (is.data.frame(x)) {
     x <- as.matrix(x)
   }
   if (is.logical(x)) {
@@ -303,7 +303,7 @@ rxdist <- function(
   p = 2
 ) {
   stopifnot(is_number(p), p > 0)
-  if (!is.matrix(newdata) && !inherits(newdata, "data.frame")) {
+  if (!is.matrix(newdata) && !is.data.frame(newdata)) {
     stop("`newdata` must be a matrix or data frame", call. = FALSE)
   }
   method <- match.arg(method)
@@ -317,7 +317,7 @@ rxdist <- function(
   if (!is.null(data_nms) && !is.null(center_nms) && !identical(data_nms, center_nms)) {
     newdata <- newdata[, center_nms, drop = FALSE]
   }
-  if (inherits(newdata, "data.frame")) {
+  if (is.data.frame(newdata)) {
     newdata <- as.matrix(newdata)
   }
   if (!is.numeric(newdata)) {
