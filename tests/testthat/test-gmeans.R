@@ -126,6 +126,27 @@ test_that("predict works", {
   expect_identical(predict(cl, x, method = "minkowski", p = 2), predict(cl, x))
 })
 
+test_that("predict ignores unused non-numeric columns in a data frame", {
+  withr::local_seed(1234L)
+  x <- as.matrix(iris[, -5L])
+  cl <- gmeans(x)
+  expect_identical(predict(cl, iris), predict(cl, x))
+  expect_identical(compute_wss(cl, iris), compute_wss(cl, x))
+  # required columns must still be numeric
+  bad <- iris
+  bad$Sepal.Length <- as.character(bad$Sepal.Length)
+  expect_error(predict(cl, bad), "must be numeric", fixed = TRUE)
+})
+
+test_that("predict rejects newdata that is not a matrix or data frame", {
+  withr::local_seed(1234L)
+  x <- as.matrix(iris[, -5L])
+  cl <- gmeans(x)
+  expect_error(predict(cl, x[1L, ]), "matrix or data frame", fixed = TRUE)
+  expect_error(predict(cl, NULL), "matrix or data frame", fixed = TRUE)
+  expect_error(compute_wss(cl, x[1L, ]), "matrix or data frame", fixed = TRUE)
+})
+
 test_that("predict errors when unnamed centers and newdata dimensions disagree", {
   withr::local_seed(1234L)
   km <- kmeans(matrix(rnorm(60L), ncol = 3L), 2L)

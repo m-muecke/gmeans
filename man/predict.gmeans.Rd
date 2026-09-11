@@ -20,7 +20,8 @@ Adapted from \CRANpkg{clue}
 An object of class \code{"gmeans"}.}
 
 \item{newdata}{(\code{matrix()})\cr
-New data to predict on.}
+New data to predict on, a numeric matrix or a data frame.
+Columns are matched to the centers by name and unused columns are ignored.}
 
 \item{method}{(\code{character(1)})\cr
 Distance metric to use.

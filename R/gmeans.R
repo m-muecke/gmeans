@@ -225,7 +225,8 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 #' @param object (`gmeans()`)\cr
 #'   An object of class `"gmeans"`.
 #' @param newdata (`matrix()`)\cr
-#'   New data to predict on.
+#'   New data to predict on, a numeric matrix or a data frame.
+#'   Columns are matched to the centers by name and unused columns are ignored.
 #' @param method (`character(1)`)\cr
 #'   Distance metric to use.
 #'   Either `"euclidean"`, `"manhattan"`, or `"minkowski"`. Default is `"euclidean"`.
@@ -269,7 +270,8 @@ predict.gmeans <- function(
 #' @param object (`any`)\cr
 #'   Class inheriting from `"kmeans"`.
 #' @param newdata (`matrix()`)\cr
-#'   New data to predict on.
+#'   New data to predict on, a numeric matrix or a data frame.
+#'   Columns are matched to the centers by name and unused columns are ignored.
 #' @returns A `numeric()` vector with one within-cluster sum of squares per cluster,
 #'   in the order of the rows of `object$centers`. Clusters with no assigned points
 #'   contribute `0`.
@@ -301,8 +303,8 @@ rxdist <- function(
   p = 2
 ) {
   stopifnot(is_number(p), p > 0)
-  if (inherits(newdata, "data.frame")) {
-    newdata <- as.matrix(newdata)
+  if (!is.matrix(newdata) && !inherits(newdata, "data.frame")) {
+    stop("`newdata` must be a matrix or data frame", call. = FALSE)
   }
   method <- match.arg(method)
   centers <- object$centers
@@ -314,6 +316,12 @@ rxdist <- function(
   center_nms <- colnames(centers)
   if (!is.null(data_nms) && !is.null(center_nms) && !identical(data_nms, center_nms)) {
     newdata <- newdata[, center_nms, drop = FALSE]
+  }
+  if (inherits(newdata, "data.frame")) {
+    newdata <- as.matrix(newdata)
+  }
+  if (!is.numeric(newdata)) {
+    stop("`newdata` must be numeric", call. = FALSE)
   }
   if (ncol(newdata) != ncol(centers)) {
     stop("`newdata` must have the same number of columns as the centers", call. = FALSE)
