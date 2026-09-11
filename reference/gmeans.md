@@ -41,7 +41,8 @@ gmeans(x, k_init = 2L, k_max = 10L, level = 0.05, ...)
 
   (`any`)  
   Additional arguments passed to
-  [`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html).
+  [`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html). `nstart` has
+  no effect since the initial centers are always given as a matrix.
 
 ## Value
 

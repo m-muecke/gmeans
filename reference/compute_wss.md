@@ -18,7 +18,8 @@ compute_wss(object, newdata = NULL)
 - newdata:
 
   ([`matrix()`](https://rdrr.io/r/base/matrix.html))  
-  New data to predict on.
+  New data to predict on, a numeric matrix or a data frame. Columns are
+  matched to the centers by name and unused columns are ignored.
 
 ## Value
 

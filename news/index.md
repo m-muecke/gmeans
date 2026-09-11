@@ -16,6 +16,11 @@
 - [`predict.gmeans()`](https://m-muecke.github.io/gmeans/reference/predict.gmeans.md)
   and
   [`compute_wss()`](https://m-muecke.github.io/gmeans/reference/compute_wss.md)
+  now accept data frames with unused non-numeric columns and error
+  clearly when `newdata` is not a matrix or data frame.
+- [`predict.gmeans()`](https://m-muecke.github.io/gmeans/reference/predict.gmeans.md)
+  and
+  [`compute_wss()`](https://m-muecke.github.io/gmeans/reference/compute_wss.md)
   now error on a column mismatch between `newdata` and unnamed centers
   instead of returning wrong distances.
 

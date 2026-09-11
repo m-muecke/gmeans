@@ -29,7 +29,8 @@ Adapted from [clue](https://CRAN.R-project.org/package=clue)
 - newdata:
 
   ([`matrix()`](https://rdrr.io/r/base/matrix.html))  
-  New data to predict on.
+  New data to predict on, a numeric matrix or a data frame. Columns are
+  matched to the centers by name and unused columns are ignored.
 
 - method:
 
