@@ -12,6 +12,8 @@
 - [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
   now errors clearly on input with zero rows or zero columns.
 - [`predict.gmeans()`](https://m-muecke.github.io/gmeans/reference/predict.gmeans.md)
+  now errors when the Minkowski power `p` is not positive.
+- [`predict.gmeans()`](https://m-muecke.github.io/gmeans/reference/predict.gmeans.md)
   and
   [`compute_wss()`](https://m-muecke.github.io/gmeans/reference/compute_wss.md)
   now error on a column mismatch between `newdata` and unnamed centers

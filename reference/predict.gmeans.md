@@ -40,7 +40,7 @@ Adapted from [clue](https://CRAN.R-project.org/package=clue)
 - p:
 
   (`numeric(1)`)  
-  Power of the Minkowski distance. Default is `2`.
+  Power of the Minkowski distance. Must be positive. Default is `2`.
 
 - ...:
 
