@@ -29,7 +29,8 @@
 #' @param x (`matrix()`)\cr
 #'   Numeric matrix of data, or a data frame with all numeric columns.
 #'   Logical input is coerced to a 0/1 matrix.
-#'   Missing and infinite values are not allowed.
+#'   Missing and infinite values are not allowed and the matrix must have at least
+#'   one row and one column.
 #' @param k_init (`integer(1)`)\cr
 #'   Initial amount of centers. Default is `2L`.
 #' @param k_max (`integer(1)`)\cr
@@ -63,6 +64,8 @@ gmeans <- function(x, k_init = 2L, k_max = 10L, level = 0.05, ...) {
     is.matrix(x),
     is.numeric(x),
     all(is.finite(x)),
+    nrow(x) > 0L,
+    ncol(x) > 0L,
     is_count(k_init),
     is_count(k_max),
     k_init <= k_max,

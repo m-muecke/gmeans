@@ -24,6 +24,10 @@ test_that("gmeans works", {
   # x must be numeric and finite
   expect_error(gmeans(matrix(letters[1:20], ncol = 2L)), "is.numeric", fixed = TRUE)
   expect_error(gmeans(rbind(x, c(NA, 1))), "is.finite", fixed = TRUE)
+  # x must have at least one row and one column
+  expect_error(gmeans(matrix(numeric(), nrow = 0L, ncol = 2L)), "nrow(x) > 0L", fixed = TRUE)
+  expect_error(gmeans(matrix(numeric(), nrow = 10L, ncol = 0L)), "ncol(x) > 0L", fixed = TRUE)
+  expect_error(gmeans(iris[0L, -5L]), "nrow(x) > 0L", fixed = TRUE)
 })
 
 test_that("gmeans accepts logical input", {

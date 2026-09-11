@@ -10,7 +10,8 @@ gmeans(x, k_init = 2L, k_max = 10L, level = 0.05, ...)
 \item{x}{(\code{matrix()})\cr
 Numeric matrix of data, or a data frame with all numeric columns.
 Logical input is coerced to a 0/1 matrix.
-Missing and infinite values are not allowed.}
+Missing and infinite values are not allowed and the matrix must have at least
+one row and one column.}
 
 \item{k_init}{(\code{integer(1)})\cr
 Initial amount of centers. Default is \code{2L}.}
