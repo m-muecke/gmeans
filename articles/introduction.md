@@ -34,10 +34,13 @@ centers <- data.table(
   x1 = c(5, 0, -3),
   x2 = c(-1, 1, -2)
 )
-points <- centers[, .(
-  x1 = rnorm(num_points, mean = x1),
-  x2 = rnorm(num_points, mean = x2)
-), by = cluster]
+points <- centers[,
+  .(
+    x1 = rnorm(num_points, mean = x1),
+    x2 = rnorm(num_points, mean = x2)
+  ),
+  by = cluster
+]
 
 ggplot(points, aes(x1, x2, color = cluster)) +
   geom_point(alpha = 0.3)
@@ -99,10 +102,10 @@ functions that mimic the functionality of the `broom` package:
 
 ``` r
 
-`%||%` <- function(x, y) if (!is.null(x)) x else y
-
 tidy <- function(x, col.names = colnames(x$centers)) {
-  col.names <- col.names %||% paste0("x", seq_len(ncol(x$centers)))
+  if (is.null(col.names)) {
+    col.names <- paste0("x", seq_len(ncol(x$centers)))
+  }
   dt <- as.data.table(x$centers)
   setnames(dt, col.names)
   dt[, let(
@@ -198,7 +201,8 @@ To enhance the visualization, let’s add cluster centers:
 
 ``` r
 
-p2 <- p1 + geom_point(data = clusters, size = 10, shape = "x") +
+p2 <- p1 +
+  geom_point(data = clusters, size = 10, shape = "x") +
   labs(title = "k-means Clustering with Centers")
 p2
 ```

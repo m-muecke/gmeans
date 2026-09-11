@@ -15,7 +15,8 @@ gmeans(x, k_init = 2L, k_max = 10L, level = 0.05, ...)
   ([`matrix()`](https://rdrr.io/r/base/matrix.html))  
   Numeric matrix of data, or a data frame with all numeric columns.
   Logical input is coerced to a 0/1 matrix. Missing and infinite values
-  are not allowed.
+  are not allowed and the matrix must have at least one row and one
+  column.
 
 - k_init:
 

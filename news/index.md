@@ -9,6 +9,8 @@
 - [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
   now requires finite numeric input (logical is coerced to 0/1) and
   errors clearly when there are fewer distinct points than centers.
+- [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
+  now errors clearly on input with zero rows or zero columns.
 - [`predict.gmeans()`](https://m-muecke.github.io/gmeans/reference/predict.gmeans.md)
   and
   [`compute_wss()`](https://m-muecke.github.io/gmeans/reference/compute_wss.md)

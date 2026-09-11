@@ -56,6 +56,8 @@
 <li>
 <code><a href="../reference/gmeans.html">gmeans()</a></code> now requires finite numeric input (logical is coerced to 0/1) and errors clearly when there are fewer distinct points than centers.</li>
 <li>
+<code><a href="../reference/gmeans.html">gmeans()</a></code> now errors clearly on input with zero rows or zero columns.</li>
+<li>
 <code><a href="../reference/predict.gmeans.html">predict.gmeans()</a></code> and <code><a href="../reference/compute_wss.html">compute_wss()</a></code> now error on a column mismatch between <code>newdata</code> and unnamed centers instead of returning wrong distances.</li>
 </ul></div>
     <div class="section level2">
