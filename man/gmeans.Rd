@@ -25,7 +25,8 @@ Significance level for the Anderson-Darling test.
 Default is \code{0.05}. See \code{\link[=ad.test]{ad.test()}} for more information.}
 
 \item{...}{(\code{any})\cr
-Additional arguments passed to \code{\link[stats:kmeans]{stats::kmeans()}}.}
+Additional arguments passed to \code{\link[stats:kmeans]{stats::kmeans()}}.
+\code{nstart} has no effect since the initial centers are always given as a matrix.}
 }
 \value{
 An object of class \code{c("gmeans", "kmeans")}. See \code{\link[stats:kmeans]{stats::kmeans()}} for details.

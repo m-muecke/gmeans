@@ -41,6 +41,7 @@
 #'   Default is `0.05`. See [ad.test()] for more information.
 #' @param ... (`any`)\cr
 #'   Additional arguments passed to [stats::kmeans()].
+#'   `nstart` has no effect since the initial centers are always given as a matrix.
 #' @references
 #' `r format_bib("hamerly2003learning")`
 #' @returns An object of class `c("gmeans", "kmeans")`. See [stats::kmeans()] for details.
