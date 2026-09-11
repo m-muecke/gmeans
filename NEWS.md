@@ -1,4 +1,4 @@
-# gmeans (development version)
+# gmeans 0.2.0
 
 * Removed the mlr3 integration vignette since the learner now ships in mlr3cluster as `lrn("clust.gmeans")`.
 * `gmeans()` now errors when `k_init` exceeds `k_max`.
