@@ -229,7 +229,7 @@ is_null_hypothesis <- function(data, centers, level = 0.05) {
 #'   Distance metric to use.
 #'   Either `"euclidean"`, `"manhattan"`, or `"minkowski"`. Default is `"euclidean"`.
 #' @param p (`numeric(1)`)\cr
-#'   Power of the Minkowski distance. Default is `2`.
+#'   Power of the Minkowski distance. Must be positive. Default is `2`.
 #' @param ... (`any`)\cr
 #'   Additional arguments.
 #' @returns An `integer()` vector with one cluster index per row of `newdata`.
@@ -299,7 +299,7 @@ rxdist <- function(
   method = c("euclidean", "manhattan", "minkowski"),
   p = 2
 ) {
-  stopifnot(is_number(p))
+  stopifnot(is_number(p), p > 0)
   if (inherits(newdata, "data.frame")) {
     newdata <- as.matrix(newdata)
   }

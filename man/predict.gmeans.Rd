@@ -27,7 +27,7 @@ Distance metric to use.
 Either \code{"euclidean"}, \code{"manhattan"}, or \code{"minkowski"}. Default is \code{"euclidean"}.}
 
 \item{p}{(\code{numeric(1)})\cr
-Power of the Minkowski distance. Default is \code{2}.}
+Power of the Minkowski distance. Must be positive. Default is \code{2}.}
 
 \item{...}{(\code{any})\cr
 Additional arguments.}

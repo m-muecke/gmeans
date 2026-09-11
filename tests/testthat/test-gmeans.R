@@ -120,6 +120,10 @@ test_that("predict works", {
   # allow more than required cols
   newdata <- cbind(x, z = 1:50)
   expect_no_error(predict(cl, newdata))
+  # p must be positive
+  expect_error(predict(cl, x, method = "minkowski", p = 0), "p > 0", fixed = TRUE)
+  expect_error(predict(cl, x, method = "minkowski", p = -1), "p > 0", fixed = TRUE)
+  expect_identical(predict(cl, x, method = "minkowski", p = 2), predict(cl, x))
 })
 
 test_that("predict errors when unnamed centers and newdata dimensions disagree", {
