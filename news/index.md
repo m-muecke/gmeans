@@ -1,6 +1,8 @@
 # Changelog
 
-## gmeans (development version)
+## gmeans 0.2.0
+
+CRAN release: 2026-09-11
 
 - Removed the mlr3 integration vignette since the learner now ships in
   mlr3cluster as `lrn("clust.gmeans")`.

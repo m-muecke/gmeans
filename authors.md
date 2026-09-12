@@ -10,13 +10,13 @@
 Source:
 [`DESCRIPTION`](https://github.com/m-muecke/gmeans/blob/main/DESCRIPTION)
 
-Mücke M (2026). *gmeans: G-means Clustering*. R package version
-0.1.0.9000, <https://m-muecke.github.io/gmeans/>.
+Mücke M (2026). *gmeans: G-means Clustering*. R package version 0.2.0,
+<https://m-muecke.github.io/gmeans/>.
 
     @Manual{,
       title = {gmeans: G-means Clustering},
       author = {Maximilian Mücke},
       year = {2026},
-      note = {R package version 0.1.0.9000},
+      note = {R package version 0.2.0},
       url = {https://m-muecke.github.io/gmeans/},
     }
