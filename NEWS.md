@@ -1,5 +1,8 @@
 # gmeans (development version)
 
+* `gmeans()` now stores `k_init`, `k_max`, and `level` in the returned object.
+* New `tidy()`, `augment()`, and `glance()` methods for `gmeans` objects.
+
 # gmeans 0.2.0
 
 * Removed the mlr3 integration vignette since the learner now ships in mlr3cluster as `lrn("clust.gmeans")`.

@@ -44,7 +44,9 @@
 #'   `nstart` has no effect since the initial centers are always given as a matrix.
 #' @references
 #' `r format_bib("hamerly2003learning")`
-#' @returns An object of class `c("gmeans", "kmeans")`. See [stats::kmeans()] for details.
+#' @returns An object of class `c("gmeans", "kmeans")` with the components of a
+#'   [stats::kmeans()] object plus `k_init`, `k_max`, and `level`, the settings used to
+#'   fit the model. See [gmeans_tidiers] for summarizing the result as data frames.
 #' @export
 #' @examples
 #' set.seed(123)
@@ -64,7 +66,7 @@ gmeans <- function(x, k_init = 2L, k_max = 10L, level = 0.05, ...) {
   stopifnot(
     is.matrix(x),
     is.numeric(x),
-    all(is.finite(x)),
+    is.finite(x),
     nrow(x) > 0L,
     ncol(x) > 0L,
     is_count(k_init),
@@ -89,6 +91,9 @@ gmeans <- function(x, k_init = 2L, k_max = 10L, level = 0.05, ...) {
     }
     km <- stats::kmeans(x, new_centers, ...)
   }
+  km$k_init <- as.integer(k_init)
+  km$k_max <- as.integer(k_max)
+  km$level <- level
   class(km) <- c("gmeans", class(km))
   km
 }

@@ -16,8 +16,10 @@ Depends:
 Imports:
     stats
 Suggests:
+    broom,
     clue,
     data.table (>= 1.15.0),
+    generics,
     ggplot2,
     knitr,
     rmarkdown,

@@ -29,7 +29,9 @@ Additional arguments passed to \code{\link[stats:kmeans]{stats::kmeans()}}.
 \code{nstart} has no effect since the initial centers are always given as a matrix.}
 }
 \value{
-An object of class \code{c("gmeans", "kmeans")}. See \code{\link[stats:kmeans]{stats::kmeans()}} for details.
+An object of class \code{c("gmeans", "kmeans")} with the components of a
+\code{\link[stats:kmeans]{stats::kmeans()}} object plus \code{k_init}, \code{k_max}, and \code{level}, the settings used to
+fit the model. See \link{gmeans_tidiers} for summarizing the result as data frames.
 }
 \description{
 Perform G-means clustering on a data matrix.
