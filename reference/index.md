@@ -14,3 +14,6 @@
   : Tidy a G-means Clustering Object
 - [`predict(`*`<gmeans>`*`)`](https://m-muecke.github.io/gmeans/reference/predict.gmeans.md)
   : Predict Method for G-means Clustering
+- [`summary(`*`<gmeans>`*`)`](https://m-muecke.github.io/gmeans/reference/summary.gmeans.md)
+  [`print(`*`<summary.gmeans>`*`)`](https://m-muecke.github.io/gmeans/reference/summary.gmeans.md)
+  : Summarize a G-means Clustering Object

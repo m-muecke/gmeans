@@ -4,6 +4,8 @@
 
 - [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
   now stores `k_init`, `k_max`, and `level` in the returned object.
+- New [`summary()`](https://rdrr.io/r/base/summary.html) method for
+  `gmeans` objects.
 - New [`tidy()`](https://generics.r-lib.org/reference/tidy.html),
   [`augment()`](https://generics.r-lib.org/reference/augment.html), and
   [`glance()`](https://generics.r-lib.org/reference/glance.html) methods
