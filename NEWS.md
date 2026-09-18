@@ -1,6 +1,7 @@
 # gmeans (development version)
 
 * `gmeans()` now stores `k_init`, `k_max`, and `level` in the returned object.
+* New `summary()` method for `gmeans` objects.
 * New `tidy()`, `augment()`, and `glance()` methods for `gmeans` objects.
 
 # gmeans 0.2.0
