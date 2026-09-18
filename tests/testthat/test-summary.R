@@ -28,3 +28,8 @@ test_that("print.summary.gmeans prints the summary", {
   expect_snapshot(print(summary(cl)))
   expect_invisible(print(summary(cl)))
 })
+
+test_that("print.summary.gmeans omits the ratio when the total sum of squares is zero", {
+  cl <- gmeans(matrix(1, nrow = 20L, ncol = 2L), k_init = 1L)
+  expect_snapshot(print(summary(cl)))
+})

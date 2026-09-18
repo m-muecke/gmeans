@@ -71,12 +71,17 @@ print.summary.gmeans <- function(x, digits = max(3L, getOption("digits") - 3L), 
     format(x$level, digits = digits)
   ))
   print(x$clusters, digits = digits, row.names = FALSE)
+  ratio <- if (x$totss > 0) {
+    sprintf(" (%s%% of total)", format(100 * x$betweenss / x$totss, digits = digits))
+  } else {
+    ""
+  }
   cat(sprintf(
-    "\nTotal SS: %s, within SS: %s, between SS: %s (%s%% of total)\n",
+    "\nTotal SS: %s, within SS: %s, between SS: %s%s\n",
     format(x$totss, digits = digits),
     format(x$tot.withinss, digits = digits),
     format(x$betweenss, digits = digits),
-    format(100 * x$betweenss / x$totss, digits = digits)
+    ratio
   ))
   invisible(x)
 }

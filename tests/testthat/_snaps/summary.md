@@ -16,3 +16,15 @@
       
       Total SS: 681.4, within SS: 40.98, between SS: 640.4 (93.99% of total)
 
+# print.summary.gmeans omits the ratio when the total sum of squares is zero
+
+    Code
+      print(summary(cl))
+    Output
+      G-means clustering with 1 cluster (k_init = 1, k_max = 10, level = 0.05)
+      
+       cluster size withinss x1 x2
+             1   20        0  1  1
+      
+      Total SS: 0, within SS: 0, between SS: 0
+
