@@ -2,6 +2,13 @@
 
 ## gmeans (development version)
 
+- [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
+  now stores `k_init`, `k_max`, and `level` in the returned object.
+- New [`tidy()`](https://generics.r-lib.org/reference/tidy.html),
+  [`augment()`](https://generics.r-lib.org/reference/augment.html), and
+  [`glance()`](https://generics.r-lib.org/reference/glance.html) methods
+  for `gmeans` objects.
+
 ## gmeans 0.2.0
 
 CRAN release: 2026-09-11

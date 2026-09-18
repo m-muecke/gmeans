@@ -46,8 +46,11 @@ gmeans(x, k_init = 2L, k_max = 10L, level = 0.05, ...)
 
 ## Value
 
-An object of class `c("gmeans", "kmeans")`. See
-[`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html) for details.
+An object of class `c("gmeans", "kmeans")` with the components of a
+[`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html) object plus
+`k_init`, `k_max`, and `level`, the settings used to fit the model. See
+[gmeans_tidiers](https://m-muecke.github.io/gmeans/reference/gmeans_tidiers.md)
+for summarizing the result as data frames.
 
 ## Details
 

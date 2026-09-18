@@ -89,6 +89,10 @@ and a single significance level rather than from a grid search over `k`.
   : Compute Within-Cluster Sum of Squares
 - [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md) :
   G-means Clustering
+- [`tidy(`*`<gmeans>`*`)`](https://m-muecke.github.io/gmeans/reference/gmeans_tidiers.md)
+  [`augment(`*`<gmeans>`*`)`](https://m-muecke.github.io/gmeans/reference/gmeans_tidiers.md)
+  [`glance(`*`<gmeans>`*`)`](https://m-muecke.github.io/gmeans/reference/gmeans_tidiers.md)
+  : Tidy a G-means Clustering Object
 - [`predict(`*`<gmeans>`*`)`](https://m-muecke.github.io/gmeans/reference/predict.gmeans.md)
   : Predict Method for G-means Clustering
 

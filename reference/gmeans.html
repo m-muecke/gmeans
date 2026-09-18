@@ -95,7 +95,9 @@ Additional arguments passed to <code><a href="https://rdrr.io/r/stats/kmeans.htm
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <code>c("gmeans", "kmeans")</code>. See <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code> for details.</p>
+    <p>An object of class <code>c("gmeans", "kmeans")</code> with the components of a
+<code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code> object plus <code>k_init</code>, <code>k_max</code>, and <code>level</code>, the settings used to
+fit the model. See <a href="gmeans_tidiers.html">gmeans_tidiers</a> for summarizing the result as data frames.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

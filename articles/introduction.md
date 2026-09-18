@@ -4,6 +4,7 @@ We’ll start by loading the necessary libraries:
 
 ``` r
 
+library(broom)
 library(data.table)
 library(ggplot2)
 library(gmeans)
@@ -16,9 +17,12 @@ adapted k-means clustering example from the
 [tidymodels](https://www.tidymodels.org/learn/statistics/k-means/)
 website. This example shows the challenge of determining the number of
 clusters (`k`) in clustering analysis. Throughout this vignette, we will
-use `data.table` for data manipulation, and the custom `tidy`,
-`augment`, and `glance` functions for handling model output, inspired by
-the `broom` package functionality.
+use `data.table` for data manipulation, and the
+[`tidy()`](https://generics.r-lib.org/reference/tidy.html),
+[`augment()`](https://generics.r-lib.org/reference/augment.html), and
+[`glance()`](https://generics.r-lib.org/reference/glance.html) generics
+for handling model output. The `broom` package provides methods for
+`kmeans` objects, and `gmeans` provides methods for its own objects.
 
 We begin by generating some random two-dimensional data that naturally
 forms three clusters. Each cluster’s data comes from a different
@@ -97,80 +101,65 @@ is often not available in practice.
 
 To explore the effect of different `k`, we can fit k-means models with
 varying numbers of clusters and visualize the results. To make handling
-the k-means output easier, we define `tidy`, `augment`, and `glance`
-functions that mimic the functionality of the `broom` package:
+the k-means output easier, we use the
+[`tidy()`](https://generics.r-lib.org/reference/tidy.html),
+[`augment()`](https://generics.r-lib.org/reference/augment.html), and
+[`glance()`](https://generics.r-lib.org/reference/glance.html) methods
+for `kmeans` objects from the `broom` package.
 
-``` r
-
-tidy <- function(x, col.names = colnames(x$centers)) {
-  if (is.null(col.names)) {
-    col.names <- paste0("x", seq_len(ncol(x$centers)))
-  }
-  dt <- as.data.table(x$centers)
-  setnames(dt, col.names)
-  dt[, let(
-    size = x$size,
-    withinss = x$withinss,
-    cluster = factor(seq_len(.N))
-  )][]
-}
-
-augment <- function(x, data) {
-  if (inherits(data, "matrix") && is.null(colnames(data))) {
-    colnames(data) <- paste0("X", seq_len(ncol(data)))
-  }
-  dt <- as.data.table(data)
-  dt[, .cluster := as.factor(x$cluster)][]
-}
-
-glance <- function(x) {
-  as.data.table(x[c("totss", "tot.withinss", "betweenss", "iter")])
-}
-```
-
-The `augment()` function adds the cluster assignments to the original
-dataset, allowing us to see how each data point is classified:
+The [`augment()`](https://generics.r-lib.org/reference/augment.html)
+function adds the cluster assignments to the original dataset, allowing
+us to see how each data point is classified:
 
 ``` r
 
 augment(kclust, points)
-#>             x1         x2 .cluster
-#>          <num>      <num>   <fctr>
-#>   1:  6.907163 -0.5580268        3
-#>   2:  6.144877  0.6338766        3
-#>   3:  4.235469 -1.1313761        3
-#>  ---                              
-#> 298: -3.486164 -1.2307705        2
-#> 299: -1.439651 -3.7284605        2
-#> 300: -3.531135 -0.7172739        2
+#> # A tibble: 300 × 3
+#>       x1      x2 .cluster
+#>    <dbl>   <dbl> <fct>   
+#>  1  6.91 -0.558  3       
+#>  2  6.14  0.634  3       
+#>  3  4.24 -1.13   3       
+#>  4  3.54 -0.832  3       
+#>  5  3.91  0.0169 3       
+#>  6  5.30 -0.887  3       
+#>  7  5.01 -0.935  3       
+#>  8  6.16 -0.739  3       
+#>  9  7.13 -0.487  3       
+#> 10  5.24 -1.28   3       
+#> # ℹ 290 more rows
 ```
 
-The `tidy()` function provides a per-cluster summary, displaying the
-cluster centers, sizes, and within-cluster sum of squares:
+The [`tidy()`](https://generics.r-lib.org/reference/tidy.html) function
+provides a per-cluster summary, displaying the cluster centers, sizes,
+and within-cluster sum of squares:
 
 ``` r
 
 tidy(kclust)
-#>            x1         x2  size withinss cluster
-#>         <num>      <num> <int>    <num>  <fctr>
-#> 1: -0.1277535  1.1366932   146 307.3195       1
-#> 2: -2.9430301 -1.9877357    53 119.2575       2
-#> 3:  5.0156304 -0.8637111   101 213.5906       3
+#> # A tibble: 3 × 5
+#>       x1     x2  size withinss cluster
+#>    <dbl>  <dbl> <int>    <dbl> <fct>  
+#> 1 -0.128  1.14    146     307. 1      
+#> 2 -2.94  -1.99     53     119. 2      
+#> 3  5.02  -0.864   101     214. 3
 ```
 
 To obtain a single-row summary with overall metrics such as total sum of
-squares and the number of iterations, use the `glance()` function:
+squares and the number of iterations, use the
+[`glance()`](https://generics.r-lib.org/reference/glance.html) function:
 
 ``` r
 
 glance(kclust)
-#>       totss tot.withinss betweenss  iter
-#>       <num>        <num>     <num> <int>
-#> 1: 3746.156     640.1676  3105.989     2
+#> # A tibble: 1 × 4
+#>   totss tot.withinss betweenss  iter
+#>   <dbl>        <dbl>     <dbl> <int>
+#> 1 3746.         640.     3106.     2
 ```
 
-Using these helper functions, we can easily extract and manipulate the
-results of k-means clustering for different values of `k`:
+Using these methods, we can easily extract and manipulate the results of
+k-means clustering for different values of `k`:
 
 ``` r
 
@@ -193,7 +182,7 @@ p1 <- ggplot(assignments, aes(x = x1, y = x2)) +
 p1
 ```
 
-![](introduction_files/figure-html/unnamed-chunk-8-1.png)
+![](introduction_files/figure-html/unnamed-chunk-7-1.png)
 
 ## Visualizing cluster centers
 
@@ -207,7 +196,7 @@ p2 <- p1 +
 p2
 ```
 
-![](introduction_files/figure-html/unnamed-chunk-9-1.png)
+![](introduction_files/figure-html/unnamed-chunk-8-1.png)
 
 ## Evaluating clustering performance
 
@@ -227,7 +216,7 @@ ggplot(clusterings, aes(k, tot.withinss)) +
   )
 ```
 
-![](introduction_files/figure-html/unnamed-chunk-10-1.png)
+![](introduction_files/figure-html/unnamed-chunk-9-1.png)
 
 In general, the WSS decreases as the number of clusters k increases,
 which is expected since having more clusters usually results in a better
@@ -286,8 +275,9 @@ gmeans(points)
 #> 
 #> Available components:
 #> 
-#> [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-#> [6] "betweenss"    "size"         "iter"         "ifault"
+#>  [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
+#>  [6] "betweenss"    "size"         "iter"         "ifault"       "k_init"      
+#> [11] "k_max"        "level"
 ```
 
 As expected from our previous analysis, G-means identifies 3 clusters,
@@ -303,14 +293,15 @@ x <- as.matrix(iris[, -5])
 gclust <- gmeans(x)
 ```
 
-Since
-[`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md) uses
-[`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html) under the hood,
-we can use our previously defined helper functions to analyze the
-clustering results.
+`gmeans` ships its own
+[`tidy()`](https://generics.r-lib.org/reference/tidy.html),
+[`augment()`](https://generics.r-lib.org/reference/augment.html), and
+[`glance()`](https://generics.r-lib.org/reference/glance.html) methods,
+so the same workflow applies to the clustering results.
 
-The `augment()` function adds cluster assignments to the original
-dataset for easy plotting:
+The [`augment()`](https://generics.r-lib.org/reference/augment.html)
+function adds cluster assignments to the original dataset for easy
+plotting:
 
 ``` r
 
@@ -319,25 +310,26 @@ augment(gclust, x) |>
   geom_point(aes(color = .cluster))
 ```
 
-![](introduction_files/figure-html/unnamed-chunk-13-1.png)
+![](introduction_files/figure-html/unnamed-chunk-12-1.png)
 
-The `tidy()` function provides a summary of each cluster:
+The [`tidy()`](https://generics.r-lib.org/reference/tidy.html) function
+provides a summary of each cluster:
 
 ``` r
 
 tidy(gclust)
-#>    Sepal.Length Sepal.Width Petal.Length Petal.Width  size  withinss cluster
-#>           <num>       <num>        <num>       <num> <int>     <num>  <fctr>
-#> 1:     5.005660    3.369811     1.560377    0.290566    53  28.55208       1
-#> 2:     6.301031    2.886598     4.958763    1.695876    97 123.79588       2
+#>   Sepal.Length Sepal.Width Petal.Length Petal.Width size  withinss cluster
+#> 1     5.005660    3.369811     1.560377    0.290566   53  28.55208       1
+#> 2     6.301031    2.886598     4.958763    1.695876   97 123.79588       2
 ```
 
-The `glance()` function gives an overall summary of the model:
+The [`glance()`](https://generics.r-lib.org/reference/glance.html)
+function gives an overall summary of the model, including the number of
+clusters found and the settings used to fit it:
 
 ``` r
 
 glance(gclust)
-#>       totss tot.withinss betweenss  iter
-#>       <num>        <num>     <num> <int>
-#> 1: 681.3706      152.348  529.0226     1
+#>   k k_init k_max level    totss tot.withinss betweenss iter
+#> 1 2      2    10  0.05 681.3706      152.348  529.0226    1
 ```
