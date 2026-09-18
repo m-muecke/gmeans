@@ -16,6 +16,12 @@ test_that("summary returns the fit settings and per-cluster table", {
   expect_identical(unname(as.matrix(res$clusters[, colnames(x)])), unname(cl$centers))
 })
 
+test_that("summary names unnamed centers", {
+  withr::local_seed(123L)
+  cl <- gmeans(unname(as.matrix(iris[, 1:2])))
+  expect_named(summary(cl)$clusters, c("cluster", "size", "withinss", "x1", "x2"))
+})
+
 test_that("print.summary.gmeans prints the summary", {
   withr::local_seed(123L)
   cl <- gmeans(as.matrix(iris[, -5L]))

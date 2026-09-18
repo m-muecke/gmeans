@@ -32,6 +32,9 @@
 summary.gmeans <- function(object, ...) {
   centers <- object$centers
   k <- nrow(centers)
+  if (is.null(colnames(centers))) {
+    colnames(centers) <- paste0("x", seq_len(ncol(centers)))
+  }
   clusters <- data.frame(
     cluster = factor(seq_len(k)),
     size = object$size,
