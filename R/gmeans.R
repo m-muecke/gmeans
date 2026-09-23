@@ -23,7 +23,9 @@
 #'    \eqn{\{x_i \mid \text{class}(x_i) = j\}} follows a Gaussian distribution
 #'    at the confidence level \eqn{\alpha}.
 #' 5. If the data points appear Gaussian, keep \eqn{c_j}.
-#'    Otherwise, replace \eqn{c_j} with two new centers.
+#'    Otherwise, replace \eqn{c_j} with two new centers, found by k-means on the
+#'    cluster started from \eqn{c_j \pm s \sqrt{2 \lambda / \pi}}, where \eqn{s} is
+#'    the main principal component of the cluster and \eqn{\lambda} its eigenvalue.
 #' 6. Repeat from step 2 until no more centers are added.
 #'
 #' @param x (`matrix()`)\cr
@@ -32,13 +34,13 @@
 #'   Missing and infinite values are not allowed and the matrix must have at least
 #'   one row and one column.
 #' @param k_init (`integer(1)`)\cr
-#'   Initial amount of centers. Default is `2L`.
+#'   Initial amount of centers. Default is `1L`.
 #' @param k_max (`integer(1)`)\cr
 #'   Maximum amount of centers. Must be greater than or equal to `k_init`.
 #'   Default is `10L`.
 #' @param level (`numeric(1)`)\cr
 #'   Significance level for the Anderson-Darling test.
-#'   Default is `0.05`. See [ad.test()] for more information.
+#'   Default is `0.0001`. See [ad.test()] for more information.
 #' @param ... (`any`)\cr
 #'   Additional arguments passed to [stats::kmeans()].
 #'   `nstart` has no effect since the initial centers are always given as a matrix.
@@ -56,7 +58,7 @@
 #' )
 #' colnames(x) <- c("x", "y")
 #' cl <- gmeans(x)
-gmeans <- function(x, k_init = 2L, k_max = 10L, level = 0.05, ...) {
+gmeans <- function(x, k_init = 1L, k_max = 10L, level = 0.0001, ...) {
   if (is.data.frame(x)) {
     x <- as.matrix(x)
   }
@@ -126,13 +128,28 @@ split_and_search <- function(data, cluster, level, ...) {
   if (!any(points != rep(points[1L, ], each = nrow(points)))) {
     return()
   }
-  km <- stats::kmeans(points, 2L, ...)
+  km <- stats::kmeans(points, split_centers(points), ...)
   new_centers <- km$centers
-  if (nrow(new_centers) > 1L && !is_null_hypothesis(points, new_centers, level)) {
-    new_centers
-  } else {
+  if (is_null_hypothesis(points, new_centers, level)) {
     NULL
+  } else {
+    new_centers
   }
+}
+
+# initialize the two child centers at c +/- m, where m = s * sqrt(2 * lambda / pi)
+# and s is the main principal component with eigenvalue lambda
+split_centers <- function(points) {
+  pc <- eigen(stats::cov(points), symmetric = TRUE)
+  s <- pc$vectors[, 1L]
+  # the sign of an eigenvector depends on the LAPACK build, so fix it to keep
+  # the order of the two centers stable
+  if (s[which.max(abs(s))] < 0) {
+    s <- -s
+  }
+  m <- s * sqrt(2 * pc$values[1L] / pi)
+  center <- colMeans(points)
+  rbind(center + m, center - m)
 }
 
 #' kmeans++ initialization
@@ -196,7 +213,7 @@ kmeans_plusplus <- function(x, k) {
 #'   x_{i}^{*}=\frac{\left \langle x_{i}, v \right \rangle}{\left \| v \right \|^{2}}
 #' }
 #' @noRd
-is_null_hypothesis <- function(data, centers, level = 0.05) {
+is_null_hypothesis <- function(data, centers, level) {
   v <- centers[1L, ] - centers[2L, ]
   points <- as.vector(data %*% v / sum(v^2))
   ad.test(points)$p.value > level

@@ -38,7 +38,11 @@ test_that("gmeans accepts logical input", {
 
 test_that("gmeans errors clearly with too few distinct points", {
   withr::local_seed(1234L)
-  expect_error(gmeans(matrix(1, nrow = 20L, ncol = 2L)), "distinct data points", fixed = TRUE)
+  expect_error(
+    gmeans(matrix(1, nrow = 20L, ncol = 2L), k_init = 2L),
+    "distinct data points",
+    fixed = TRUE
+  )
   expect_error(
     gmeans(matrix(rnorm(10L), ncol = 2L), k_init = 6L),
     "distinct data points",
@@ -66,6 +70,7 @@ test_that("gmeans works with a single initial center", {
   )
   expect_gt(nrow(gmeans(x, k_init = 1L)$centers), 1L)
   expect_gt(nrow(gmeans(x[, 1L, drop = FALSE], k_init = 1L)$centers), 1L)
+  expect_identical(nrow(gmeans(matrix(1, nrow = 20L, ncol = 2L))$centers), 1L)
 })
 
 test_that("gmeans respects k_max", {
@@ -75,6 +80,14 @@ test_that("gmeans respects k_max", {
   expect_lte(nrow(gmeans(x, k_max = 5L)$centers), 5L)
 })
 
+test_that("gmeans finds the number of clusters", {
+  withr::local_seed(3L)
+  x <- do.call(rbind, lapply(c(0, 10, 20), \(m) cbind(rnorm(50L, m), rnorm(50L, m))))
+  for (seed in 1:5) {
+    expect_identical(nrow(withr::with_seed(seed, gmeans(x, k_init = 1L))$centers), 3L)
+  }
+})
+
 test_that("gmeans works with duplicated points", {
   withr::local_seed(11L)
   # a cluster of identical points has fewer distinct rows than the 2 centers
@@ -82,6 +95,31 @@ test_that("gmeans works with duplicated points", {
   expect_null(split_and_search(matrix(rep(1, 20L), ncol = 2L), seq_len(10L), 0.05))
   x <- cbind(a = rep(1:3, 20L), b = rep(1:2, 30L))
   expect_s3_class(gmeans(x), "gmeans")
+  # the mean of the identical rows is not exactly representable
+  x <- rbind(matrix(c(0.1, 0.7), 30L, 2L, byrow = TRUE), matrix(rnorm(60L, 5), 30L))
+  expect_s3_class(gmeans(x, k_init = 1L), "gmeans")
+})
+
+test_that("split_centers places the centers along the main principal component", {
+  x <- cbind(c(-3, -1, 1, 3), 5)
+  res <- split_centers(x)
+  expect_equal(res[, 1L], c(1, -1) * sqrt(40 / 3 / pi))
+  expect_equal(res[, 2L], c(5, 5))
+  expect_equal(split_centers(-x)[, 1L], res[, 1L])
+})
+
+test_that("split_and_search does not depend on the random seed", {
+  withr::local_seed(1234L)
+  x <- rbind(
+    matrix(rnorm(40L, sd = 0.3), ncol = 2L),
+    matrix(rnorm(40L, mean = 3, sd = 0.3), ncol = 2L)
+  )
+  res <- withr::with_seed(1L, split_and_search(x, seq_len(40L), 0.05))
+  expect_shape(res, dim = c(2L, 2L))
+  expect_identical(
+    withr::with_seed(2L, split_and_search(x, seq_len(40L), 0.05)),
+    res
+  )
 })
 
 test_that("kmeans_plusplus works", {

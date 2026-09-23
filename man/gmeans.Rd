@@ -4,7 +4,7 @@
 \alias{gmeans}
 \title{G-means Clustering}
 \usage{
-gmeans(x, k_init = 2L, k_max = 10L, level = 0.05, ...)
+gmeans(x, k_init = 1L, k_max = 10L, level = 1e-04, ...)
 }
 \arguments{
 \item{x}{(\code{matrix()})\cr
@@ -14,7 +14,7 @@ Missing and infinite values are not allowed and the matrix must have at least
 one row and one column.}
 
 \item{k_init}{(\code{integer(1)})\cr
-Initial amount of centers. Default is \code{2L}.}
+Initial amount of centers. Default is \code{1L}.}
 
 \item{k_max}{(\code{integer(1)})\cr
 Maximum amount of centers. Must be greater than or equal to \code{k_init}.
@@ -22,7 +22,7 @@ Default is \code{10L}.}
 
 \item{level}{(\code{numeric(1)})\cr
 Significance level for the Anderson-Darling test.
-Default is \code{0.05}. See \code{\link[=ad.test]{ad.test()}} for more information.}
+Default is \code{0.0001}. See \code{\link[=ad.test]{ad.test()}} for more information.}
 
 \item{...}{(\code{any})\cr
 Additional arguments passed to \code{\link[stats:kmeans]{stats::kmeans()}}.
@@ -56,7 +56,9 @@ centers \eqn{C}, i.e., \eqn{C \leftarrow \text{kmeans}(C, X)}.
 \eqn{\{x_i \mid \text{class}(x_i) = j\}} follows a Gaussian distribution
 at the confidence level \eqn{\alpha}.
 \item If the data points appear Gaussian, keep \eqn{c_j}.
-Otherwise, replace \eqn{c_j} with two new centers.
+Otherwise, replace \eqn{c_j} with two new centers, found by k-means on the
+cluster started from \eqn{c_j \pm s \sqrt{2 \lambda / \pi}}, where \eqn{s} is
+the main principal component of the cluster and \eqn{\lambda} its eigenvalue.
 \item Repeat from step 2 until no more centers are added.
 }
 }
