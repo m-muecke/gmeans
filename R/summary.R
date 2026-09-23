@@ -25,7 +25,6 @@
 #' @seealso [gmeans()]
 #' @export
 #' @examples
-#' set.seed(123)
 #' x <- as.matrix(iris[, -5])
 #' cl <- gmeans(x)
 #' summary(cl)

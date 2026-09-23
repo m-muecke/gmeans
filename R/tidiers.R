@@ -23,7 +23,6 @@
 #' @name gmeans_tidiers
 #' @examplesIf requireNamespace("generics", quietly = TRUE)
 #' library(generics)
-#' set.seed(123)
 #' x <- as.matrix(iris[, -5])
 #' cl <- gmeans(x)
 #'

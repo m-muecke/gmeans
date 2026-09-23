@@ -43,7 +43,6 @@ package. The generics come from the generics package, so load it or broom to cal
 \examples{
 \dontshow{if (requireNamespace("generics", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 library(generics)
-set.seed(123)
 x <- as.matrix(iris[, -5])
 cl <- gmeans(x)
 

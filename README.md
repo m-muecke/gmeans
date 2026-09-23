@@ -30,47 +30,21 @@ pak::pak("m-muecke/gmeans")
 
 ## Usage
 
+The Old Faithful geyser has short and long eruptions, and `gmeans()`
+finds these two groups without being told how many to look for:
+
 ``` r
 library(gmeans)
 
-km <- gmeans(mtcars)
-km
-#> K-means clustering with 2 clusters of sizes 14, 18
+km <- gmeans(faithful)
+summary(km)
+#> G-means clustering with 2 clusters (k_init = 1, k_max = 10, level = 1e-04)
 #> 
-#> Cluster means:
-#>        mpg      cyl     disp        hp     drat       wt     qsec        vs
-#> 1 15.10000 8.000000 353.1000 209.21429 3.229286 3.999214 16.77214 0.0000000
-#> 2 23.97222 4.777778 135.5389  98.05556 3.882222 2.609056 18.68611 0.7777778
-#>          am     gear     carb
-#> 1 0.1428571 3.285714 3.500000
-#> 2 0.6111111 4.000000 2.277778
+#>  cluster size withinss eruptions waiting
+#>        1  172     5446     4.298   80.28
+#>        2  100     3456     2.094   54.75
 #> 
-#> Clustering vector:
-#>           Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
-#>                   2                   2                   2                   2 
-#>   Hornet Sportabout             Valiant          Duster 360           Merc 240D 
-#>                   1                   2                   1                   2 
-#>            Merc 230            Merc 280           Merc 280C          Merc 450SE 
-#>                   2                   2                   2                   1 
-#>          Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
-#>                   1                   1                   1                   1 
-#>   Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
-#>                   1                   2                   2                   2 
-#>       Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
-#>                   2                   1                   1                   1 
-#>    Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
-#>                   1                   2                   2                   2 
-#>      Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
-#>                   1                   2                   1                   2 
-#> 
-#> Within cluster sum of squares by cluster:
-#> [1] 93643.90 58920.54
-#>  (between_SS / total_SS =  75.5 %)
-#> 
-#> Available components:
-#> 
-#> [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-#> [6] "betweenss"    "size"         "iter"         "ifault"
+#> Total SS: 50440, within SS: 8902, between SS: 41538 (82.35% of total)
 ```
 
 ## When to use gmeans
@@ -80,6 +54,11 @@ are roughly Gaussian. The algorithm splits a cluster only when an
 Anderson-Darling test rejects normality, so the number of clusters
 follows from the data and a single significance level rather than from a
 grid search over `k`.
+
+The default significance level of `0.0001` follows Hamerly and Elkan
+(2003) and keeps Gaussian clusters from being split. With small clusters
+of fewer than about 50 points the test has little power to detect a
+split, so a larger level such as `0.01` can work better.
 
 ## Related work
 

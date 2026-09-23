@@ -62,7 +62,6 @@ where \eqn{p} is a parameter that defines the distance type (e.g., \eqn{p=2} for
 }
 }
 \examples{
-set.seed(123)
 x <- as.matrix(iris[, -5])
 cl <- gmeans(x)
 

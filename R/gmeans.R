@@ -251,7 +251,6 @@ is_null_hypothesis <- function(data, centers, level) {
 #' @source Adapted from \CRANpkg{clue}
 #' @export
 #' @examples
-#' set.seed(123)
 #' x <- as.matrix(iris[, -5])
 #' cl <- gmeans(x)
 #'

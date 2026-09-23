@@ -40,7 +40,6 @@ fit the model, a per-cluster table of sizes, within-cluster sums of squares and 
 overall sums of squares.
 }
 \examples{
-set.seed(123)
 x <- as.matrix(iris[, -5])
 cl <- gmeans(x)
 summary(cl)

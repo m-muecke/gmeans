@@ -37,11 +37,14 @@ pak::pak("m-muecke/gmeans")
 
 ## Usage
 
+The Old Faithful geyser has short and long eruptions, and `gmeans()` finds these two groups without
+being told how many to look for:
+
 ```{r}
 library(gmeans)
 
-km <- gmeans(mtcars)
-km
+km <- gmeans(faithful)
+summary(km)
 ```
 
 ## When to use gmeans
@@ -50,6 +53,11 @@ Use `gmeans()` when the number of clusters is unknown and the clusters are rough
 The algorithm splits a cluster only when an Anderson-Darling test rejects normality, so the
 number of clusters follows from the data and a single significance level rather than from a
 grid search over `k`.
+
+The default significance level of `0.0001` follows Hamerly and Elkan (2003) and keeps Gaussian
+clusters from being split.
+With small clusters of fewer than about 50 points the test has little power to detect a split, so
+a larger level such as `0.01` can work better.
 
 ## Related work
 

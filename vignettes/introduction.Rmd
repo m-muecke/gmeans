@@ -181,22 +181,27 @@ benefits over traditional k-means clustering.
 Let's now apply the G-means algorithm to the same data:
 
 ```{r}
-set.seed(123)
-
-gmeans(points)
+fit <- gmeans(points)
+summary(fit)
 ```
 
 As expected from our previous analysis, G-means identifies 3 clusters, aligning with
-the elbow point observed in the WSS plot.
+the elbow point observed in the WSS plot. No `set.seed()` is needed: G-means starts from
+a single center and splits it deterministically, so the result does not depend on the
+random seed.
 
 Next, let's explore how G-means performs on a different dataset:
 
 ```{r}
-set.seed(1234)
-
 x <- as.matrix(iris[, -5])
 gclust <- gmeans(x)
+table(cluster = gclust$cluster, species = iris$Species)
 ```
+
+G-means finds two clusters: one with the setosa flowers, and one with nearly all
+versicolor and virginica flowers. These two species overlap so much in their
+measurements that together they still look Gaussian to the test, so G-means does not
+split them.
 
 `gmeans` ships its own `tidy()`, `augment()`, and `glance()` methods, so the same
 workflow applies to the clustering results.
