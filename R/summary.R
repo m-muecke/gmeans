@@ -62,11 +62,11 @@ summary.gmeans <- function(object, ...) {
 #' @export
 print.summary.gmeans <- function(x, digits = max(3L, getOption("digits") - 3L), ...) {
   cat(sprintf(
-    "G-means clustering with %d cluster%s (k_init = %d, k_max = %d, level = %s)\n\n",
+    "G-means clustering with %d cluster%s (k_init = %d, k_max = %s, level = %s)\n\n",
     x$k,
     if (x$k == 1L) "" else "s",
     x$k_init,
-    x$k_max,
+    format(x$k_max),
     format(x$level, digits = digits, scientific = FALSE)
   ))
   print(x$clusters, digits = digits, row.names = FALSE)

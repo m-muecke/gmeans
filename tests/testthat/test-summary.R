@@ -6,7 +6,7 @@ test_that("summary returns the fit settings and per-cluster table", {
   expect_s3_class(res, "summary.gmeans")
   expect_identical(res$k, nrow(cl$centers))
   expect_identical(res$k_init, 1L)
-  expect_identical(res$k_max, 5L)
+  expect_identical(res$k_max, 5)
   expect_identical(res$level, 0.01)
   expect_identical(res$totss, cl$totss)
   expect_named(res$clusters, c("cluster", "size", "withinss", colnames(x)))

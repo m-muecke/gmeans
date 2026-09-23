@@ -33,7 +33,7 @@
 #' @param k_init (`integer(1)`)\cr
 #'   Initial amount of centers. Default is `1L`.
 #' @param k_max (`integer(1)`)\cr
-#'   Maximum amount of centers. Must be greater than or equal to `k_init`. Default is `10L`.
+#'   Maximum amount of centers. Must be greater than or equal to `k_init`. Default is `Inf`.
 #' @param level (`numeric(1)`)\cr
 #'   Significance level for the Anderson-Darling test. Default is `0.0001`. A larger level such as
 #'   `0.01` can work better for clusters with fewer than about 50 points. See [ad.test()] for more
@@ -55,7 +55,7 @@
 #' )
 #' colnames(x) <- c("x", "y")
 #' cl <- gmeans(x)
-gmeans <- function(x, k_init = 1L, k_max = 10L, level = 0.0001, ...) {
+gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.0001, ...) {
   if (is.data.frame(x)) {
     x <- as.matrix(x)
   }
@@ -69,7 +69,7 @@ gmeans <- function(x, k_init = 1L, k_max = 10L, level = 0.0001, ...) {
     nrow(x) > 0L,
     ncol(x) > 0L,
     is_count(k_init),
-    is_count(k_max),
+    is_count(k_max) || identical(k_max, Inf),
     k_init <= k_max,
     is_number(level),
     level > 0,
@@ -97,7 +97,7 @@ gmeans <- function(x, k_init = 1L, k_max = 10L, level = 0.0001, ...) {
     km <- stats::kmeans(x, new_centers, ...)
   }
   km$k_init <- as.integer(k_init)
-  km$k_max <- as.integer(k_max)
+  km$k_max <- as.numeric(k_max)
   km$level <- level
   class(km) <- c("gmeans", class(km))
   km

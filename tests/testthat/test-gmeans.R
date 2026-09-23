@@ -14,6 +14,7 @@ test_that("gmeans works", {
   expect_error(gmeans(x, k_max = NA_integer_))
   expect_error(gmeans(x, k_max = 1:10))
   expect_error(gmeans(x, k_max = 1.5))
+  expect_error(gmeans(x, k_max = -Inf))
   expect_error(gmeans(x, k_init = 3L, k_max = 2L), "k_init <= k_max", fixed = TRUE)
   # level needs to be a number between 0 and 1
   expect_error(gmeans(x, level = NULL))
@@ -83,6 +84,7 @@ test_that("gmeans respects k_max", {
   x <- do.call(rbind, lapply(seq(0, 60, by = 4), \(m) cbind(rnorm(40L, m), rnorm(40L, m))))
   expect_lte(nrow(gmeans(x, k_max = 3L)$centers), 3L)
   expect_lte(nrow(gmeans(x, k_max = 5L)$centers), 5L)
+  expect_gt(nrow(gmeans(x)$centers), 10L)
 })
 
 test_that("gmeans finds the number of clusters", {
