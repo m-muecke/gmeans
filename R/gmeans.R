@@ -39,8 +39,8 @@
 #'   `0.01` can work better for clusters with fewer than about 50 points. See [ad.test()] for more
 #'   information.
 #' @param ... (`any`)\cr
-#'   Additional arguments passed to [stats::kmeans()]. `nstart` has no effect since the initial
-#'   centers are always given as a matrix.
+#'   Additional arguments passed to [stats::kmeans()], except `centers`, which is set by `k_init`.
+#'   `nstart` has no effect since the initial centers are always given as a matrix.
 #' @references
 #' `r format_bib("hamerly2003learning")`
 #' @returns An object of class `c("gmeans", "kmeans")` with the components of a [stats::kmeans()]
@@ -75,6 +75,9 @@ gmeans <- function(x, k_init = 1L, k_max = 10L, level = 0.0001, ...) {
     level > 0,
     level < 1
   )
+  if ("centers" %in% ...names()) {
+    stop("`centers` can't be passed to `gmeans()`, use `k_init` instead", call. = FALSE)
+  }
 
   init_centers <- kmeans_plusplus(x, k_init)
   if (length(init_centers) == 1L) {

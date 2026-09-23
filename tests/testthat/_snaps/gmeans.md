@@ -1,3 +1,11 @@
+# gmeans errors clearly when centers is passed
+
+    Code
+      gmeans(matrix(1:20, ncol = 2L), centers = 3L)
+    Condition
+      Error:
+      ! `centers` can't be passed to `gmeans()`, use `k_init` instead
+
 # ad.test works
 
     Code

@@ -30,6 +30,10 @@ test_that("gmeans works", {
   expect_error(gmeans(iris[0L, -5L]), "nrow(x) > 0L", fixed = TRUE)
 })
 
+test_that("gmeans errors clearly when centers is passed", {
+  expect_snapshot(gmeans(matrix(1:20, ncol = 2L), centers = 3L), error = TRUE)
+})
+
 test_that("gmeans accepts logical input", {
   withr::local_seed(1234L)
   x <- matrix(sample(c(TRUE, FALSE), 60L, replace = TRUE), ncol = 2L)
