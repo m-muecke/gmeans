@@ -81,14 +81,15 @@ Maximum amount of centers. Must be greater than or equal to <code>k_init</code>.
 
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
 <dd><p>(<code>numeric(1)</code>)<br>
-Significance level for the Anderson-Darling test. Default is <code>0.0001</code>. See <code><a href="ad.test.html">ad.test()</a></code> for more
+Significance level for the Anderson-Darling test. Default is <code>0.0001</code>. A larger level such as
+<code>0.01</code> can work better for clusters with fewer than about 50 points. See <code><a href="ad.test.html">ad.test()</a></code> for more
 information.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>(<code>any</code>)<br>
-Additional arguments passed to <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code>. <code>nstart</code> has no effect since the initial
-centers are always given as a matrix.</p></dd>
+Additional arguments passed to <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code>, except <code>centers</code>, which is set by <code>k_init</code>.
+<code>nstart</code> has no effect since the initial centers are always given as a matrix.</p></dd>
 
 </dl></div>
     <div class="section level2">

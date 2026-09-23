@@ -68,7 +68,6 @@ library(generics)
 #> 
 #>     as.difftime, as.factor, as.ordered, intersect, is.element, setdiff,
 #>     setequal, union
-set.seed(123)
 x <- as.matrix(iris[, -5])
 cl <- gmeans(x)
 

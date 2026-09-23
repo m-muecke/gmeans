@@ -65,34 +65,6 @@ beforehand. To illustrate this, let’s fit a k-means model with `k = 3`:
 
 points <- points[, cluster := NULL]
 kclust <- kmeans(points, centers = 3)
-kclust
-#> K-means clustering with 3 clusters of sizes 146, 53, 101
-#> 
-#> Cluster means:
-#>           x1         x2
-#> 1 -0.1277535  1.1366932
-#> 2 -2.9430301 -1.9877357
-#> 3  5.0156304 -0.8637111
-#> 
-#> Clustering vector:
-#>   [1] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 3 3 3 3 3 3 3 3 3 3 3 3
-#>  [38] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
-#>  [75] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 1 1 1 1 1 1 1 1 1 1
-#> [112] 1 1 1 1 1 1 1 1 1 1 1 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1
-#> [149] 1 1 1 1 1 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-#> [186] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-#> [223] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 2 1 1 1 1 1 2 2 2 2 2 2 2 2 2
-#> [260] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
-#> [297] 2 2 2 2
-#> 
-#> Within cluster sum of squares by cluster:
-#> [1] 307.3195 119.2575 213.5906
-#>  (between_SS / total_SS =  82.9 %)
-#> 
-#> Available components:
-#> 
-#> [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-#> [6] "betweenss"    "size"         "iter"         "ifault"
 ```
 
 Here, we fit the k-means model with the correct number of clusters
@@ -247,51 +219,41 @@ Let’s now apply the G-means algorithm to the same data:
 
 ``` r
 
-set.seed(123)
-
-gmeans(points)
-#> K-means clustering with 3 clusters of sizes 101, 146, 53
+fit <- gmeans(points)
+summary(fit)
+#> G-means clustering with 3 clusters (k_init = 1, k_max = 10, level = 0.0001)
 #> 
-#> Cluster means:
-#>           x1         x2
-#> 1  5.0156304 -0.8637111
-#> 2 -0.1277535  1.1366932
-#> 3 -2.9430301 -1.9877357
+#>  cluster size withinss     x1     x2
+#>        1  101      214  5.016 -0.864
+#>        2  146      307 -0.128  1.137
+#>        3   53      119 -2.943 -1.988
 #> 
-#> Clustering vector:
-#>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1
-#>  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-#>  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
-#> [112] 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 2 2 2 2 2 2
-#> [149] 2 2 2 2 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
-#> [186] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
-#> [223] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 2 2 2 2 2 2 2 3 2 2 2 2 2 3 3 3 3 3 3 3 3 3
-#> [260] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
-#> [297] 3 3 3 3
-#> 
-#> Within cluster sum of squares by cluster:
-#> [1] 213.5906 307.3195 119.2575
-#>  (between_SS / total_SS =  82.9 %)
-#> 
-#> Available components:
-#> 
-#>  [1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
-#>  [6] "betweenss"    "size"         "iter"         "ifault"       "k_init"      
-#> [11] "k_max"        "level"
+#> Total SS: 3746, within SS: 640, between SS: 3106 (82.9% of total)
 ```
 
 As expected from our previous analysis, G-means identifies 3 clusters,
-aligning with the elbow point observed in the WSS plot.
+aligning with the elbow point observed in the WSS plot. No
+[`set.seed()`](https://rdrr.io/r/base/Random.html) is needed: G-means
+starts from a single center and splits it deterministically, so the
+result does not depend on the random seed.
 
 Next, let’s explore how G-means performs on a different dataset:
 
 ``` r
 
-set.seed(1234)
-
 x <- as.matrix(iris[, -5])
 gclust <- gmeans(x)
+table(cluster = gclust$cluster, species = iris$Species)
+#>        species
+#> cluster setosa versicolor virginica
+#>       1      0         47        50
+#>       2     50          3         0
 ```
+
+G-means finds two clusters: one with the setosa flowers, and one with
+nearly all versicolor and virginica flowers. These two species overlap
+so much in their measurements that together they still look Gaussian to
+the test, so G-means does not split them.
 
 `gmeans` ships its own
 [`tidy()`](https://generics.r-lib.org/reference/tidy.html),
@@ -318,9 +280,9 @@ provides a summary of each cluster:
 ``` r
 
 tidy(gclust)
-#>   Sepal.Length Sepal.Width Petal.Length Petal.Width size  withinss cluster
-#> 1     6.301031    2.886598     4.958763    1.695876   97 123.79588       1
-#> 2     5.005660    3.369811     1.560377    0.290566   53  28.55208       2
+#>   Sepal.Length Sepal.Width Petal.Length Petal.Width size withinss cluster
+#> 1        6.301       2.887        4.959      1.6959   97   123.80       1
+#> 2        5.006       3.370        1.560      0.2906   53    28.55       2
 ```
 
 The [`glance()`](https://generics.r-lib.org/reference/glance.html)
@@ -330,6 +292,6 @@ clusters found and the settings used to fit it:
 ``` r
 
 glance(gclust)
-#>   k k_init k_max level    totss tot.withinss betweenss iter
-#> 1 2      1    10 1e-04 681.3706      152.348  529.0226    1
+#>   k k_init k_max level totss tot.withinss betweenss iter
+#> 1 2      1    10 1e-04 681.4        152.3       529    1
 ```

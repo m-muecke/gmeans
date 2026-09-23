@@ -85,7 +85,6 @@ predict on a plain
 ## Examples
 
 ``` r
-set.seed(123)
 x <- as.matrix(iris[, -5])
 cl <- gmeans(x)
 

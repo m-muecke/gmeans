@@ -61,11 +61,10 @@ class `"summary.gmeans"`, a list with components:
 ## Examples
 
 ``` r
-set.seed(123)
 x <- as.matrix(iris[, -5])
 cl <- gmeans(x)
 summary(cl)
-#> G-means clustering with 2 clusters (k_init = 1, k_max = 10, level = 1e-04)
+#> G-means clustering with 2 clusters (k_init = 1, k_max = 10, level = 0.0001)
 #> 
 #>  cluster size withinss Sepal.Length Sepal.Width Petal.Length Petal.Width
 #>        1   97   123.80        6.301       2.887        4.959      1.6959

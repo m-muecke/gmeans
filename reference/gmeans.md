@@ -33,7 +33,8 @@ gmeans(x, k_init = 1L, k_max = 10L, level = 1e-04, ...)
 
   (`numeric(1)`)  
   Significance level for the Anderson-Darling test. Default is `0.0001`.
-  See
+  A larger level such as `0.01` can work better for clusters with fewer
+  than about 50 points. See
   [`ad.test()`](https://m-muecke.github.io/gmeans/reference/ad.test.md)
   for more information.
 
@@ -41,8 +42,9 @@ gmeans(x, k_init = 1L, k_max = 10L, level = 1e-04, ...)
 
   (`any`)  
   Additional arguments passed to
-  [`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html). `nstart` has
-  no effect since the initial centers are always given as a matrix.
+  [`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html), except
+  `centers`, which is set by `k_init`. `nstart` has no effect since the
+  initial centers are always given as a matrix.
 
 ## Value
 

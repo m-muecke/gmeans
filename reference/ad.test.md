@@ -25,13 +25,13 @@ Adapted from `nortest::ad.test()`
 A list inheriting from classes `"htest"` containing the following
 components:
 
-- statistic: the value of the statistic.
+- `statistic`: the value of the statistic.
 
-- p.value: the p-value of the test.
+- `p.value`: the p-value of the test.
 
-- method: the character string `"Anderson-Darling normality test"`.
+- `method`: the character string `"Anderson-Darling normality test"`.
 
-- data.name: a character string giving the name(s) of the data.
+- `data.name`: a character string giving the name(s) of the data.
 
 ## Details
 
