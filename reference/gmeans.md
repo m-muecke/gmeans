@@ -5,7 +5,7 @@ Perform G-means clustering on a data matrix.
 ## Usage
 
 ``` r
-gmeans(x, k_init = 2L, k_max = 10L, level = 0.05, ...)
+gmeans(x, k_init = 1L, k_max = 10L, level = 1e-04, ...)
 ```
 
 ## Arguments
@@ -21,7 +21,7 @@ gmeans(x, k_init = 2L, k_max = 10L, level = 0.05, ...)
 - k_init:
 
   (`integer(1)`)  
-  Initial amount of centers. Default is `2L`.
+  Initial amount of centers. Default is `1L`.
 
 - k_max:
 
@@ -32,7 +32,7 @@ gmeans(x, k_init = 2L, k_max = 10L, level = 0.05, ...)
 - level:
 
   (`numeric(1)`)  
-  Significance level for the Anderson-Darling test. Default is `0.05`.
+  Significance level for the Anderson-Darling test. Default is `0.0001`.
   See
   [`ad.test()`](https://m-muecke.github.io/gmeans/reference/ad.test.md)
   for more information.
@@ -78,7 +78,10 @@ The algorithm is outlined as follows:
     distribution at the confidence level \\\alpha\\.
 
 5.  If the data points appear Gaussian, keep \\c_j\\. Otherwise, replace
-    \\c_j\\ with two new centers.
+    \\c_j\\ with two new centers, found by k-means on the cluster
+    started from \\c_j \pm s \sqrt{2 \lambda / \pi}\\, where \\s\\ is
+    the main principal component of the cluster and \\\lambda\\ its
+    eigenvalue.
 
 6.  Repeat from step 2 until no more centers are added.
 

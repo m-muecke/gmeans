@@ -51,6 +51,12 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="gmeans-development-version">gmeans (development version)<a class="anchor" aria-label="anchor" href="#gmeans-development-version"></a></h2>
 <ul><li>
+<code><a href="../reference/gmeans.html">gmeans()</a></code> now splits a cluster by starting the two new centers along its main principal component, as described in Hamerly and Elkan (2003), instead of at random points. The split step no longer depends on the random seed and the number of clusters is found more reliably, so results may differ from earlier versions.</li>
+<li>
+<code><a href="../reference/gmeans.html">gmeans()</a></code> now uses <code>k_init = 1</code> by default, as in Hamerly and Elkan (2003). The previous default of <code>2</code> could never return a single cluster. With one initial center the result no longer depends on the random seed.</li>
+<li>
+<code><a href="../reference/gmeans.html">gmeans()</a></code> now uses <code>level = 0.0001</code> by default, the significance level used by Hamerly and Elkan (2003). The previous default of <code>0.05</code> often split clusters that are Gaussian, especially in higher dimensions.</li>
+<li>
 <code><a href="../reference/gmeans.html">gmeans()</a></code> now stores <code>k_init</code>, <code>k_max</code>, and <code>level</code> in the returned object.</li>
 <li>New <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for <code>gmeans</code> objects.</li>
 <li>New <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code>, <code><a href="https://generics.r-lib.org/reference/augment.html" class="external-link">augment()</a></code>, and <code><a href="https://generics.r-lib.org/reference/glance.html" class="external-link">glance()</a></code> methods for <code>gmeans</code> objects.</li>

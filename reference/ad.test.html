@@ -68,8 +68,8 @@
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric()</a></code>)<br>
-Vector of data values. Missing values are allowed, but the
-number of non-missing values must be greater than 7.</p></dd>
+Vector of data values. Missing values are allowed, but the number of non-missing values must be
+greater than 7.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -81,16 +81,14 @@ number of non-missing values must be greater than 7.</p></dd>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of
-normality. The test statistic is $$
+    <p>The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of normality.
+The test statistic is $$
   A^2 = -n -\frac{1}{n} \sum_{i=1}^{n} (2i - 1) [\ln(z_{i}) + \ln(1 - z_{n + 1 - i})]
 $$
-where \(z_{i} = \Phi(\frac{x_{i} - \bar{x}}{s})\). Here,
-\(\Phi\) is the cumulative distribution function of the standard normal
-distribution, and \(\bar{x}\) and \(s\) are mean and standard deviation of
-the data values. The p-value is computed from the modified statistic
-\(A^2_*=A^2 (1.0 + 0.75/n + 2.25/n^{2})\) according to Table 4.9 in
-Stephens (1986).</p>
+where \(z_{i} = \Phi(\frac{x_{i} - \bar{x}}{s})\). Here, \(\Phi\) is the cumulative
+distribution function of the standard normal distribution, and \(\bar{x}\) and \(s\) are mean
+and standard deviation of the data values. The p-value is computed from the modified statistic
+\(A^2_*=A^2 (1.0 + 0.75/n + 2.25/n^{2})\) according to Table 4.9 in Stephens (1986).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -108,8 +106,8 @@ CRC Press.
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="https://rdrr.io/r/stats/shapiro.test.html" class="external-link">stats::shapiro.test()</a></code> for performing the Shapiro-Wilk test for normality.
 <code>nortest::cvm.test()</code>, <code>nortest::lillie.test()</code>, <code>nortest::pearson.test()</code>,
-<code>nortest::sf.test()</code> for performing further tests for normality.
-<code><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">stats::qqnorm()</a></code> for producing a normal quantile-quantile plot.</p></div>
+<code>nortest::sf.test()</code> for performing further tests for normality. <code><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">stats::qqnorm()</a></code> for
+producing a normal quantile-quantile plot.</p></div>
     </div>
 
     <div class="section level2">

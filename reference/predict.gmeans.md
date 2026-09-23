@@ -91,5 +91,5 @@ cl <- gmeans(x)
 
 newdata <- x[1:10, ]
 predict(cl, newdata)
-#>  [1] 4 4 4 4 4 4 4 4 4 4
+#>  [1] 2 2 2 2 2 2 2 2 2 2
 ```

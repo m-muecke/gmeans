@@ -55,7 +55,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gmeans</span><span class="op">(</span><span class="va">x</span>, k_init <span class="op">=</span> <span class="fl">2L</span>, k_max <span class="op">=</span> <span class="fl">10L</span>, level <span class="op">=</span> <span class="fl">0.05</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gmeans</span><span class="op">(</span><span class="va">x</span>, k_init <span class="op">=</span> <span class="fl">1L</span>, k_max <span class="op">=</span> <span class="fl">10L</span>, level <span class="op">=</span> <span class="fl">1e-04</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -64,60 +64,58 @@
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix()</a></code>)<br>
-Numeric matrix of data, or a data frame with all numeric columns.
-Logical input is coerced to a 0/1 matrix.
-Missing and infinite values are not allowed and the matrix must have at least
-one row and one column.</p></dd>
+Numeric matrix of data, or a data frame with all numeric columns. Logical input is coerced to a
+0/1 matrix. Missing and infinite values are not allowed and the matrix must have at least one
+row and one column.</p></dd>
 
 
 <dt id="arg-k-init">k_init<a class="anchor" aria-label="anchor" href="#arg-k-init"></a></dt>
 <dd><p>(<code>integer(1)</code>)<br>
-Initial amount of centers. Default is <code>2L</code>.</p></dd>
+Initial amount of centers. Default is <code>1L</code>.</p></dd>
 
 
 <dt id="arg-k-max">k_max<a class="anchor" aria-label="anchor" href="#arg-k-max"></a></dt>
 <dd><p>(<code>integer(1)</code>)<br>
-Maximum amount of centers. Must be greater than or equal to <code>k_init</code>.
-Default is <code>10L</code>.</p></dd>
+Maximum amount of centers. Must be greater than or equal to <code>k_init</code>. Default is <code>10L</code>.</p></dd>
 
 
 <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
 <dd><p>(<code>numeric(1)</code>)<br>
-Significance level for the Anderson-Darling test.
-Default is <code>0.05</code>. See <code><a href="ad.test.html">ad.test()</a></code> for more information.</p></dd>
+Significance level for the Anderson-Darling test. Default is <code>0.0001</code>. See <code><a href="ad.test.html">ad.test()</a></code> for more
+information.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>(<code>any</code>)<br>
-Additional arguments passed to <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code>.
-<code>nstart</code> has no effect since the initial centers are always given as a matrix.</p></dd>
+Additional arguments passed to <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code>. <code>nstart</code> has no effect since the initial
+centers are always given as a matrix.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An object of class <code>c("gmeans", "kmeans")</code> with the components of a
-<code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code> object plus <code>k_init</code>, <code>k_max</code>, and <code>level</code>, the settings used to
-fit the model. See <a href="gmeans_tidiers.html">gmeans_tidiers</a> for summarizing the result as data frames.</p>
+    <p>An object of class <code>c("gmeans", "kmeans")</code> with the components of a <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code>
+object plus <code>k_init</code>, <code>k_max</code>, and <code>level</code>, the settings used to fit the model. See
+<a href="gmeans_tidiers.html">gmeans_tidiers</a> for summarizing the result as data frames.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The G-means clustering algorithm is an extension of the traditional k-means
-algorithm that automatically determines the number of clusters by iteratively
-testing the Gaussianity of data within clusters. The process begins with a specified
-initial number of clusters (<code>k_init</code>) and iteratively increases the number of
-clusters until it reaches the specified maximum (<code>k_max</code>) or the data within
-clusters is determined to be Gaussian at the specified significance level (<code>level</code>).</p>
-<p>The algorithm is outlined as follows:</p><ol><li><p>Let \(C\) be the initial set of centers (usually
-\(C \leftarrow \{\bar{x}\}\)).</p></li>
-<li><p>Perform k-means clustering on the dataset \(X\) using the current set of
-centers \(C\), i.e., \(C \leftarrow \text{kmeans}(C, X)\).</p></li>
+    <p>The G-means clustering algorithm is an extension of the traditional k-means algorithm that
+automatically determines the number of clusters by iteratively testing the Gaussianity of data
+within clusters. The process begins with a specified initial number of clusters (<code>k_init</code>) and
+iteratively increases the number of clusters until it reaches the specified maximum (<code>k_max</code>) or
+the data within clusters is determined to be Gaussian at the specified significance level
+(<code>level</code>).</p>
+<p>The algorithm is outlined as follows:</p><ol><li><p>Let \(C\) be the initial set of centers (usually \(C \leftarrow \{\bar{x}\}\)).</p></li>
+<li><p>Perform k-means clustering on the dataset \(X\) using the current set of centers \(C\),
+i.e., \(C \leftarrow \text{kmeans}(C, X)\).</p></li>
 <li><p>For each center \(c_j\), identify the set of data points
 \(\{x_i \mid \text{class}(x_i) = j\}\) that are assigned to \(c_j\).</p></li>
 <li><p>Use the Anderson-Darling test to check if the set of data points
-\(\{x_i \mid \text{class}(x_i) = j\}\) follows a Gaussian distribution
-at the confidence level \(\alpha\).</p></li>
-<li><p>If the data points appear Gaussian, keep \(c_j\).
-Otherwise, replace \(c_j\) with two new centers.</p></li>
+\(\{x_i \mid \text{class}(x_i) = j\}\) follows a Gaussian distribution at the confidence
+level \(\alpha\).</p></li>
+<li><p>If the data points appear Gaussian, keep \(c_j\). Otherwise, replace \(c_j\) with two new
+centers, found by k-means on the cluster started from \(c_j \pm s \sqrt{2 \lambda / \pi}\),
+where \(s\) is the main principal component of the cluster and \(\lambda\) its eigenvalue.</p></li>
 <li><p>Repeat from step 2 until no more centers are added.</p></li>
 </ol></div>
     <div class="section level2">

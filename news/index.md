@@ -3,6 +3,20 @@
 ## gmeans (development version)
 
 - [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
+  now splits a cluster by starting the two new centers along its main
+  principal component, as described in Hamerly and Elkan (2003), instead
+  of at random points. The split step no longer depends on the random
+  seed and the number of clusters is found more reliably, so results may
+  differ from earlier versions.
+- [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
+  now uses `k_init = 1` by default, as in Hamerly and Elkan (2003). The
+  previous default of `2` could never return a single cluster. With one
+  initial center the result no longer depends on the random seed.
+- [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
+  now uses `level = 0.0001` by default, the significance level used by
+  Hamerly and Elkan (2003). The previous default of `0.05` often split
+  clusters that are Gaussian, especially in higher dimensions.
+- [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
   now stores `k_init`, `k_max`, and `level` in the returned object.
 - New [`summary()`](https://rdrr.io/r/base/summary.html) method for
   `gmeans` objects.

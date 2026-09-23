@@ -5,11 +5,9 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tidy a G-means Clustering Object — gmeans_tidiers"><meta name="description" content="Summarize a G-means clustering model as data frames, following the conventions of
-the broom package. The generics come from the generics package, so load it or broom
-to call the methods."><meta property="og:description" content="Summarize a G-means clustering model as data frames, following the conventions of
-the broom package. The generics come from the generics package, so load it or broom
-to call the methods."></head><body>
+</script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tidy a G-means Clustering Object — gmeans_tidiers"><meta name="description" content="Summarize a G-means clustering model as data frames, following the conventions of the broom
+package. The generics come from the generics package, so load it or broom to call the methods."><meta property="og:description" content="Summarize a G-means clustering model as data frames, following the conventions of the broom
+package. The generics come from the generics package, so load it or broom to call the methods."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -54,9 +52,8 @@ to call the methods."></head><body>
     </div>
 
     <div class="ref-description section level2">
-    <p>Summarize a G-means clustering model as data frames, following the conventions of
-the broom package. The generics come from the generics package, so load it or broom
-to call the methods.</p>
+    <p>Summarize a G-means clustering model as data frames, following the conventions of the broom
+package. The generics come from the generics package, so load it or broom to call the methods.</p>
     </div>
 
     <div class="section level2">
@@ -82,8 +79,8 @@ An object of class <code>"gmeans"</code>.</p></dd>
 
 <dt id="arg-col-names">col.names<a class="anchor" aria-label="anchor" href="#arg-col-names"></a></dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/character.html" class="external-link">character()</a></code>)<br>
-Column names for the centers. Defaults to the column names of the centers, or
-<code>x1</code>, <code>x2</code>, ... if they are unnamed.</p></dd>
+Column names for the centers. Defaults to the column names of the centers, or <code>x1</code>, <code>x2</code>, ...
+if they are unnamed.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -100,8 +97,8 @@ The data used to fit the model, a numeric matrix or a data frame.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code>:</p><ul><li><p><code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code>: one row per cluster with the centers, <code>size</code>, <code>withinss</code>, and <code>cluster</code>.</p></li>
 <li><p><code><a href="https://generics.r-lib.org/reference/augment.html" class="external-link">augment()</a></code>: <code>data</code> with a <code>.cluster</code> factor giving the cluster assignments.</p></li>
-<li><p><code><a href="https://generics.r-lib.org/reference/glance.html" class="external-link">glance()</a></code>: one row with <code>k</code>, <code>k_init</code>, <code>k_max</code>, <code>level</code>, <code>totss</code>, <code>tot.withinss</code>,
-<code>betweenss</code>, and <code>iter</code>.</p></li>
+<li><p><code><a href="https://generics.r-lib.org/reference/glance.html" class="external-link">glance()</a></code>: one row with <code>k</code>, <code>k_init</code>, <code>k_max</code>, <code>level</code>, <code>totss</code>, <code>tot.withinss</code>, <code>betweenss</code>,
+and <code>iter</code>.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -123,24 +120,19 @@ The data used to fit the model, a numeric matrix or a data frame.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length Sepal.Width Petal.Length Petal.Width size  withinss cluster</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     6.247222    2.847222     4.775000    1.575000   36 11.454444       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     5.242857    2.371429     3.442857    1.028571    7  1.262857       2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     5.628571    2.723810     4.133333    1.295238   21  4.177143       3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     5.006000    3.428000     1.462000    0.246000   50 15.151000       4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     7.475000    3.125000     6.300000    2.050000   12  4.655000       5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     6.611111    3.000000     5.505556    2.083333   18  3.052222       6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7     6.283333    3.233333     5.516667    2.400000    6  1.230000       7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     6.301031    2.886598     4.958763    1.695876   97 123.79588       1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     5.005660    3.369811     1.560377    0.290566   53  28.55208       2</span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/glance.html" class="external-link">glance</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   k k_init k_max level    totss tot.withinss betweenss iter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 7      2    10  0.05 681.3706     40.98267  640.3879    1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2      1    10 1e-04 681.3706      152.348  529.0226    1</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html" class="external-link">augment</a></span><span class="op">(</span><span class="va">cl</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Length Sepal.Width Petal.Length Petal.Width .cluster</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          5.1         3.5          1.4         0.2        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2          4.9         3.0          1.4         0.2        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3          4.7         3.2          1.3         0.2        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          4.6         3.1          1.5         0.2        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          5.0         3.6          1.4         0.2        4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          5.4         3.9          1.7         0.4        4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          5.1         3.5          1.4         0.2        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          4.9         3.0          1.4         0.2        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          4.7         3.2          1.3         0.2        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          4.6         3.1          1.5         0.2        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          5.0         3.6          1.4         0.2        2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6          5.4         3.9          1.7         0.4        2</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
