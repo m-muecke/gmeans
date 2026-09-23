@@ -47,11 +47,12 @@ test_that("gmeans errors clearly with too few distinct points", {
     "distinct data points",
     fixed = TRUE
   )
-  expect_error(
-    gmeans(matrix(rnorm(10L), ncol = 2L), k_init = 6L),
-    "distinct data points",
-    fixed = TRUE
-  )
+})
+
+test_that("gmeans errors clearly when k_init is not less than the number of rows", {
+  expect_snapshot(gmeans(matrix(1:4, ncol = 2L), k_init = 2L), error = TRUE)
+  expect_snapshot(gmeans(matrix(1:10, ncol = 2L), k_init = 6L, k_max = 6L), error = TRUE)
+  expect_s3_class(gmeans(matrix(1:2, ncol = 2L)), "gmeans")
 })
 
 test_that("gmeans works with a single column", {

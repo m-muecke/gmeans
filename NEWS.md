@@ -5,6 +5,7 @@
 * `gmeans()` now uses `level = 0.0001` by default, the significance level used by Hamerly and Elkan (2003). The previous default of `0.05` often split clusters that are Gaussian, especially in higher dimensions.
 * `gmeans()` now stores `k_init`, `k_max`, and `level` in the returned object.
 * `gmeans()` now errors clearly when `centers` is passed, pointing to `k_init` instead.
+* `gmeans()` now errors clearly when `k_init` is not less than the number of rows in `x`.
 * New `summary()` method for `gmeans` objects.
 * New `tidy()`, `augment()`, and `glance()` methods for `gmeans` objects.
 

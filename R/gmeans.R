@@ -75,6 +75,9 @@ gmeans <- function(x, k_init = 1L, k_max = 10L, level = 0.0001, ...) {
     level > 0,
     level < 1
   )
+  if (k_init > 1L && k_init >= nrow(x)) {
+    stop("`k_init` must be less than the number of rows in `x`", call. = FALSE)
+  }
   if ("centers" %in% ...names()) {
     stop("`centers` can't be passed to `gmeans()`, use `k_init` instead", call. = FALSE)
   }
