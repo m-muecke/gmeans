@@ -25,19 +25,19 @@ Number of significant digits to print.}
 \value{
 \code{summary()} returns an object of class \code{"summary.gmeans"}, a list with components:
 \itemize{
-\item \code{k}, \code{k_init}, \code{k_max}, \code{level}: the number of clusters found and the settings
-used to fit the model.
-\item \code{clusters}: a \code{data.frame()} with one row per cluster and the columns \code{cluster},
-\code{size}, \code{withinss}, followed by the cluster centers.
+\item \code{k}, \code{k_init}, \code{k_max}, \code{level}: the number of clusters found and the settings used to fit the
+model.
+\item \code{clusters}: a \code{data.frame()} with one row per cluster and the columns \code{cluster}, \code{size},
+\code{withinss}, followed by the cluster centers.
 \item \code{totss}, \code{tot.withinss}, \code{betweenss}, \code{iter}: as in \code{\link[stats:kmeans]{stats::kmeans()}}.
 }
 
 \code{print()} returns \code{x} invisibly.
 }
 \description{
-Summarize the result of a G-means clustering: the number of clusters found, the
-settings used to fit the model, a per-cluster table of sizes, within-cluster sums of
-squares and centers, and the overall sums of squares.
+Summarize the result of a G-means clustering: the number of clusters found, the settings used to
+fit the model, a per-cluster table of sizes, within-cluster sums of squares and centers, and the
+overall sums of squares.
 }
 \examples{
 set.seed(123)

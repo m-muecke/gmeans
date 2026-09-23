@@ -4,51 +4,47 @@
 #' Perform G-means clustering on a data matrix.
 #'
 #' @details
-#' The G-means clustering algorithm is an extension of the traditional k-means
-#' algorithm that automatically determines the number of clusters by iteratively
-#' testing the Gaussianity of data within clusters. The process begins with a specified
-#' initial number of clusters (`k_init`) and iteratively increases the number of
-#' clusters until it reaches the specified maximum (`k_max`) or the data within
-#' clusters is determined to be Gaussian at the specified significance level (`level`).
+#' The G-means clustering algorithm is an extension of the traditional k-means algorithm that
+#' automatically determines the number of clusters by iteratively testing the Gaussianity of data
+#' within clusters. The process begins with a specified initial number of clusters (`k_init`) and
+#' iteratively increases the number of clusters until it reaches the specified maximum (`k_max`) or
+#' the data within clusters is determined to be Gaussian at the specified significance level
+#' (`level`).
 #'
 #' The algorithm is outlined as follows:
 #'
-#' 1. Let \eqn{C} be the initial set of centers (usually
-#'    \eqn{C \leftarrow \{\bar{x}\}}).
-#' 2. Perform k-means clustering on the dataset \eqn{X} using the current set of
-#'    centers \eqn{C}, i.e., \eqn{C \leftarrow \text{kmeans}(C, X)}.
+#' 1. Let \eqn{C} be the initial set of centers (usually \eqn{C \leftarrow \{\bar{x}\}}).
+#' 2. Perform k-means clustering on the dataset \eqn{X} using the current set of centers \eqn{C},
+#'    i.e., \eqn{C \leftarrow \text{kmeans}(C, X)}.
 #' 3. For each center \eqn{c_j}, identify the set of data points
 #'    \eqn{\{x_i \mid \text{class}(x_i) = j\}} that are assigned to \eqn{c_j}.
 #' 4. Use the Anderson-Darling test to check if the set of data points
-#'    \eqn{\{x_i \mid \text{class}(x_i) = j\}} follows a Gaussian distribution
-#'    at the confidence level \eqn{\alpha}.
-#' 5. If the data points appear Gaussian, keep \eqn{c_j}.
-#'    Otherwise, replace \eqn{c_j} with two new centers, found by k-means on the
-#'    cluster started from \eqn{c_j \pm s \sqrt{2 \lambda / \pi}}, where \eqn{s} is
-#'    the main principal component of the cluster and \eqn{\lambda} its eigenvalue.
+#'    \eqn{\{x_i \mid \text{class}(x_i) = j\}} follows a Gaussian distribution at the confidence
+#'    level \eqn{\alpha}.
+#' 5. If the data points appear Gaussian, keep \eqn{c_j}. Otherwise, replace \eqn{c_j} with two new
+#'    centers, found by k-means on the cluster started from \eqn{c_j \pm s \sqrt{2 \lambda / \pi}},
+#'    where \eqn{s} is the main principal component of the cluster and \eqn{\lambda} its eigenvalue.
 #' 6. Repeat from step 2 until no more centers are added.
 #'
 #' @param x (`matrix()`)\cr
-#'   Numeric matrix of data, or a data frame with all numeric columns.
-#'   Logical input is coerced to a 0/1 matrix.
-#'   Missing and infinite values are not allowed and the matrix must have at least
-#'   one row and one column.
+#'   Numeric matrix of data, or a data frame with all numeric columns. Logical input is coerced to a
+#'   0/1 matrix. Missing and infinite values are not allowed and the matrix must have at least one
+#'   row and one column.
 #' @param k_init (`integer(1)`)\cr
 #'   Initial amount of centers. Default is `1L`.
 #' @param k_max (`integer(1)`)\cr
-#'   Maximum amount of centers. Must be greater than or equal to `k_init`.
-#'   Default is `10L`.
+#'   Maximum amount of centers. Must be greater than or equal to `k_init`. Default is `10L`.
 #' @param level (`numeric(1)`)\cr
-#'   Significance level for the Anderson-Darling test.
-#'   Default is `0.0001`. See [ad.test()] for more information.
+#'   Significance level for the Anderson-Darling test. Default is `0.0001`. See [ad.test()] for more
+#'   information.
 #' @param ... (`any`)\cr
-#'   Additional arguments passed to [stats::kmeans()].
-#'   `nstart` has no effect since the initial centers are always given as a matrix.
+#'   Additional arguments passed to [stats::kmeans()]. `nstart` has no effect since the initial
+#'   centers are always given as a matrix.
 #' @references
 #' `r format_bib("hamerly2003learning")`
-#' @returns An object of class `c("gmeans", "kmeans")` with the components of a
-#'   [stats::kmeans()] object plus `k_init`, `k_max`, and `level`, the settings used to
-#'   fit the model. See [gmeans_tidiers] for summarizing the result as data frames.
+#' @returns An object of class `c("gmeans", "kmeans")` with the components of a [stats::kmeans()]
+#'   object plus `k_init`, `k_max`, and `level`, the settings used to fit the model. See
+#'   [gmeans_tidiers] for summarizing the result as data frames.
 #' @export
 #' @examples
 #' set.seed(123)
@@ -142,8 +138,8 @@ split_and_search <- function(data, cluster, level, ...) {
 split_centers <- function(points) {
   pc <- eigen(stats::cov(points), symmetric = TRUE)
   s <- pc$vectors[, 1L]
-  # the sign of an eigenvector depends on the LAPACK build, so fix it to keep
-  # the order of the two centers stable
+  # the sign of an eigenvector depends on the LAPACK build, so fix it to keep the order of the two
+  # centers stable
   if (s[which.max(abs(s))] < 0) {
     s <- -s
   }
@@ -155,27 +151,22 @@ split_centers <- function(points) {
 #' kmeans++ initialization
 #'
 #' @description
-#' Algorithm for choosing the initial centers. k-means++ algorithm guarantees an
-#' approximation ratio \eqn{O(\log k)}. Clustering results of k-means are dependent
-#' on the choice of initial centers. This method is used to find out optimal initial
-#' centers.
+#' Algorithm for choosing the initial centers. k-means++ algorithm guarantees an approximation ratio
+#' \eqn{O(\log k)}. Clustering results of k-means are dependent on the choice of initial centers.
+#' This method is used to find out optimal initial centers.
 #'
 #' @details
 #' The kmeans++ can be divided into the following steps:
-#' 1. The first center is chosen randomly from the input data with a uniform
-#'    distribution.
-#' 2. For each point \eqn{x_i}, compute its distance \eqn{D(x_i)} to the
-#'    nearest center already chosen.
-#' 3. Calculate the probability \eqn{p_i} for each point \eqn{x_i} to be
-#'    selected as the next center: \deqn{
+#' 1. The first center is chosen randomly from the input data with a uniform distribution.
+#' 2. For each point \eqn{x_i}, compute its distance \eqn{D(x_i)} to the nearest center already
+#'    chosen.
+#' 3. Calculate the probability \eqn{p_i} for each point \eqn{x_i} to be selected as the next
+#'    center: \deqn{
 #'      p_{i} = \frac{D(x_{i})^2}{\sum_{j=0}^{n} D(x_{j})^2}
 #'    }
-#'    Points farther from existing centers have a higher probability of being
-#'    chosen.
-#' 4. Select the next center based on the probability distribution calculated
-#'    in step 3.
-#' 5. Repeat steps 2-4 until the required number of centers, \eqn{k}, is
-#'    initialized.
+#'    Points farther from existing centers have a higher probability of being chosen.
+#' 4. Select the next center based on the probability distribution calculated in step 3.
+#' 5. Repeat steps 2-4 until the required number of centers, \eqn{k}, is initialized.
 #'
 #' @references
 #' `r format_bib("arthur2007kmeanspp")`
@@ -207,8 +198,8 @@ kmeans_plusplus <- function(x, k) {
 #' Null Hypothesis Test
 #'
 #' @description
-#' Simplifies the test for Gaussian fit by projecting the data to one dimension using
-#' the following formula, as described in `r cite_bib("hamerly2003learning")`:
+#' Simplifies the test for Gaussian fit by projecting the data to one dimension using the following
+#' formula, as described in `r cite_bib("hamerly2003learning")`:
 #' \deqn{
 #'   x_{i}^{*}=\frac{\left \langle x_{i}, v \right \rangle}{\left \| v \right \|^{2}}
 #' }
@@ -225,33 +216,33 @@ is_null_hypothesis <- function(data, centers, level) {
 #' Predicted values based on the G-means clustering model.
 #'
 #' @details
-#' The `predict` method for G-means clustering assigns new data points to the nearest
-#' cluster center identified by the G-means algorithm. The method uses the specified
-#' distance metric to calculate the distance between each new data point and all
-#' cluster centers, and then assigns each point to the cluster with the closest center.
+#' The `predict` method for G-means clustering assigns new data points to the nearest cluster center
+#' identified by the G-means algorithm. The method uses the specified distance metric to calculate
+#' the distance between each new data point and all cluster centers, and then assigns each point to
+#' the cluster with the closest center.
 #'
 #' The `method` argument specifies the distance metric to use. The following options:
-#' - `"euclidean"`: The Euclidean distance is the default metric used in the k-means
+#' * `"euclidean"`: The Euclidean distance is the default metric used in the k-means
 #'   and is defined as \deqn{
 #'     d(x, y) = \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}
 #'   }
-#' - `"manhattan"`: The Manhattan distance is defined as \deqn{
+#' * `"manhattan"`: The Manhattan distance is defined as \deqn{
 #'     d(x, y) = \sum_{i=1}^{n} |x_i - y_i|
 #'   }
-#' - `"minkowski"`: The Minkowski distance is defined as \deqn{
+#' * `"minkowski"`: The Minkowski distance is defined as \deqn{
 #'     d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{1/p},
 #'   }
-#'   where \eqn{p} is a parameter that defines the distance type (e.g., \eqn{p=2}
-#'   for Euclidean, \eqn{p=1} for Manhattan).
+#'   where \eqn{p} is a parameter that defines the distance type (e.g., \eqn{p=2} for Euclidean,
+#'   \eqn{p=1} for Manhattan).
 #'
 #' @param object (`gmeans()`)\cr
 #'   An object of class `"gmeans"`.
 #' @param newdata (`matrix()`)\cr
-#'   New data to predict on, a numeric matrix or a data frame.
-#'   Columns are matched to the centers by name and unused columns are ignored.
+#'   New data to predict on, a numeric matrix or a data frame. Columns are matched to the centers by
+#'   name and unused columns are ignored.
 #' @param method (`character(1)`)\cr
-#'   Distance metric to use.
-#'   Either `"euclidean"`, `"manhattan"`, or `"minkowski"`. Default is `"euclidean"`.
+#'   Distance metric to use. Either `"euclidean"`, `"manhattan"`, or `"minkowski"`. Default is
+#'   `"euclidean"`.
 #' @param p (`numeric(1)`)\cr
 #'   Power of the Minkowski distance. Must be positive. Default is `2`.
 #' @param ... (`any`)\cr
@@ -284,19 +275,17 @@ predict.gmeans <- function(
 #' WSS is defined as \deqn{
 #'   \sum_{i=1}^{n} \left\|x_{i} - \mu_{j(i)}\right\|^2,
 #' }
-#' where \eqn{x_{i}} is a data point and \eqn{\mu_{j(i)}} is the centroid of the cluster
-#' to which \eqn{x_{i}} is assigned. When new data is provided, the function predicts
-#' the nearest cluster for each new observation and computes the WSS for these points
-#' based on their predicted clusters.
+#' where \eqn{x_{i}} is a data point and \eqn{\mu_{j(i)}} is the centroid of the cluster to which
+#' \eqn{x_{i}} is assigned. When new data is provided, the function predicts the nearest cluster for
+#' each new observation and computes the WSS for these points based on their predicted clusters.
 #'
 #' @param object (`any`)\cr
 #'   Class inheriting from `"kmeans"`.
 #' @param newdata (`matrix()`)\cr
-#'   New data to predict on, a numeric matrix or a data frame.
-#'   Columns are matched to the centers by name and unused columns are ignored.
-#' @returns A `numeric()` vector with one within-cluster sum of squares per cluster,
-#'   in the order of the rows of `object$centers`. Clusters with no assigned points
-#'   contribute `0`.
+#'   New data to predict on, a numeric matrix or a data frame. Columns are matched to the centers by
+#'   name and unused columns are ignored.
+#' @returns A `numeric()` vector with one within-cluster sum of squares per cluster, in the order of
+#'   the rows of `object$centers`. Clusters with no assigned points contribute `0`.
 #' @export
 #' @examples
 #' km <- kmeans(mtcars, 5)
@@ -367,31 +356,29 @@ rxdist <- function(
 #' Perform the Anderson-Darling normality test.
 #'
 #' @details
-#' The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of
-#' normality. The test statistic is \deqn{
+#' The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of normality.
+#' The test statistic is \deqn{
 #'   A^2 = -n -\frac{1}{n} \sum_{i=1}^{n} (2i - 1) [\ln(z_{i}) + \ln(1 - z_{n + 1 - i})]
 #' }
-#' where \eqn{z_{i} = \Phi(\frac{x_{i} - \bar{x}}{s})}. Here,
-#' \eqn{\Phi} is the cumulative distribution function of the standard normal
-#' distribution, and \eqn{\bar{x}} and \eqn{s} are mean and standard deviation of
-#' the data values. The p-value is computed from the modified statistic
-#' \eqn{A^2_*=A^2 (1.0 + 0.75/n + 2.25/n^{2})} according to Table 4.9 in
-#' Stephens (1986).
+#' where \eqn{z_{i} = \Phi(\frac{x_{i} - \bar{x}}{s})}. Here, \eqn{\Phi} is the cumulative
+#' distribution function of the standard normal distribution, and \eqn{\bar{x}} and \eqn{s} are mean
+#' and standard deviation of the data values. The p-value is computed from the modified statistic
+#' \eqn{A^2_*=A^2 (1.0 + 0.75/n + 2.25/n^{2})} according to Table 4.9 in Stephens (1986).
 #'
 #' @param x (`numeric()`)\cr
-#'   Vector of data values. Missing values are allowed, but the
-#'   number of non-missing values must be greater than 7.
+#'   Vector of data values. Missing values are allowed, but the number of non-missing values must be
+#'   greater than 7.
 #'
 #' @returns
 #' A list inheriting from classes `"htest"` containing the following components:
-#'   * statistic: the value of the statistic.
-#'   * p.value: the p-value of the test.
-#'   * method: the character string `"Anderson-Darling normality test"`.
-#'   * data.name: a character string giving the name(s) of the data.
+#' * statistic: the value of the statistic.
+#' * p.value: the p-value of the test.
+#' * method: the character string `"Anderson-Darling normality test"`.
+#' * data.name: a character string giving the name(s) of the data.
 #' @seealso [stats::shapiro.test()] for performing the Shapiro-Wilk test for normality.
 #'   [nortest::cvm.test()], [nortest::lillie.test()], [nortest::pearson.test()],
-#'   [nortest::sf.test()] for performing further tests for normality.
-#'   [stats::qqnorm()] for producing a normal quantile-quantile plot.
+#'   [nortest::sf.test()] for performing further tests for normality. [stats::qqnorm()] for
+#'   producing a normal quantile-quantile plot.
 #' @source Adapted from [nortest::ad.test()]
 #' @references
 #' `r format_bib("d2017goodness", "thode2002testing")`

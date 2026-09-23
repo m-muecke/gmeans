@@ -20,12 +20,12 @@ Adapted from \CRANpkg{clue}
 An object of class \code{"gmeans"}.}
 
 \item{newdata}{(\code{matrix()})\cr
-New data to predict on, a numeric matrix or a data frame.
-Columns are matched to the centers by name and unused columns are ignored.}
+New data to predict on, a numeric matrix or a data frame. Columns are matched to the centers by
+name and unused columns are ignored.}
 
 \item{method}{(\code{character(1)})\cr
-Distance metric to use.
-Either \code{"euclidean"}, \code{"manhattan"}, or \code{"minkowski"}. Default is \code{"euclidean"}.}
+Distance metric to use. Either \code{"euclidean"}, \code{"manhattan"}, or \code{"minkowski"}. Default is
+\code{"euclidean"}.}
 
 \item{p}{(\code{numeric(1)})\cr
 Power of the Minkowski distance. Must be positive. Default is \code{2}.}
@@ -40,10 +40,10 @@ An \code{integer()} vector with one cluster index per row of \code{newdata}.
 Predicted values based on the G-means clustering model.
 }
 \details{
-The \code{predict} method for G-means clustering assigns new data points to the nearest
-cluster center identified by the G-means algorithm. The method uses the specified
-distance metric to calculate the distance between each new data point and all
-cluster centers, and then assigns each point to the cluster with the closest center.
+The \code{predict} method for G-means clustering assigns new data points to the nearest cluster center
+identified by the G-means algorithm. The method uses the specified distance metric to calculate
+the distance between each new data point and all cluster centers, and then assigns each point to
+the cluster with the closest center.
 
 The \code{method} argument specifies the distance metric to use. The following options:
 \itemize{
@@ -57,8 +57,8 @@ and is defined as \deqn{
 \item \code{"minkowski"}: The Minkowski distance is defined as \deqn{
     d(x, y) = \left( \sum_{i=1}^{n} |x_i - y_i|^p \right)^{1/p},
   }
-where \eqn{p} is a parameter that defines the distance type (e.g., \eqn{p=2}
-for Euclidean, \eqn{p=1} for Manhattan).
+where \eqn{p} is a parameter that defines the distance type (e.g., \eqn{p=2} for Euclidean,
+\eqn{p=1} for Manhattan).
 }
 }
 \examples{

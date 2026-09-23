@@ -1,9 +1,9 @@
 #' Summarize a G-means Clustering Object
 #'
 #' @description
-#' Summarize the result of a G-means clustering: the number of clusters found, the
-#' settings used to fit the model, a per-cluster table of sizes, within-cluster sums of
-#' squares and centers, and the overall sums of squares.
+#' Summarize the result of a G-means clustering: the number of clusters found, the settings used to
+#' fit the model, a per-cluster table of sizes, within-cluster sums of squares and centers, and the
+#' overall sums of squares.
 #'
 #' @param object (`gmeans()`)\cr
 #'   An object of class `"gmeans"`.
@@ -15,10 +15,10 @@
 #'   Additional arguments. Currently unused.
 #' @returns
 #' `summary()` returns an object of class `"summary.gmeans"`, a list with components:
-#' * `k`, `k_init`, `k_max`, `level`: the number of clusters found and the settings
-#'   used to fit the model.
-#' * `clusters`: a `data.frame()` with one row per cluster and the columns `cluster`,
-#'   `size`, `withinss`, followed by the cluster centers.
+#' * `k`, `k_init`, `k_max`, `level`: the number of clusters found and the settings used to fit the
+#'   model.
+#' * `clusters`: a `data.frame()` with one row per cluster and the columns `cluster`, `size`,
+#'   `withinss`, followed by the cluster centers.
 #' * `totss`, `tot.withinss`, `betweenss`, `iter`: as in [stats::kmeans()].
 #'
 #' `print()` returns `x` invisibly.

@@ -11,13 +11,12 @@ compute_wss(object, newdata = NULL)
 Class inheriting from \code{"kmeans"}.}
 
 \item{newdata}{(\code{matrix()})\cr
-New data to predict on, a numeric matrix or a data frame.
-Columns are matched to the centers by name and unused columns are ignored.}
+New data to predict on, a numeric matrix or a data frame. Columns are matched to the centers by
+name and unused columns are ignored.}
 }
 \value{
-A \code{numeric()} vector with one within-cluster sum of squares per cluster,
-in the order of the rows of \code{object$centers}. Clusters with no assigned points
-contribute \code{0}.
+A \code{numeric()} vector with one within-cluster sum of squares per cluster, in the order of
+the rows of \code{object$centers}. Clusters with no assigned points contribute \code{0}.
 }
 \description{
 Compute Within-Cluster Sum of Squares
@@ -26,10 +25,9 @@ Compute Within-Cluster Sum of Squares
 WSS is defined as \deqn{
   \sum_{i=1}^{n} \left\|x_{i} - \mu_{j(i)}\right\|^2,
 }
-where \eqn{x_{i}} is a data point and \eqn{\mu_{j(i)}} is the centroid of the cluster
-to which \eqn{x_{i}} is assigned. When new data is provided, the function predicts
-the nearest cluster for each new observation and computes the WSS for these points
-based on their predicted clusters.
+where \eqn{x_{i}} is a data point and \eqn{\mu_{j(i)}} is the centroid of the cluster to which
+\eqn{x_{i}} is assigned. When new data is provided, the function predicts the nearest cluster for
+each new observation and computes the WSS for these points based on their predicted clusters.
 }
 \examples{
 km <- kmeans(mtcars, 5)

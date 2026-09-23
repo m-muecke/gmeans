@@ -18,8 +18,8 @@
 An object of class \code{"gmeans"}.}
 
 \item{col.names}{(\code{character()})\cr
-Column names for the centers. Defaults to the column names of the centers, or
-\code{x1}, \code{x2}, ... if they are unnamed.}
+Column names for the centers. Defaults to the column names of the centers, or \code{x1}, \code{x2}, ...
+if they are unnamed.}
 
 \item{...}{(\code{any})\cr
 Additional arguments. Currently unused.}
@@ -32,14 +32,13 @@ A \code{data.frame()}:
 \itemize{
 \item \code{tidy()}: one row per cluster with the centers, \code{size}, \code{withinss}, and \code{cluster}.
 \item \code{augment()}: \code{data} with a \code{.cluster} factor giving the cluster assignments.
-\item \code{glance()}: one row with \code{k}, \code{k_init}, \code{k_max}, \code{level}, \code{totss}, \code{tot.withinss},
-\code{betweenss}, and \code{iter}.
+\item \code{glance()}: one row with \code{k}, \code{k_init}, \code{k_max}, \code{level}, \code{totss}, \code{tot.withinss}, \code{betweenss},
+and \code{iter}.
 }
 }
 \description{
-Summarize a G-means clustering model as data frames, following the conventions of
-the broom package. The generics come from the generics package, so load it or broom
-to call the methods.
+Summarize a G-means clustering model as data frames, following the conventions of the broom
+package. The generics come from the generics package, so load it or broom to call the methods.
 }
 \examples{
 \dontshow{if (requireNamespace("generics", quietly = TRUE)) withAutoprint(\{ # examplesIf}

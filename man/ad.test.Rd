@@ -11,8 +11,8 @@ ad.test(x)
 }
 \arguments{
 \item{x}{(\code{numeric()})\cr
-Vector of data values. Missing values are allowed, but the
-number of non-missing values must be greater than 7.}
+Vector of data values. Missing values are allowed, but the number of non-missing values must be
+greater than 7.}
 }
 \value{
 A list inheriting from classes \code{"htest"} containing the following components:
@@ -27,16 +27,14 @@ A list inheriting from classes \code{"htest"} containing the following component
 Perform the Anderson-Darling normality test.
 }
 \details{
-The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of
-normality. The test statistic is \deqn{
+The Anderson-Darling test is an EDF omnibus test for the composite hypothesis of normality.
+The test statistic is \deqn{
   A^2 = -n -\frac{1}{n} \sum_{i=1}^{n} (2i - 1) [\ln(z_{i}) + \ln(1 - z_{n + 1 - i})]
 }
-where \eqn{z_{i} = \Phi(\frac{x_{i} - \bar{x}}{s})}. Here,
-\eqn{\Phi} is the cumulative distribution function of the standard normal
-distribution, and \eqn{\bar{x}} and \eqn{s} are mean and standard deviation of
-the data values. The p-value is computed from the modified statistic
-\eqn{A^2_*=A^2 (1.0 + 0.75/n + 2.25/n^{2})} according to Table 4.9 in
-Stephens (1986).
+where \eqn{z_{i} = \Phi(\frac{x_{i} - \bar{x}}{s})}. Here, \eqn{\Phi} is the cumulative
+distribution function of the standard normal distribution, and \eqn{\bar{x}} and \eqn{s} are mean
+and standard deviation of the data values. The p-value is computed from the modified statistic
+\eqn{A^2_*=A^2 (1.0 + 0.75/n + 2.25/n^{2})} according to Table 4.9 in Stephens (1986).
 }
 \examples{
 set.seed(123)
@@ -57,6 +55,6 @@ CRC Press.
 \seealso{
 \code{\link[stats:shapiro.test]{stats::shapiro.test()}} for performing the Shapiro-Wilk test for normality.
 \code{\link[nortest:cvm.test]{nortest::cvm.test()}}, \code{\link[nortest:lillie.test]{nortest::lillie.test()}}, \code{\link[nortest:pearson.test]{nortest::pearson.test()}},
-\code{\link[nortest:sf.test]{nortest::sf.test()}} for performing further tests for normality.
-\code{\link[stats:qqnorm]{stats::qqnorm()}} for producing a normal quantile-quantile plot.
+\code{\link[nortest:sf.test]{nortest::sf.test()}} for performing further tests for normality. \code{\link[stats:qqnorm]{stats::qqnorm()}} for
+producing a normal quantile-quantile plot.
 }
