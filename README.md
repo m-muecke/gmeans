@@ -38,7 +38,7 @@ library(gmeans)
 
 km <- gmeans(faithful)
 summary(km)
-#> G-means clustering with 2 clusters (k_init = 1, k_max = 10, level = 1e-04)
+#> G-means clustering with 2 clusters (k_init = 1, k_max = 10, level = 0.0001)
 #> 
 #>  cluster size withinss eruptions waiting
 #>        1  172     5446     4.298   80.28

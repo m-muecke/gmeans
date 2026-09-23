@@ -19,7 +19,8 @@ Initial amount of centers. Default is \code{1L}.}
 Maximum amount of centers. Must be greater than or equal to \code{k_init}. Default is \code{10L}.}
 
 \item{level}{(\code{numeric(1)})\cr
-Significance level for the Anderson-Darling test. Default is \code{0.0001}. See \code{\link[=ad.test]{ad.test()}} for more
+Significance level for the Anderson-Darling test. Default is \code{0.0001}. A larger level such as
+\code{0.01} can work better for clusters with fewer than about 50 points. See \code{\link[=ad.test]{ad.test()}} for more
 information.}
 
 \item{...}{(\code{any})\cr

@@ -35,7 +35,8 @@
 #' @param k_max (`integer(1)`)\cr
 #'   Maximum amount of centers. Must be greater than or equal to `k_init`. Default is `10L`.
 #' @param level (`numeric(1)`)\cr
-#'   Significance level for the Anderson-Darling test. Default is `0.0001`. See [ad.test()] for more
+#'   Significance level for the Anderson-Darling test. Default is `0.0001`. A larger level such as
+#'   `0.01` can work better for clusters with fewer than about 50 points. See [ad.test()] for more
 #'   information.
 #' @param ... (`any`)\cr
 #'   Additional arguments passed to [stats::kmeans()]. `nstart` has no effect since the initial
@@ -369,10 +370,10 @@ rxdist <- function(
 #'
 #' @returns
 #' A list inheriting from classes `"htest"` containing the following components:
-#' * statistic: the value of the statistic.
-#' * p.value: the p-value of the test.
-#' * method: the character string `"Anderson-Darling normality test"`.
-#' * data.name: a character string giving the name(s) of the data.
+#' * `statistic`: the value of the statistic.
+#' * `p.value`: the p-value of the test.
+#' * `method`: the character string `"Anderson-Darling normality test"`.
+#' * `data.name`: a character string giving the name(s) of the data.
 #' @seealso [stats::shapiro.test()] for performing the Shapiro-Wilk test for normality.
 #'   [nortest::cvm.test()], [nortest::lillie.test()], [nortest::pearson.test()],
 #'   [nortest::sf.test()] for performing further tests for normality. [stats::qqnorm()] for

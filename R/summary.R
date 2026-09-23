@@ -67,7 +67,7 @@ print.summary.gmeans <- function(x, digits = max(3L, getOption("digits") - 3L), 
     if (x$k == 1L) "" else "s",
     x$k_init,
     x$k_max,
-    format(x$level, digits = digits)
+    format(x$level, digits = digits, scientific = FALSE)
   ))
   print(x$clusters, digits = digits, row.names = FALSE)
   ratio <- if (x$totss > 0) {

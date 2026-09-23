@@ -17,10 +17,10 @@ greater than 7.}
 \value{
 A list inheriting from classes \code{"htest"} containing the following components:
 \itemize{
-\item statistic: the value of the statistic.
-\item p.value: the p-value of the test.
-\item method: the character string \code{"Anderson-Darling normality test"}.
-\item data.name: a character string giving the name(s) of the data.
+\item \code{statistic}: the value of the statistic.
+\item \code{p.value}: the p-value of the test.
+\item \code{method}: the character string \code{"Anderson-Darling normality test"}.
+\item \code{data.name}: a character string giving the name(s) of the data.
 }
 }
 \description{
