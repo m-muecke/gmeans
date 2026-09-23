@@ -305,8 +305,9 @@ compute_wss <- function(object, newdata = NULL) {
     wss <- object$withinss
   } else {
     d <- rxdist(object, newdata)
-    pred <- factor(apply(d, 1L, which.min), levels = seq_len(nrow(object$centers)))
-    dist <- apply(d, 1L, min)
+    pred <- max.col(-d, ties.method = "first")
+    dist <- d[cbind(seq_along(pred), pred)]
+    pred <- factor(pred, levels = seq_len(nrow(object$centers)))
     wss <- as.numeric(tapply(dist, pred, sum, default = 0))
   }
   wss

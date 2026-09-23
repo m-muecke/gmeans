@@ -216,6 +216,8 @@ test_that("predict breaks ties deterministically", {
     replicate(10L, predict(km, newdata)),
     matrix(1L, nrow = 2L, ncol = 10L)
   )
+  # compute_wss assigns tied points to the same cluster as predict
+  expect_identical(compute_wss(km, newdata), c(4, 0))
 })
 
 test_that("ad.test works", {
