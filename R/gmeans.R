@@ -138,8 +138,7 @@ split_and_search <- function(data, cluster, level, ...) {
 split_centers <- function(points) {
   pc <- eigen(stats::cov(points), symmetric = TRUE)
   s <- pc$vectors[, 1L]
-  # the sign of an eigenvector depends on the LAPACK build, so fix it to keep the order of the two
-  # centers stable
+  # fix the eigenvector sign, which depends on the LAPACK build
   if (s[which.max(abs(s))] < 0) {
     s <- -s
   }
