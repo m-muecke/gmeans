@@ -35,6 +35,14 @@ test_that("gmeans errors clearly when centers is passed", {
   expect_snapshot(gmeans(matrix(1:20, ncol = 2L), centers = 3L), error = TRUE)
 })
 
+test_that("gmeans runs k-means to convergence by default", {
+  withr::local_seed(1L)
+  x <- matrix(rexp(20000L), ncol = 2L)
+  expect_no_warning(fit <- gmeans(x))
+  expect_identical(fit$ifault, 0L)
+  expect_identical(suppressWarnings(gmeans(x, iter.max = 2L))$ifault, 2L)
+})
+
 test_that("gmeans accepts logical input", {
   withr::local_seed(1234L)
   x <- matrix(sample(c(TRUE, FALSE), 60L, replace = TRUE), ncol = 2L)
@@ -99,7 +107,7 @@ test_that("gmeans works with duplicated points", {
   withr::local_seed(11L)
   # a cluster of identical points has fewer distinct rows than the 2 centers
   # stats::kmeans() is asked for
-  expect_null(split_and_search(matrix(rep(1, 20L), ncol = 2L), seq_len(10L), 0.05))
+  expect_null(split_and_search(matrix(rep(1, 20L), ncol = 2L), seq_len(10L), 0.05, 100L))
   x <- cbind(a = rep(1:3, 20L), b = rep(1:2, 30L))
   expect_s3_class(gmeans(x), "gmeans")
   # the mean of the identical rows is not exactly representable
@@ -121,10 +129,10 @@ test_that("split_and_search does not depend on the random seed", {
     matrix(rnorm(40L, sd = 0.3), ncol = 2L),
     matrix(rnorm(40L, mean = 3, sd = 0.3), ncol = 2L)
   )
-  res <- withr::with_seed(1L, split_and_search(x, seq_len(40L), 0.05))
+  res <- withr::with_seed(1L, split_and_search(x, seq_len(40L), 0.05, 100L))
   expect_shape(res, dim = c(2L, 2L))
   expect_identical(
-    withr::with_seed(2L, split_and_search(x, seq_len(40L), 0.05)),
+    withr::with_seed(2L, split_and_search(x, seq_len(40L), 0.05, 100L)),
     res
   )
 })

@@ -4,7 +4,7 @@
 \alias{gmeans}
 \title{G-means Clustering}
 \usage{
-gmeans(x, k_init = 1L, k_max = Inf, level = 1e-04, ...)
+gmeans(x, k_init = 1L, k_max = Inf, level = 1e-04, iter.max = 100L, ...)
 }
 \arguments{
 \item{x}{(\code{matrix()})\cr
@@ -22,6 +22,10 @@ Maximum amount of centers. Must be greater than or equal to \code{k_init}. Defau
 Significance level for the Anderson-Darling test. Default is \code{0.0001}. A larger level such as
 \code{0.01} can work better for clusters with fewer than about 50 points. See \code{\link[=ad.test]{ad.test()}} for more
 information.}
+
+\item{iter.max}{(\code{integer(1)})\cr
+Maximum number of k-means iterations, passed to \code{\link[stats:kmeans]{stats::kmeans()}}. Default is \code{100L}, higher
+than the \code{10L} of \code{\link[stats:kmeans]{stats::kmeans()}}, so that k-means converges when there are many clusters.}
 
 \item{...}{(\code{any})\cr
 Additional arguments passed to \code{\link[stats:kmeans]{stats::kmeans()}}, except \code{centers}, which is set by \code{k_init}.

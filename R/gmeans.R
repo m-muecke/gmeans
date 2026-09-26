@@ -38,6 +38,9 @@
 #'   Significance level for the Anderson-Darling test. Default is `0.0001`. A larger level such as
 #'   `0.01` can work better for clusters with fewer than about 50 points. See [ad.test()] for more
 #'   information.
+#' @param iter.max (`integer(1)`)\cr
+#'   Maximum number of k-means iterations, passed to [stats::kmeans()]. Default is `100L`, higher
+#'   than the `10L` of [stats::kmeans()], so that k-means converges when there are many clusters.
 #' @param ... (`any`)\cr
 #'   Additional arguments passed to [stats::kmeans()], except `centers`, which is set by `k_init`.
 #'   `nstart` has no effect since the initial centers are always given as a matrix.
@@ -55,7 +58,7 @@
 #' )
 #' colnames(x) <- c("x", "y")
 #' cl <- gmeans(x)
-gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.0001, ...) {
+gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.0001, iter.max = 100L, ...) {
   if (is.data.frame(x)) {
     x <- as.matrix(x)
   }
@@ -73,7 +76,8 @@ gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.0001, ...) {
     k_init <= k_max,
     is_number(level),
     level > 0,
-    level < 1
+    level < 1,
+    is_count(iter.max)
   )
   if (k_init > 1L && k_init >= nrow(x)) {
     stop("`k_init` must be less than the number of rows in `x`", call. = FALSE)
@@ -86,15 +90,15 @@ gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.0001, ...) {
   if (length(init_centers) == 1L) {
     init_centers <- 1L
   }
-  km <- stats::kmeans(x, init_centers, ...)
+  km <- stats::kmeans(x, init_centers, iter.max = iter.max, ...)
 
   repeat {
-    new_centers <- suggest_centers(x, km, k_max, level, ...)
+    new_centers <- suggest_centers(x, km, k_max, level, iter.max, ...)
     # no more centers added
     if (nrow(km$centers) == nrow(new_centers)) {
       break
     }
-    km <- stats::kmeans(x, new_centers, ...)
+    km <- stats::kmeans(x, new_centers, iter.max = iter.max, ...)
   }
   km$k_init <- as.integer(k_init)
   km$k_max <- if (is.finite(k_max)) as.integer(k_max) else Inf
@@ -103,14 +107,14 @@ gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.0001, ...) {
   km
 }
 
-suggest_centers <- function(data, km, k_max, level, ...) {
+suggest_centers <- function(data, km, k_max, level, iter.max, ...) {
   centers <- NULL
   k <- nrow(km$centers)
   for (i in seq_len(k)) {
     new_centers <- NULL
     if (k < k_max) {
       cluster <- which(km$cluster == i)
-      new_centers <- split_and_search(data, cluster, level, ...)
+      new_centers <- split_and_search(data, cluster, level, iter.max, ...)
     }
     if (is.null(new_centers)) {
       centers <- rbind(centers, km$centers[i, ])
@@ -122,7 +126,7 @@ suggest_centers <- function(data, km, k_max, level, ...) {
   centers
 }
 
-split_and_search <- function(data, cluster, level, ...) {
+split_and_search <- function(data, cluster, level, iter.max, ...) {
   if (length(cluster) < 8L) {
     return()
   }
@@ -131,7 +135,7 @@ split_and_search <- function(data, cluster, level, ...) {
   if (!any(points != rep(points[1L, ], each = nrow(points)))) {
     return()
   }
-  km <- stats::kmeans(points, split_centers(points), ...)
+  km <- stats::kmeans(points, split_centers(points), iter.max = iter.max, ...)
   new_centers <- km$centers
   if (is_null_hypothesis(points, new_centers, level)) {
     NULL
