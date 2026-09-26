@@ -29,6 +29,12 @@ test_that("print.summary.gmeans prints the summary", {
   expect_invisible(print(summary(cl)))
 })
 
+test_that("print.summary.gmeans does not use scientific notation for a large k_max", {
+  withr::local_seed(123L)
+  cl <- gmeans(as.matrix(iris[, -5L]), k_max = 100000)
+  expect_output(print(summary(cl)), "k_max = 100000,", fixed = TRUE)
+})
+
 test_that("print.summary.gmeans omits the ratio when the total sum of squares is zero", {
   cl <- gmeans(matrix(1, nrow = 20L, ncol = 2L), k_init = 1L)
   expect_snapshot(print(summary(cl)))
