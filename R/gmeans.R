@@ -97,7 +97,7 @@ gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.0001, ...) {
     km <- stats::kmeans(x, new_centers, ...)
   }
   km$k_init <- as.integer(k_init)
-  km$k_max <- as.numeric(k_max)
+  km$k_max <- if (is.finite(k_max)) as.integer(k_max) else Inf
   km$level <- level
   class(km) <- c("gmeans", class(km))
   km
