@@ -92,19 +92,17 @@ replicated <- synthetic[,
   by = .(d, k)
 ]
 
-paper <- data.table(
-  d = rep(c(2L, 8L, 32L), each = 3L),
-  k = rep(c(5L, 20L, 80L), times = 3L),
-  paper_k_found = c(
-    "9.1 ± 9.9", "20.1 ± 0.6", "80.0 ± 0.2",
-    "5.0 ± 0.0", "20.0 ± 0.1", "80.2 ± 0.5",
-    "5.0 ± 0.0", "20.0 ± 0.0", "80.0 ± 0.0"
-  ),
-  paper_distortion = c(
-    "0.89 ± 0.23", "0.99 ± 0.01", "1.00 ± 0.01",
-    "1.00 ± 0.00", "0.99 ± 0.00", "0.99 ± 0.00",
-    "1.00 ± 0.00", "1.00 ± 0.00", "1.00 ± 0.00"
-  )
+paper <- rowwiseDT(
+  d = , k = , paper_k_found = , paper_distortion = ,
+   2L ,  5L , "9.1 ± 9.9"     , "0.89 ± 0.23"      ,
+   2L , 20L , "20.1 ± 0.6"    , "0.99 ± 0.01"      ,
+   2L , 80L , "80.0 ± 0.2"    , "1.00 ± 0.01"      ,
+   8L ,  5L , "5.0 ± 0.0"     , "1.00 ± 0.00"      ,
+   8L , 20L , "20.0 ± 0.1"    , "0.99 ± 0.00"      ,
+   8L , 80L , "80.2 ± 0.5"    , "0.99 ± 0.00"      ,
+  32L ,  5L , "5.0 ± 0.0"     , "1.00 ± 0.00"      ,
+  32L , 20L , "20.0 ± 0.0"    , "1.00 ± 0.00"      ,
+  32L , 80L , "80.0 ± 0.0"    , "1.00 ± 0.00"
 )
 
 comparison <- paper[replicated, on = .(d, k)]
@@ -207,9 +205,13 @@ training set by Alpaydin and Alimoglu (1996),
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 ```{r}
-pendigits <- fread("pendigits-train.csv", header = FALSE)
-x <- as.matrix(pendigits[, 1:16])
-digit <- pendigits[[17L]]
+pendigits <- fread(
+  "pendigits-train.csv",
+  header = FALSE,
+  col.names = c(paste0("x", 1:16), "digit")
+)
+x <- as.matrix(pendigits[, !"digit"])
+digit <- pendigits$digit
 
 partition_quality <- function(truth, cluster) {
   p <- table(truth, cluster) / length(truth)
