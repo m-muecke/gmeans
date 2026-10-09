@@ -122,6 +122,13 @@ test_that("gmeans does not split points that differ only by rounding error", {
   expect_null(split_and_search(cbind(x, 0.7), seq_len(20L), 0.05, 100L))
   x <- rbind(cbind(rep(0.3, 30L), 0.7), c(0.1 + 0.2, 0.7), matrix(rnorm(60L, 5), ncol = 2L))
   expect_identical(nrow(gmeans(x)$centers), 2L)
+  expect_identical(nrow(gmeans(cbind(1e16 + rep(c(0, 2), each = 10L), 1))$centers), 1L)
+})
+
+test_that("gmeans splits clusters far from the origin", {
+  withr::local_seed(1L)
+  x <- c(rnorm(50L, sd = 1e5), rnorm(50L, mean = 1e6, sd = 1e5))
+  expect_identical(nrow(gmeans(cbind(1.7e18 + x))$centers), 2L)
 })
 
 test_that("suggest_centers only splits clusters that are not Gaussian", {

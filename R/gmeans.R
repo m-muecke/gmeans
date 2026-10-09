@@ -133,8 +133,10 @@ split_and_search <- function(data, cluster, level, iter.max, ...) {
   }
   points <- data[cluster, , drop = FALSE]
   start <- split_centers(points)
-  # the rows are identical up to rounding error
-  if (all(abs(start[1L, ] - start[2L, ]) <= 1e-12 * abs(start[1L, ] + start[2L, ]))) {
+  # rows that differ only by rounding error can leave a start center without points
+  tp <- t(points)
+  second <- colSums((tp - start[2L, ])^2) < colSums((tp - start[1L, ])^2)
+  if (all(second) || !any(second)) {
     return()
   }
   km <- stats::kmeans(points, start, iter.max = iter.max, ...)
