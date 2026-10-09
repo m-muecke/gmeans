@@ -27,6 +27,8 @@
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
+vignettes/articles/*.html
+vignettes/articles/figure/
 inst/doc
 /doc/
 /Meta/
