@@ -13,7 +13,8 @@ options(digits = 4L)
 [Hamerly and Elkan (2003)](https://proceedings.neurips.cc/paper_files/paper/2003/file/234833147b97bb6aed53a8f4f1c7a7d8-Paper.pdf)
 evaluate G-means on synthetic data (their Table 1), study the statistical power of the split test
 (their Figure 3), and cluster two real datasets of handwritten digits. This article reruns these
-experiments with `gmeans()`.
+experiments with `gmeans()`. The paper also compares G-means with X-means and the BIC and reports
+run times, which are left out here.
 
 The defaults of `gmeans()` follow the paper: the search starts from one center (`k_init = 1`), the
 Anderson-Darling test uses the significance level `level = 0.0001`, and the number of clusters is
@@ -175,8 +176,8 @@ ggplot(error_rates, aes(n, rate)) +
 ```
 
 As in the paper, the test almost never splits a single Gaussian cluster, while it needs enough
-points to split two clusters. In the paper the type II error is close to 1 for up to about 25
-points, about 0.37 at 50 points, and 0 from 100 points on. Here it is
+points to split two clusters. In the paper the type II error is close to 1 at 10 and 20 points,
+about 0.37 at 50 points, and 0 from 100 points on. Here it is
 `r error_rates[n == 30L & startsWith(error, "Type II"), rate]` at 30
 points, `r error_rates[n == 50L & startsWith(error, "Type II"), rate]` at 50
 points, and `r error_rates[n == 100L & startsWith(error, "Type II"), rate]`
@@ -238,9 +239,18 @@ Apart from the data, `gmeans()` differs from the paper in these details:
 * The test statistic is corrected for the sample size with the factor
   \(1 + 0.75/n + 2.25/n^2\) from D'Agostino and Stephens (1986), while the paper uses
   \(1 + 4/n - 25/n^2\) from Stephens (1974). At the significance level 0.0001, this gives a critical
-  value of about 1.851 instead of 1.869.
+  value of about 1.851 instead of 1.869. More importantly, the paper's factor is larger for small
+  samples, so its test splits small clusters more readily: to split a cluster, the uncorrected
+  statistic has to exceed about 1.64 with 20 points and 1.75 with 50 points in the paper, but 1.77
+  and 1.82 here.
+  Rerunning the power study with the paper's correction lowers the type II error at 50 points by
+  about 0.07, which moves it further from the paper's figure, while the synthetic results barely
+  change.
 * Clusters with fewer than 8 points are not tested and therefore never split, since the p-value of
   the test requires at least 8 values.
 * k-means uses the Hartigan-Wong algorithm, the default of `stats::kmeans()`. The paper does not
-  say which algorithm it uses. With `algorithm = "Lloyd"`, `gmeans()` splits fewer Gaussian clusters
-  in high dimensions and comes closer to the paper for 80 clusters in 32 dimensions.
+  say which algorithm it uses. With `algorithm = "Lloyd"`, `gmeans()` splits fewer Gaussian
+  clusters in high dimensions: for 80 clusters in 32 dimensions, the median number of clusters found
+  over 30 datasets drops from 83 to 81. Neither this nor the correction of the test statistic
+  explains why the paper finds exactly 80 clusters, so the remaining gap presumably comes from
+  details of the data or the implementation that the paper does not give.
