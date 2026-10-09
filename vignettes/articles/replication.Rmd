@@ -116,8 +116,7 @@ knitr::kable(
 
 In most settings `gmeans()` finds about the true number of clusters, as in the paper. With five
 clusters in two dimensions, both the paper and `gmeans()` sometimes split the non-spherical clusters
-into many pieces. Since the scaling of the clusters is not specified in the paper, the datasets here
-are not the same as in the paper, so the results can differ by more than chance.
+into many pieces.
 
 With 80 clusters in 32 dimensions, `gmeans()` usually finds a few clusters too many (median
 `r median(synthetic[d == 32L & k == 80L, k_found])`), while the paper finds
@@ -181,8 +180,7 @@ about 0.37 at 50 points, and 0 from 100 points on. Here it is
 `r error_rates[n == 30L & startsWith(error, "Type II"), rate]` at 30
 points, `r error_rates[n == 50L & startsWith(error, "Type II"), rate]` at 50
 points, and `r error_rates[n == 100L & startsWith(error, "Type II"), rate]`
-at 100 points. A larger `level`
-trades a higher type I error for more power on small clusters.
+at 100 points.
 
 ## Handwritten digits
 
@@ -226,11 +224,9 @@ partition_quality(digit, fit$cluster)
 
 `gmeans()` finds `r nrow(fit$centers)` clusters with a partition quality of
 `r round(partition_quality(digit, fit$cluster), 3)`, compared to 69 clusters and 0.196 in the paper.
-Like the paper, it splits each digit into several clusters, so the partition quality stays well
-below 1.
 
-The paper also clusters 6000 examples of the NIST digits after a random projection to 50 dimensions.
-Neither the examples nor the projection are given, so this experiment cannot be repeated.
+The paper also clusters 6000 randomly chosen MNIST digits after a random projection to 50
+dimensions, which is not repeated here.
 
 ## Remaining differences
 
@@ -238,11 +234,9 @@ Apart from the data, `gmeans()` differs from the paper in these details:
 
 * The test statistic is corrected for the sample size with the factor
   \(1 + 0.75/n + 2.25/n^2\) from D'Agostino and Stephens (1986), while the paper uses
-  \(1 + 4/n - 25/n^2\) from Stephens (1974). At the significance level 0.0001, this gives a critical
-  value of about 1.851 instead of 1.869. More importantly, the paper's factor is larger for small
-  samples, so its test splits small clusters more readily: to split a cluster, the uncorrected
-  statistic has to exceed about 1.64 with 20 points and 1.75 with 50 points in the paper, but 1.77
-  and 1.82 here.
+  \(1 + 4/n - 25/n^2\) from Stephens (1974). The paper's factor is larger for small samples, so its
+  test splits small clusters more readily: to split a cluster, the uncorrected statistic has to
+  exceed about 1.64 with 20 points and 1.75 with 50 points in the paper, but 1.77 and 1.82 here.
   Rerunning the power study with the paper's correction lowers the type II error at 50 points by
   about 0.07, which moves it further from the paper's figure, while the synthetic results barely
   change.
@@ -252,5 +246,4 @@ Apart from the data, `gmeans()` differs from the paper in these details:
   say which algorithm it uses. With `algorithm = "Lloyd"`, `gmeans()` splits fewer Gaussian
   clusters in high dimensions: for 80 clusters in 32 dimensions, the median number of clusters found
   over 30 datasets drops from 83 to 81. Neither this nor the correction of the test statistic
-  explains why the paper finds exactly 80 clusters, so the remaining gap presumably comes from
-  details of the data or the implementation that the paper does not give.
+  explains why the paper finds exactly 80 clusters.
