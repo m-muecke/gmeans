@@ -17,6 +17,15 @@
   Hamerly and Elkan (2003). The previous default of `0.05` often split
   clusters that are Gaussian, especially in higher dimensions.
 - [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
+  now uses `k_max = Inf` by default, as in Hamerly and Elkan (2003). The
+  previous default of `10` silently capped the number of clusters on
+  data with more than 10 clusters.
+- [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
+  gains an `iter.max` argument that defaults to `100`, instead of the
+  `10` used by [`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html),
+  so k-means converges when there are many clusters instead of warning
+  that it did not converge.
+- [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
   now stores `k_init`, `k_max`, and `level` in the returned object.
 - [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
   now errors clearly when `centers` is passed, pointing to `k_init`

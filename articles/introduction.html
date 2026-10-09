@@ -40,6 +40,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/introduction.html">Why G-means?</a></li>
+    <li><a class="dropdown-item" href="../articles/replication.html">Replicating Hamerly and Elkan (2003)</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -260,7 +261,7 @@ clustering.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gmeans.html">gmeans</a></span><span class="op">(</span><span class="va">points</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; G-means clustering with 3 clusters (k_init = 1, k_max = 10, level = 0.0001)</span></span>
+<span><span class="co">#&gt; G-means clustering with 3 clusters (k_init = 1, k_max = Inf, level = 0.0001)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  cluster size withinss     x1     x2</span></span>
 <span><span class="co">#&gt;        1  101      214  5.016 -0.864</span></span>
@@ -309,7 +310,7 @@ fit it:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/glance.html" class="external-link">glance</a></span><span class="op">(</span><span class="va">gclust</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   k k_init k_max level totss tot.withinss betweenss iter</span></span>
-<span><span class="co">#&gt; 1 2      1    10 1e-04 681.4        152.3       529    1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 2      1   Inf 1e-04 681.4        152.3       529    1</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

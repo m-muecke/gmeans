@@ -25,6 +25,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/introduction.html">Why G-means?</a></li>
+    <li><a class="dropdown-item" href="../articles/replication.html">Replicating Hamerly and Elkan (2003)</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -56,6 +57,10 @@
 <code><a href="../reference/gmeans.html">gmeans()</a></code> now uses <code>k_init = 1</code> by default, as in Hamerly and Elkan (2003). The previous default of <code>2</code> could never return a single cluster. With one initial center the result no longer depends on the random seed.</li>
 <li>
 <code><a href="../reference/gmeans.html">gmeans()</a></code> now uses <code>level = 0.0001</code> by default, the significance level used by Hamerly and Elkan (2003). The previous default of <code>0.05</code> often split clusters that are Gaussian, especially in higher dimensions.</li>
+<li>
+<code><a href="../reference/gmeans.html">gmeans()</a></code> now uses <code>k_max = Inf</code> by default, as in Hamerly and Elkan (2003). The previous default of <code>10</code> silently capped the number of clusters on data with more than 10 clusters.</li>
+<li>
+<code><a href="../reference/gmeans.html">gmeans()</a></code> gains an <code>iter.max</code> argument that defaults to <code>100</code>, instead of the <code>10</code> used by <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">stats::kmeans()</a></code>, so k-means converges when there are many clusters instead of warning that it did not converge.</li>
 <li>
 <code><a href="../reference/gmeans.html">gmeans()</a></code> now stores <code>k_init</code>, <code>k_max</code>, and <code>level</code> in the returned object.</li>
 <li>

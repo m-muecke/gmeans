@@ -77,7 +77,7 @@ tidy(cl)
 #> 2     5.005660    3.369811     1.560377    0.290566   53  28.55208       2
 glance(cl)
 #>   k k_init k_max level    totss tot.withinss betweenss iter
-#> 1 2      1    10 1e-04 681.3706      152.348  529.0226    1
+#> 1 2      1   Inf 1e-04 681.3706      152.348  529.0226    1
 head(augment(cl, x))
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width .cluster
 #> 1          5.1         3.5          1.4         0.2        2

@@ -221,7 +221,7 @@ Let’s now apply the G-means algorithm to the same data:
 
 fit <- gmeans(points)
 summary(fit)
-#> G-means clustering with 3 clusters (k_init = 1, k_max = 10, level = 0.0001)
+#> G-means clustering with 3 clusters (k_init = 1, k_max = Inf, level = 0.0001)
 #> 
 #>  cluster size withinss     x1     x2
 #>        1  101      214  5.016 -0.864
@@ -293,5 +293,5 @@ clusters found and the settings used to fit it:
 
 glance(gclust)
 #>   k k_init k_max level totss tot.withinss betweenss iter
-#> 1 2      1    10 1e-04 681.4        152.3       529    1
+#> 1 2      1   Inf 1e-04 681.4        152.3       529    1
 ```

@@ -5,7 +5,7 @@ Perform G-means clustering on a data matrix.
 ## Usage
 
 ``` r
-gmeans(x, k_init = 1L, k_max = 10L, level = 1e-04, ...)
+gmeans(x, k_init = 1L, k_max = Inf, level = 1e-04, iter.max = 100L, ...)
 ```
 
 ## Arguments
@@ -27,7 +27,7 @@ gmeans(x, k_init = 1L, k_max = 10L, level = 1e-04, ...)
 
   (`integer(1)`)  
   Maximum amount of centers. Must be greater than or equal to `k_init`.
-  Default is `10L`.
+  Default is `Inf`.
 
 - level:
 
@@ -37,6 +37,15 @@ gmeans(x, k_init = 1L, k_max = 10L, level = 1e-04, ...)
   than about 50 points. See
   [`ad.test()`](https://m-muecke.github.io/gmeans/reference/ad.test.md)
   for more information.
+
+- iter.max:
+
+  (`integer(1)`)  
+  Maximum number of k-means iterations, passed to
+  [`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html). Default is
+  `100L`, higher than the `10L` of
+  [`stats::kmeans()`](https://rdrr.io/r/stats/kmeans.html), so that
+  k-means converges when there are many clusters.
 
 - ...:
 
