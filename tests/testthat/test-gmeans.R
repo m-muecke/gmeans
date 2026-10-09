@@ -115,6 +115,23 @@ test_that("gmeans works with duplicated points", {
   expect_s3_class(gmeans(x, k_init = 1L), "gmeans")
 })
 
+test_that("suggest_centers only splits clusters that are not Gaussian", {
+  withr::local_seed(1L)
+  gaussian <- matrix(rnorm(80L, sd = 0.3), ncol = 2L)
+  bimodal <- rbind(
+    matrix(rnorm(40L, mean = 10, sd = 0.3), ncol = 2L),
+    matrix(rnorm(40L, mean = 13, sd = 0.3), ncol = 2L)
+  )
+  # interleave the rows so the points of each cluster are not contiguous
+  x <- rbind(gaussian, bimodal)[order(rep(seq_len(40L), 2L)), ]
+  km <- stats::kmeans(x, rbind(c(0, 0), c(11.5, 11.5)))
+  res <- suggest_centers(x, km, Inf, 1e-4, 100L)
+  expect_shape(res, dim = c(3L, 2L))
+  expect_equal(res[1L, ], km$centers[1L, ])
+  expect_equal(sort(res[2:3, 1L]), c(10, 13), tolerance = 0.1, ignore_attr = TRUE)
+  expect_equal(suggest_centers(x, km, 2L, 1e-4, 100L), km$centers, ignore_attr = TRUE)
+})
+
 test_that("split_centers places the centers along the main principal component", {
   x <- cbind(c(-3, -1, 1, 3), 5)
   res <- split_centers(x)
