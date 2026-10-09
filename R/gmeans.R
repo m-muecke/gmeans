@@ -132,11 +132,12 @@ split_and_search <- function(data, cluster, level, iter.max, ...) {
     return()
   }
   points <- data[cluster, , drop = FALSE]
-  # all rows identical, so there are fewer distinct points than centers to find
-  if (!any(points != rep(points[1L, ], each = nrow(points)))) {
+  start <- split_centers(points)
+  # the rows are identical up to rounding error
+  if (all(abs(start[1L, ] - start[2L, ]) <= 1e-12 * abs(start[1L, ] + start[2L, ]))) {
     return()
   }
-  km <- stats::kmeans(points, split_centers(points), iter.max = iter.max, ...)
+  km <- stats::kmeans(points, start, iter.max = iter.max, ...)
   new_centers <- km$centers
   if (is_null_hypothesis(points, new_centers, level)) {
     NULL
