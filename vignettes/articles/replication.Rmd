@@ -21,8 +21,9 @@ not capped (`k_max = Inf`). The paper provides neither its data nor its code, so
 below are regenerated from its description, and the results can only be compared approximately.
 
 ```{r setup, message = FALSE}
-library(gmeans)
+library(data.table)
 library(ggplot2)
+library(gmeans)
 ```
 
 ## Synthetic data
@@ -67,18 +68,18 @@ optimal_distortion <- function(x, cluster) {
 }
 
 set.seed(2003)
-settings <- expand.grid(rep = 1:30, k = c(5L, 20L, 80L), d = c(2L, 8L, 32L))
-synthetic <- do.call(rbind, lapply(seq_len(nrow(settings)), function(i) {
-  setting <- settings[i, ]
-  sim <- simulate_clusters(setting$k, setting$d)
-  fit <- gmeans(sim$x)
-  data.frame(
-    d = setting$d,
-    k = setting$k,
-    k_found = nrow(fit$centers),
-    distortion = fit$tot.withinss / optimal_distortion(sim$x, sim$cluster)
-  )
-}))
+settings <- CJ(d = c(2L, 8L, 32L), k = c(5L, 20L, 80L), rep = 1:30)
+synthetic <- settings[,
+  {
+    sim <- simulate_clusters(k, d)
+    fit <- gmeans(sim$x)
+    .(
+      k_found = nrow(fit$centers),
+      distortion = fit$tot.withinss / optimal_distortion(sim$x, sim$cluster)
+    )
+  },
+  by = .(d, k, rep)
+]
 ```
 
 ```{r}
@@ -86,16 +87,12 @@ mean_sd <- function(x, digits) {
   sprintf("%.*f ± %.*f", digits, mean(x), digits, sd(x))
 }
 
-replicated <- aggregate(
-  cbind(k_found, distortion) ~ d + k,
-  data = synthetic,
-  FUN = identity,
-  simplify = FALSE
-)
-replicated$k_found <- vapply(replicated$k_found, mean_sd, character(1L), digits = 1L)
-replicated$distortion <- vapply(replicated$distortion, mean_sd, character(1L), digits = 2L)
+replicated <- synthetic[,
+  .(k_found = mean_sd(k_found, 1L), distortion = mean_sd(distortion, 2L)),
+  by = .(d, k)
+]
 
-paper <- data.frame(
+paper <- data.table(
   d = rep(c(2L, 8L, 32L), each = 3L),
   k = rep(c(5L, 20L, 80L), times = 3L),
   paper_k_found = c(
@@ -110,8 +107,7 @@ paper <- data.frame(
   )
 )
 
-comparison <- merge(paper, replicated, by = c("d", "k"))
-comparison <- comparison[order(comparison$d, comparison$k), ]
+comparison <- paper[replicated, on = .(d, k)]
 knitr::kable(
   comparison,
   col.names = c("d", "true k", "k found (paper)", "distortion (paper)", "k found", "distortion"),
@@ -125,14 +121,14 @@ into many pieces. Since the scaling of the clusters is not specified in the pape
 are not the same as in the paper, so the results can differ by more than chance.
 
 With 80 clusters in 32 dimensions, `gmeans()` usually finds a few clusters too many (median
-`r median(synthetic$k_found[synthetic$d == 32L & synthetic$k == 80L])`), while the paper finds
+`r median(synthetic[d == 32L & k == 80L, k_found])`), while the paper finds
 exactly 80. Each cluster here has only about 62 points. With so few points in so many dimensions,
 the two-center k-means of the split test can find a direction along which even a single Gaussian
 cluster looks like two, so the test splits Gaussian clusters more often than the level of 0.0001
 suggests. With 80 clusters tested in every round, a few such splits add up.
 
 ```{r}
-stopped_early <- synthetic[synthetic$k_found < synthetic$k / 2, ]
+stopped_early <- synthetic[k_found < k / 2]
 stopped_early
 ```
 
@@ -150,23 +146,25 @@ apart. The paper runs 1000 tests per point.
 
 ```{r}
 set.seed(2003)
-n_points <- c(10L, 20L, 30L, 50L, 100L, 150L, 200L)
-error_rates <- do.call(rbind, lapply(n_points, function(n) {
-  type_1 <- replicate(1000L, {
-    x <- matrix(rnorm(2L * n), ncol = 2L) %*% diag(c(1, 0.95))
-    nrow(gmeans(x)$centers) > 1L
-  })
-  type_2 <- replicate(1000L, {
-    x <- matrix(rnorm(2L * n), ncol = 2L)
-    x[seq_len(n %/% 2L), 1L] <- x[seq_len(n %/% 2L), 1L] + 5
-    nrow(gmeans(x)$centers) == 1L
-  })
-  data.frame(
-    n = n,
-    error = c("Type I: splits one cluster", "Type II: does not split two clusters"),
-    rate = c(mean(type_1), mean(type_2))
-  )
-}))
+error_rates <- data.table(n = c(10L, 20L, 30L, 50L, 100L, 150L, 200L))
+error_rates <- error_rates[,
+  {
+    type_1 <- replicate(1000L, {
+      x <- matrix(rnorm(2L * n), ncol = 2L) %*% diag(c(1, 0.95))
+      nrow(gmeans(x)$centers) > 1L
+    })
+    type_2 <- replicate(1000L, {
+      x <- matrix(rnorm(2L * n), ncol = 2L)
+      x[seq_len(n %/% 2L), 1L] <- x[seq_len(n %/% 2L), 1L] + 5
+      nrow(gmeans(x)$centers) == 1L
+    })
+    .(
+      error = c("Type I: splits one cluster", "Type II: does not split two clusters"),
+      rate = c(mean(type_1), mean(type_2))
+    )
+  },
+  by = n
+]
 ```
 
 ```{r, fig.width = 8, fig.height = 3.5, dpi = 300}
@@ -181,9 +179,9 @@ ggplot(error_rates, aes(n, rate)) +
 As in the paper, the test almost never splits a single Gaussian cluster, while it needs enough
 points to split two clusters. In the paper the type II error is close to 1 for up to about 25
 points, about 0.37 at 50 points, and 0 from 100 points on. Here it is
-`r error_rates$rate[error_rates$n == 30L & startsWith(error_rates$error, "Type II")]` at 30
-points, `r error_rates$rate[error_rates$n == 50L & startsWith(error_rates$error, "Type II")]` at 50
-points, and `r error_rates$rate[error_rates$n == 100L & startsWith(error_rates$error, "Type II")]`
+`r error_rates[n == 30L & startsWith(error, "Type II"), rate]` at 30
+points, `r error_rates[n == 50L & startsWith(error, "Type II"), rate]` at 50
+points, and `r error_rates[n == 100L & startsWith(error, "Type II"), rate]`
 at 100 points. A larger `level`
 trades a higher type I error for more power on small clusters.
 
@@ -209,7 +207,7 @@ training set by Alpaydin and Alimoglu (1996),
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 ```{r}
-pendigits <- read.csv("pendigits-train.csv", header = FALSE)
+pendigits <- fread("pendigits-train.csv", header = FALSE)
 x <- as.matrix(pendigits[, 1:16])
 digit <- pendigits[[17L]]
 
