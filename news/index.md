@@ -33,6 +33,12 @@
 - [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
   now errors clearly when `k_init` is not less than the number of rows
   in `x`.
+- [`predict.gmeans()`](https://m-muecke.github.io/gmeans/reference/predict.gmeans.md)
+  and
+  [`compute_wss()`](https://m-muecke.github.io/gmeans/reference/compute_wss.md)
+  now accept logical `newdata`, coercing it to 0/1 as
+  [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
+  does for `x`.
 - New [`summary()`](https://rdrr.io/r/base/summary.html) method for
   `gmeans` objects.
 - New [`tidy()`](https://generics.r-lib.org/reference/tidy.html),

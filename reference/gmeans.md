@@ -86,7 +86,7 @@ The algorithm is outlined as follows:
 
 4.  Use the Anderson-Darling test to check if the set of data points
     \\\\x_i \mid \text{class}(x_i) = j\\\\ follows a Gaussian
-    distribution at the confidence level \\\alpha\\.
+    distribution at the significance level \\\alpha\\.
 
 5.  If the data points appear Gaussian, keep \\c_j\\. Otherwise, replace
     \\c_j\\ with two new centers, found by k-means on the cluster

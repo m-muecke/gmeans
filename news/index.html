@@ -67,6 +67,8 @@
 <code><a href="../reference/gmeans.html">gmeans()</a></code> now errors clearly when <code>centers</code> is passed, pointing to <code>k_init</code> instead.</li>
 <li>
 <code><a href="../reference/gmeans.html">gmeans()</a></code> now errors clearly when <code>k_init</code> is not less than the number of rows in <code>x</code>.</li>
+<li>
+<code><a href="../reference/predict.gmeans.html">predict.gmeans()</a></code> and <code><a href="../reference/compute_wss.html">compute_wss()</a></code> now accept logical <code>newdata</code>, coercing it to 0/1 as <code><a href="../reference/gmeans.html">gmeans()</a></code> does for <code>x</code>.</li>
 <li>New <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for <code>gmeans</code> objects.</li>
 <li>New <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code>, <code><a href="https://generics.r-lib.org/reference/augment.html" class="external-link">augment()</a></code>, and <code><a href="https://generics.r-lib.org/reference/glance.html" class="external-link">glance()</a></code> methods for <code>gmeans</code> objects.</li>
 </ul></div>
