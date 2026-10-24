@@ -142,12 +142,14 @@ sometimes split the non-spherical clusters into many pieces.
 With 80 clusters in 32 dimensions,
 [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
 usually finds a few clusters too many (median 83), while the paper finds
-exactly 80. Each cluster here has only about 62 points. With so few
-points in so many dimensions, the two-center k-means of the split test
-can find a direction along which even a single Gaussian cluster looks
-like two, so the test splits Gaussian clusters more often than the level
-of 0.0001 suggests. With 80 clusters tested in every round, a few such
-splits add up.
+exactly 80. The mean in the table is closer to 80 only because one
+dataset stops at 2 clusters (see below), which also inflates the
+standard deviation. Each cluster here has only about 62 points. With so
+few points in so many dimensions, the two-center k-means of the split
+test can find a direction along which even a single Gaussian cluster
+looks like two, so the test splits Gaussian clusters more often than the
+level of 0.0001 suggests. With 80 clusters tested in every round, a few
+such splits add up.
 
 ``` r
 
@@ -161,11 +163,11 @@ stopped_early
 
 In 1 of the 270 datasets,
 [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
-stops with less than half of the true clusters. This is a limitation of
-G-means itself: when a split does not separate the clusters cleanly,
-each part still contains many clusters, and projected onto the split
-direction such a mixture can look Gaussian enough to pass the test at
-the strict level of 0.0001.
+stops with less than half of the true clusters. This can happen to
+G-means in general, although the paper reports no such case: when a
+split does not separate the clusters cleanly, each part still contains
+many clusters, and projected onto the split direction such a mixture can
+look Gaussian enough to pass the test at the strict level of 0.0001.
 
 ## Statistical power
 
@@ -173,12 +175,13 @@ Figure 3 of the paper shows how often the split test makes the wrong
 decision, as a function of the number of points \\n\\. A type I error
 splits one Gaussian cluster, here with one axis 5% shorter than the
 other. A type II error does not split two Gaussian clusters whose means
-are \\5\sigma\\ apart. The paper runs 1000 tests per point.
+are \\5\sigma\\ apart. The paper runs 1000 tests each at 10, 20, 50,
+100, 150, and 200 points.
 
 ``` r
 
 set.seed(2003)
-error_rates <- data.table(n = c(10L, 20L, 30L, 50L, 100L, 150L, 200L))
+error_rates <- data.table(n = c(10L, 20L, 50L, 100L, 150L, 200L))
 error_rates <- error_rates[,
   {
     type_1 <- replicate(1000L, {
@@ -214,8 +217,8 @@ ggplot(error_rates, aes(n, rate)) +
 As in the paper, the test almost never splits a single Gaussian cluster,
 while it needs enough points to split two clusters. In the paper the
 type II error is close to 1 at 10 and 20 points, about 0.37 at 50
-points, and 0 from 100 points on. Here it is 0.905 at 30 points, 0.3 at
-50 points, and 0 at 100 points.
+points, and 0 from 100 points on. Here it is 0.997 at 20 points, 0.311
+at 50 points, and 0 at 100 points.
 
 ## Handwritten digits
 
@@ -276,14 +279,17 @@ differs from the paper in these details:
 
 - The test statistic is corrected for the sample size with the factor
   \\1 + 0.75/n + 2.25/n^2\\ from D’Agostino and Stephens (1986), while
-  the paper uses \\1 + 4/n - 25/n^2\\ from Stephens (1974). The paper’s
-  factor is larger for small samples, so its test splits small clusters
-  more readily: to split a cluster, the uncorrected statistic has to
-  exceed about 1.64 with 20 points and 1.75 with 50 points in the paper,
-  but 1.77 and 1.82 here. Rerunning the power study with the paper’s
-  correction lowers the type II error at 50 points by about 0.07, which
-  moves it further from the paper’s figure, while the synthetic results
-  barely change.
+  the paper uses \\1 + 4/n - 25/n^2\\ from Stephens (1974). The
+  corrected statistic is also compared to a slightly lower cutoff, 1.851
+  instead of the paper’s 1.8692, since the p-value comes from the
+  approximation of D’Agostino and Stephens (1986). The paper’s factor is
+  larger for small samples, which outweighs the lower cutoff, so its
+  test splits small clusters more readily: to split a cluster, the
+  uncorrected statistic has to exceed about 1.64 with 20 points and 1.75
+  with 50 points in the paper, but 1.77 and 1.82 here. Rerunning the
+  power study with the paper’s correction and cutoff lowers the type II
+  error at 50 points by about 0.05, which moves it further from the
+  paper’s figure, while the synthetic results barely change.
 - Clusters with fewer than 8 points are not tested and therefore never
   split, since the p-value of the test requires at least 8 values.
 - k-means uses the Hartigan-Wong algorithm, the default of
