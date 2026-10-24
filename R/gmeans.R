@@ -136,12 +136,7 @@ split_cluster <- function(data, cluster, level, iter.max, ...) {
     return()
   }
   km <- stats::kmeans(points, start, iter.max = iter.max, ...)
-  new_centers <- km$centers
-  if (is_null_hypothesis(points, new_centers, level)) {
-    NULL
-  } else {
-    new_centers
-  }
+  if (is_null_hypothesis(points, km$centers, level)) NULL else km$centers
 }
 
 # initialize the two child centers at c +/- m, where m = s * sqrt(2 * lambda / pi)
