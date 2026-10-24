@@ -55,7 +55,7 @@ i.e., \eqn{C \leftarrow \text{kmeans}(C, X)}.
 \item For each center \eqn{c_j}, identify the set of data points
 \eqn{\{x_i \mid \text{class}(x_i) = j\}} that are assigned to \eqn{c_j}.
 \item Use the Anderson-Darling test to check if the set of data points
-\eqn{\{x_i \mid \text{class}(x_i) = j\}} follows a Gaussian distribution at the confidence
+\eqn{\{x_i \mid \text{class}(x_i) = j\}} follows a Gaussian distribution at the significance
 level \eqn{\alpha}.
 \item If the data points appear Gaussian, keep \eqn{c_j}. Otherwise, replace \eqn{c_j} with two new
 centers, found by k-means on the cluster started from \eqn{c_j \pm s \sqrt{2 \lambda / \pi}},
