@@ -107,7 +107,7 @@ test_that("gmeans works with duplicated points", {
   withr::local_seed(11L)
   # a cluster of identical points has fewer distinct rows than the 2 centers
   # stats::kmeans() is asked for
-  expect_null(split_and_search(matrix(rep(1, 20L), ncol = 2L), seq_len(10L), 0.05, 100L))
+  expect_null(split_cluster(matrix(rep(1, 20L), ncol = 2L), seq_len(10L), 0.05, 100L))
   x <- cbind(a = rep(1:3, 20L), b = rep(1:2, 30L))
   expect_s3_class(gmeans(x), "gmeans")
   # the mean of the identical rows is not exactly representable
@@ -118,8 +118,8 @@ test_that("gmeans works with duplicated points", {
 test_that("gmeans does not split points that differ only by rounding error", {
   withr::local_seed(1L)
   x <- matrix(c(rep(0.3, 19L), 0.1 + 0.2))
-  expect_null(split_and_search(x, seq_len(20L), 0.05, 100L))
-  expect_null(split_and_search(cbind(x, 0.7), seq_len(20L), 0.05, 100L))
+  expect_null(split_cluster(x, seq_len(20L), 0.05, 100L))
+  expect_null(split_cluster(cbind(x, 0.7), seq_len(20L), 0.05, 100L))
   x <- rbind(cbind(rep(0.3, 30L), 0.7), c(0.1 + 0.2, 0.7), matrix(rnorm(60L, 5), ncol = 2L))
   expect_identical(nrow(gmeans(x)$centers), 2L)
   expect_identical(nrow(gmeans(cbind(1e16 + rep(c(0, 2), each = 10L), 1))$centers), 1L)
@@ -156,16 +156,16 @@ test_that("split_centers places the centers along the main principal component",
   expect_equal(split_centers(-x)[, 1L], res[, 1L])
 })
 
-test_that("split_and_search does not depend on the random seed", {
+test_that("split_cluster does not depend on the random seed", {
   withr::local_seed(1234L)
   x <- rbind(
     matrix(rnorm(40L, sd = 0.3), ncol = 2L),
     matrix(rnorm(40L, mean = 3, sd = 0.3), ncol = 2L)
   )
-  res <- withr::with_seed(1L, split_and_search(x, seq_len(40L), 0.05, 100L))
+  res <- withr::with_seed(1L, split_cluster(x, seq_len(40L), 0.05, 100L))
   expect_shape(res, dim = c(2L, 2L))
   expect_identical(
-    withr::with_seed(2L, split_and_search(x, seq_len(40L), 0.05, 100L)),
+    withr::with_seed(2L, split_cluster(x, seq_len(40L), 0.05, 100L)),
     res
   )
 })

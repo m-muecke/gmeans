@@ -114,7 +114,7 @@ suggest_centers <- function(data, km, k_max, level, iter.max, ...) {
     if (k >= k_max) {
       break
     }
-    children <- split_and_search(data, members[[i]], level, iter.max, ...)
+    children <- split_cluster(data, members[[i]], level, iter.max, ...)
     if (!is.null(children)) {
       centers[[i]] <- children
       k <- k + 1L
@@ -123,7 +123,7 @@ suggest_centers <- function(data, km, k_max, level, iter.max, ...) {
   do.call(rbind, centers)
 }
 
-split_and_search <- function(data, cluster, level, iter.max, ...) {
+split_cluster <- function(data, cluster, level, iter.max, ...) {
   if (length(cluster) < 8L) {
     return()
   }
@@ -196,7 +196,7 @@ kmeans_plusplus <- function(x, k) {
         stop("more cluster centers than distinct data points", call. = FALSE)
       }
       prob <- dists / total
-      centroids[i, ] <- x[sample.int(n, 1, prob = prob), ]
+      centroids[i, ] <- x[sample.int(n, 1L, prob = prob), ]
       if (i < k) {
         dists <- pmin(dists, colSums((tx - centroids[i, ])^2))
       }
