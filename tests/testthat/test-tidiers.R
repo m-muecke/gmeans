@@ -23,11 +23,7 @@ test_that("tidy names unnamed centers and accepts col.names", {
     generics::tidy(cl, col.names = letters[1:4]),
     c("a", "b", "c", "d", "size", "withinss", "cluster")
   )
-  expect_error(
-    generics::tidy(cl, col.names = "a"),
-    "length(col.names) == ncol(centers)",
-    fixed = TRUE
-  )
+  expect_snapshot(generics::tidy(cl, col.names = "a"), error = TRUE)
 })
 
 test_that("augment adds cluster assignments", {
@@ -41,8 +37,8 @@ test_that("augment adds cluster assignments", {
   expect_identical(res$.cluster, factor(cl$cluster))
   expect_identical(generics::augment(cl, iris[, -5L])$.cluster, factor(cl$cluster))
   expect_named(generics::augment(cl, unname(x)), c("x1", "x2", "x3", "x4", ".cluster"))
-  expect_error(generics::augment(cl, x[1:10, ]), "one row per observation", fixed = TRUE)
-  expect_error(generics::augment(cl, as.vector(x)), "matrix or data frame", fixed = TRUE)
+  expect_snapshot(generics::augment(cl, x[1:10, ]), error = TRUE)
+  expect_snapshot(generics::augment(cl, as.vector(x)), error = TRUE)
 })
 
 test_that("glance returns a single row summary", {

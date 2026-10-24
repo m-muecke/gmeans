@@ -1,3 +1,11 @@
+# gmeans works
+
+    Code
+      gmeans(x, k_max = -Inf)
+    Condition
+      Error in `gmeans()`:
+      ! is_count(k_max) || identical(k_max, Inf) is not TRUE
+
 # gmeans errors clearly when centers is passed
 
     Code
