@@ -1,4 +1,4 @@
-# gmeans (development version)
+# gmeans 0.3.0
 
 * `gmeans()` now splits a cluster by starting the two new centers along its main principal component, as described in Hamerly and Elkan (2003), instead of at random points. The split step no longer depends on the random seed and the number of clusters is found more reliably, so results may differ from earlier versions.
 * `gmeans()` now uses `k_init = 1` by default, as in Hamerly and Elkan (2003). The previous default of `2` could never return a single cluster. With one initial center the result no longer depends on the random seed.
