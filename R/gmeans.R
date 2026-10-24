@@ -106,23 +106,21 @@ gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.0001, iter.max = 100L,
 }
 
 suggest_centers <- function(data, km, k_max, level, iter.max, ...) {
-  centers <- NULL
   k <- nrow(km$centers)
   # row indices of each cluster, found in one pass instead of a scan per cluster
   members <- split(seq_along(km$cluster), factor(km$cluster, levels = seq_len(k)))
+  centers <- lapply(seq_len(k), \(i) km$centers[i, , drop = FALSE])
   for (i in seq_len(k)) {
-    new_centers <- NULL
-    if (k < k_max) {
-      new_centers <- split_and_search(data, members[[i]], level, iter.max, ...)
+    if (k >= k_max) {
+      break
     }
-    if (is.null(new_centers)) {
-      centers <- rbind(centers, km$centers[i, ])
-    } else {
-      centers <- rbind(centers, new_centers)
+    children <- split_and_search(data, members[[i]], level, iter.max, ...)
+    if (!is.null(children)) {
+      centers[[i]] <- children
       k <- k + 1L
     }
   }
-  centers
+  do.call(rbind, centers)
 }
 
 split_and_search <- function(data, cluster, level, iter.max, ...) {
