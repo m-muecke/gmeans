@@ -86,10 +86,8 @@ gmeans <- function(x, k_init = 1L, k_max = Inf, level = 0.0001, iter.max = 100L,
     stop("`centers` can't be passed to `gmeans()`, use `k_init` instead", call. = FALSE)
   }
 
-  init_centers <- kmeans_plusplus(x, k_init)
-  if (length(init_centers) == 1L) {
-    init_centers <- 1L
-  }
+  # a single center converges to the mean of x
+  init_centers <- if (k_init == 1L) 1L else kmeans_plusplus(x, k_init)
   km <- stats::kmeans(x, init_centers, iter.max = iter.max, ...)
 
   repeat {
