@@ -58,7 +58,7 @@ augment.gmeans <- function(x, data, ...) {
     stop("`data` must have one row per observation used to fit the model", call. = FALSE)
   }
   if (is.matrix(data) && is.null(colnames(data))) {
-    colnames(data) <- paste0("X", seq_len(ncol(data)))
+    colnames(data) <- paste0("x", seq_len(ncol(data)))
   }
   tab <- as.data.frame(data)
   tab$.cluster <- factor(x$cluster)

@@ -40,7 +40,7 @@ test_that("augment adds cluster assignments", {
   expect_named(res, c(colnames(x), ".cluster"))
   expect_identical(res$.cluster, factor(cl$cluster))
   expect_identical(generics::augment(cl, iris[, -5L])$.cluster, factor(cl$cluster))
-  expect_named(generics::augment(cl, unname(x)), c("X1", "X2", "X3", "X4", ".cluster"))
+  expect_named(generics::augment(cl, unname(x)), c("x1", "x2", "x3", "x4", ".cluster"))
   expect_error(generics::augment(cl, x[1:10, ]), "one row per observation", fixed = TRUE)
   expect_error(generics::augment(cl, as.vector(x)), "matrix or data frame", fixed = TRUE)
 })
