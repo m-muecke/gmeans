@@ -224,6 +224,16 @@ test_that("predict ignores unused non-numeric columns in a data frame", {
   expect_error(predict(cl, bad), "must be numeric", fixed = TRUE)
 })
 
+test_that("predict accepts logical newdata", {
+  withr::local_seed(1234L)
+  x <- matrix(sample(c(TRUE, FALSE), 60L, replace = TRUE), ncol = 2L)
+  colnames(x) <- c("a", "b")
+  cl <- gmeans(x)
+  expect_identical(predict(cl, x), predict(cl, x + 0))
+  expect_identical(compute_wss(cl, x), compute_wss(cl, x + 0))
+  expect_identical(predict(cl, as.data.frame(x)[0L, ]), integer())
+})
+
 test_that("predict rejects newdata that is not a matrix or data frame", {
   withr::local_seed(1234L)
   x <- as.matrix(iris[, -5L])

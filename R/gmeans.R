@@ -345,6 +345,9 @@ rxdist <- function(
   if (is.data.frame(newdata)) {
     newdata <- as.matrix(newdata)
   }
+  if (is.logical(newdata)) {
+    storage.mode(newdata) <- "double"
+  }
   if (!is.numeric(newdata)) {
     stop("`newdata` must be numeric", call. = FALSE)
   }
