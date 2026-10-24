@@ -1,6 +1,6 @@
 # Changelog
 
-## gmeans (development version)
+## gmeans 0.3.0
 
 - [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
   now splits a cluster by starting the two new centers along its main
