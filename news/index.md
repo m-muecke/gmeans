@@ -4,6 +4,8 @@
 
 ## gmeans 0.3.0
 
+CRAN release: 2026-10-24
+
 - [`gmeans()`](https://m-muecke.github.io/gmeans/reference/gmeans.md)
   now splits a cluster by starting the two new centers along its main
   principal component, as described in Hamerly and Elkan (2003), instead
